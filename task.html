@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks - Unlimited Earning</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary: #00d2ff;
+            --secondary: #3a7bd5;
+            --bg: #0f0c29;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --success: #00ff88;
+            --danger: #ff4d4d;
+            --warning: #ffcc00;
+        }
+
+        body {
+            margin: 0; padding: 0; font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white; min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+        }
+
+        .header { width: 90%; max-width: 500px; padding: 20px 0; display: flex; align-items: center; }
+        .header h1 { font-size: 20px; flex-grow: 1; margin: 0; color: var(--primary); }
+        .back-btn { background: none; border: none; color: white; font-size: 20px; cursor: pointer; margin-right: 15px; }
+
+        /* Counter Grid */
+        .counter-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 92%; max-width: 450px; margin-bottom: 20px;
+        }
+        .count-box {
+            background: var(--card-bg); padding: 15px; border-radius: 12px; text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .count-box h3 { margin: 0; font-size: 20px; }
+        .count-box p { margin: 0; font-size: 11px; color: #aaa; text-transform: uppercase; }
+
+        /* Main Task Area */
+        .task-container { width: 92%; max-width: 450px; margin-bottom: 50px; }
+        
+        .apply-section {
+            background: var(--card-bg); padding: 30px; border-radius: 20px; text-align: center;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+        }
+
+        .btn-apply {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none; color: white; padding: 15px 40px; border-radius: 50px;
+            font-weight: bold; cursor: pointer; font-size: 18px; box-shadow: 0 5px 15px rgba(0, 210, 255, 0.3);
+        }
+
+        /* Task Details Card */
+        .task-card {
+            background: var(--card-bg); padding: 20px; border-radius: 20px;
+            border: 1px solid var(--primary); display: none;
+        }
+
+        .timer-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .timer-box { color: var(--warning); font-weight: bold; font-size: 18px; }
+
+        .detail-row {
+            background: rgba(0, 0, 0, 0.3); padding: 12px; border-radius: 10px;
+            margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .detail-row span { font-size: 13px; color: #ccc; }
+        .detail-row b { font-size: 14px; word-break: break-all; margin: 0 10px; }
+        .copy-btn { color: var(--primary); cursor: pointer; padding: 5px; }
+
+        .submit-btn {
+            width: 100%; padding: 15px; border-radius: 12px; border: none;
+            background: var(--success); color: #000; font-weight: bold; cursor: pointer; margin-top: 10px;
+        }
+
+        /* Notice & Pending List */
+        .notice-box {
+            background: rgba(255, 204, 0, 0.15); border: 1px dashed var(--warning);
+            padding: 15px; border-radius: 12px; margin-top: 20px; text-align: center; display: none;
+        }
+
+        .pending-list { margin-top: 25px; width: 100%; }
+        .pending-item {
+            background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 10px;
+            margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
+            border-left: 4px solid var(--warning);
+        }
+        .status-tag { font-size: 10px; padding: 3px 8px; border-radius: 4px; background: var(--warning); color: black; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <button class="back-btn" onclick="location.href='home.html'"><i class="fas fa-arrow-left"></i></button>
+        <h1>Work Station</h1>
+    </div>
+
+    <!-- Counters -->
+    <div class="counter-grid">
+        <div class="count-box"> <h3 id="c-total">0</h3> <p>Total Task</p> </div>
+        <div class="count-box"> <h3 id="c-success" style="color: var(--success);">0</h3> <p>Success</p> </div>
+        <div class="count-box"> <h3 id="c-failed" style="color: var(--danger);">0</h3> <p>Failed</p> </div>
+        <div class="count-box"> <h3 id="c-pending" style="color: var(--warning);">0</h3> <p>Pending</p> </div>
+    </div>
+
+    <div class="task-container">
+        <!-- Apply Button -->
+        <div id="apply-area" class="apply-section">
+            <p id="apply-status">Ready to work?</p>
+            <button class="btn-apply" id="apply-btn" onclick="requestTask()">APPLY NOW</button>
+        </div>
+
+        <!-- Task Info Area (Hidden by default) -->
+        <div id="task-info" class="task-card">
+            <div class="timer-head">
+                <span>Task Details</span>
+                <div class="timer-box"><i class="fas fa-clock"></i> <span id="work-timer">13:00</span></div>
+            </div>
+            
+            <div class="detail-row">
+                <span>First Name:</span> <b id="t-fn">---</b> 
+                <i class="fas fa-copy copy-btn" onclick="copy('t-fn')"></i>
+            </div>
+            <div class="detail-row">
+                <span>Last Name:</span> <b id="t-ln">---</b> 
+                <i class="fas fa-copy copy-btn" onclick="copy('t-ln')"></i>
+            </div>
+            <div class="detail-row">
+                <span>Password:</span> <b id="t-ps">---</b> 
+                <i class="fas fa-copy copy-btn" onclick="copy('t-ps')"></i>
+            </div>
+            <div class="detail-row">
+                <span>Birthdate:</span> <b id="t-bd">---</b> 
+                <i class="fas fa-copy copy-btn" onclick="copy('t-bd')"></i>
+            </div>
+            <div class="detail-row">
+                <span>Email:</span> <b id="t-em">---</b> 
+                <i class="fas fa-copy copy-btn" onclick="copy('t-em')"></i>
+            </div>
+            <div class="detail-row">
+                <span>Recovery:</span> <b id="t-re">---</b> 
+                <i class="fas fa-copy copy-btn" onclick="copy('t-re')"></i>
+            </div>
+
+            <button class="submit-btn" onclick="submitTask()">I'VE COMPLETED THIS GMAIL</button>
+        </div>
+
+        <!-- Notice -->
+        <div id="delete-notice" class="notice-box">
+            <i class="fas fa-exclamation-triangle"></i><br>
+            <b>Notice:</b> Delete this Gmail from your device now. <br>
+            Time remaining: <span id="notice-timer">02:00</span>
+        </div>
+
+        <!-- Pending Section -->
+        <div class="pending-list" id="pending-list-area">
+            <p style="font-size: 14px; color: #aaa;">Your Pending Tasks:</p>
+            <div id="pending-container">
+                <!-- Items will appear here -->
+            </div>
+        </div>
+    </div>
+
+<script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBFPd0umYUjpFBH08GNhpvjPA00kTh6Y5c",
+      authDomain: "unlimited-73d64.firebaseapp.com",
+      databaseURL: "https://unlimited-73d64-default-rtdb.firebaseio.com",
+      projectId: "unlimited-73d64",
+      storageBucket: "unlimited-73d64.firebasestorage.app",
+      messagingSenderId: "1089467648940",
+      appId: "1:1089467648940:web:ed748a5a93b27ee408c809"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    let currentUser = null;
+    let workTimerInterval;
+    let requestTimeoutInterval;
+
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            currentUser = user;
+            loadStats();
+            listenForActiveTask();
+            loadPendingTasks();
+        } else {
+            window.location.href = 'index.html';
+        }
+    });
+
+    // 1. Load User Stats
+    function loadStats() {
+        db.ref('users/' + currentUser.uid).on('value', snap => {
+            const d = snap.val();
+            document.getElementById('c-total').innerText = d.totalTasks || 0;
+            document.getElementById('c-success').innerText = d.successTasks || 0;
+            document.getElementById('c-failed').innerText = d.failedTasks || 0;
+            document.getElementById('c-pending').innerText = d.pendingTasks || 0;
+        });
+    }
+
+    // 2. Request Task Logic
+    function requestTask() {
+        const btn = document.getElementById('apply-btn');
+        btn.disabled = true;
+        btn.innerText = "Applying...";
+
+        const requestTime = Date.now();
+        const requestData = {
+            uid: currentUser.uid,
+            name: "", // Will be filled from auth
+            number: "", // Will be filled from auth
+            timestamp: requestTime,
+            status: "requested"
+        };
+
+        db.ref('users/' + currentUser.uid).once('value', userSnap => {
+            requestData.name = userSnap.val().name;
+            requestData.number = userSnap.val().number;
+            
+            db.ref('task_requests/' + currentUser.uid).set(requestData);
+
+            // 2 Minute Timeout Logic
+            let timeLeft = 120;
+            document.getElementById('apply-status').innerText = "Waiting for Admin (02:00)";
+            
+            requestTimeoutInterval = setInterval(() => {
+                timeLeft--;
+                let m = Math.floor(timeLeft / 60);
+                let s = timeLeft % 60;
+                document.getElementById('apply-status').innerText = `Waiting for Admin (${m}:${s < 10 ? '0'+s : s})`;
+
+                if(timeLeft <= 0) {
+                    clearInterval(requestTimeoutInterval);
+                    db.ref('task_requests/' + currentUser.uid).remove();
+                    btn.disabled = false;
+                    btn.innerText = "APPLY NOW";
+                    document.getElementById('apply-status').innerText = "Admin busy. Try again.";
+                }
+            }, 1000);
+        });
+    }
+
+    // 3. Listen for Admin to Give Task
+    function listenForActiveTask() {
+        db.ref('active_tasks/' + currentUser.uid).on('value', snap => {
+            const task = snap.val();
+            if(task) {
+                clearInterval(requestTimeoutInterval);
+                showTaskUI(task);
+            }
+        });
+    }
+
+    function showTaskUI(task) {
+        document.getElementById('apply-area').style.display = "none";
+        document.getElementById('task-info').style.display = "block";
+        
+        document.getElementById('t-fn').innerText = task.firstName;
+        document.getElementById('t-ln').innerText = task.lastName;
+        document.getElementById('t-ps').innerText = task.password;
+        document.getElementById('t-bd').innerText = task.birthDate;
+        document.getElementById('t-em').innerText = task.email;
+        document.getElementById('t-re').innerText = task.recoveryEmail;
+
+        // 13 Minute Work Timer
+        let timeLeft = 13 * 60;
+        workTimerInterval = setInterval(() => {
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById('work-timer').innerText = `${m}:${s < 10 ? '0'+s : s}`;
+            if(timeLeft <= 0) {
+                clearInterval(workTimerInterval);
+                alert("Task expired!");
+                location.reload();
+            }
+        }, 1000);
+    }
+
+    // 4. Submit Task
+    async function submitTask() {
+        if(!confirm("Are you sure you have created the Gmail?")) return;
+
+        clearInterval(workTimerInterval);
+        const taskRef = db.ref('active_tasks/' + currentUser.uid);
+        const snapshot = await taskRef.once('value');
+        const taskData = snapshot.val();
+
+        // Move to Review for Admin
+        const reviewData = {
+            ...taskData,
+            submittedAt: Date.now(),
+            status: "review"
+        };
+
+        await db.ref('reviews/' + currentUser.uid + "_" + Date.now()).set(reviewData);
+        await taskRef.remove();
+        await db.ref('users/' + currentUser.uid).update({
+            pendingTasks: firebase.database.ServerValue.increment(1),
+            totalTasks: firebase.database.ServerValue.increment(1)
+        });
+
+        // Show 2-minute delete notice
+        document.getElementById('task-info').style.display = "none";
+        document.getElementById('delete-notice').style.display = "block";
+
+        let noticeTime = 120;
+        const nInt = setInterval(() => {
+            noticeTime--;
+            let m = Math.floor(noticeTime / 60);
+            let s = noticeTime % 60;
+            document.getElementById('notice-timer').innerText = `${m}:${s < 10 ? '0'+s : s}`;
+            if(noticeTime <= 0) {
+                clearInterval(nInt);
+                document.getElementById('delete-notice').style.display = "none";
+                document.getElementById('apply-area').style.display = "block";
+                document.getElementById('apply-btn').disabled = false;
+                document.getElementById('apply-btn').innerText = "APPLY NOW";
+                document.getElementById('apply-status').innerText = "Ready for next?";
+            }
+        }, 1000);
+    }
+
+    // 5. Load Pending Tasks
+    function loadPendingTasks() {
+        db.ref('reviews').on('value', snap => {
+            const container = document.getElementById('pending-container');
+            container.innerHTML = "";
+            snap.forEach(child => {
+                const data = child.val();
+                if(data.uid === currentUser.uid) {
+                    const div = document.createElement('div');
+                    div.className = "pending-item";
+                    div.innerHTML = `
+                        <span>${data.email}</span>
+                        <span class="status-tag">PENDING</span>
+                    `;
+                    container.appendChild(div);
+                }
+            });
+        });
+    }
+
+    // Utility: Copy
+    function copy(id) {
+        const text = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(text);
+        alert("Copied: " + text);
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdraw - Unlimited Earning</title>
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    
+    <!-- Icons & Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #00d2ff;
+            --secondary: #3a7bd5;
+            --success: #00ff88;
+            --danger: #ff0055;
+            --bg: #0b0e1a;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+
+        body {
+            background: radial-gradient(circle at top right, #1a1c2c, #0b0e1a);
+            color: white; min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+        }
+
+        /* Header */
+        .header {
+            width: 100%; max-width: 500px; padding: 20px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .back-btn {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            color: white; width: 40px; height: 40px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+        }
+
+        /* Balance Display */
+        .balance-section {
+            width: 90%; max-width: 450px; text-align: center; margin: 10px 0 25px;
+        }
+        .balance-section p { font-size: 14px; color: #aaa; }
+        .balance-section h1 { font-size: 40px; font-weight: 800; color: var(--primary); }
+
+        /* Method Selection */
+        .methods {
+            width: 90%; max-width: 450px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px;
+        }
+        .method-card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            padding: 15px 10px; border-radius: 20px; text-align: center; cursor: pointer; transition: 0.3s;
+        }
+        .method-card.active { border-color: var(--primary); background: rgba(0, 210, 255, 0.1); }
+        .method-card i { font-size: 20px; margin-bottom: 8px; display: block; }
+        .method-card span { font-size: 12px; font-weight: 600; }
+
+        /* Withdraw Form */
+        .withdraw-box {
+            width: 90%; max-width: 450px; background: var(--glass);
+            padding: 25px; border-radius: 28px; border: 1px solid var(--glass-border);
+        }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-size: 12px; color: #888; margin-bottom: 8px; margin-left: 5px; }
+        .input-field {
+            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
+            padding: 14px 15px; border-radius: 15px; color: white; outline: none; font-size: 15px;
+        }
+        .input-field:focus { border-color: var(--primary); }
+
+        .info-row { display: flex; justify-content: space-between; font-size: 12px; color: #888; margin-bottom: 10px; }
+        .info-row b { color: var(--success); }
+
+        .btn {
+            width: 100%; padding: 15px; border: none; border-radius: 15px;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            color: white; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s;
+        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Requirements Card */
+        .req-card {
+            width: 90%; max-width: 450px; margin-top: 20px; padding: 15px;
+            background: rgba(255, 255, 255, 0.03); border-radius: 18px; font-size: 13px;
+        }
+        .req-item { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; color: #ccc; }
+        .req-item i { font-size: 14px; }
+        .req-item.done { color: var(--success); }
+        .req-item.fail { color: var(--danger); }
+
+        #toast {
+            position: fixed; bottom: 30px; background: var(--danger); color: white;
+            padding: 12px 25px; border-radius: 30px; font-weight: 600; display: none; z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="toast">Error Message</div>
+
+    <div class="header">
+        <div class="back-btn" onclick="location.href='home.html'"><i class="fas fa-arrow-left"></i></div>
+        <h3 style="font-weight: 700;">Withdraw Funds</h3>
+        <div style="width: 40px;"></div>
+    </div>
+
+    <div class="balance-section">
+        <p>Current Balance</p>
+        <h1>৳<span id="user-balance">0.00</span></h1>
+    </div>
+
+    <div class="methods">
+        <div class="method-card active" onclick="selectMethod('Recharge', 20, this)">
+            <i class="fas fa-mobile-alt"></i>
+            <span>Recharge</span>
+        </div>
+        <div class="method-card" onclick="selectMethod('Nagad', 40, this)">
+            <i class="fas fa-money-bill-wave"></i>
+            <span>Nagad</span>
+        </div>
+        <div class="method-card" onclick="selectMethod('Bkash', 60, this)">
+            <i class="fas fa-university"></i>
+            <span>Bkash</span>
+        </div>
+    </div>
+
+    <div class="withdraw-box">
+        <div class="info-row">
+            <span>Minimum Withdraw: <b id="min-label">৳20</b></span>
+            <span>Daily Limit: <b id="daily-limit-count">0/3</b></span>
+        </div>
+
+        <div class="input-group">
+            <label>Receiving Number</label>
+            <input type="number" id="w-number" class="input-field" placeholder="017xxxxxxxx">
+        </div>
+
+        <div class="input-group">
+            <label>Amount (৳)</label>
+            <input type="number" id="w-amount" class="input-field" placeholder="Enter amount">
+        </div>
+
+        <button class="btn" id="withdraw-btn" onclick="processWithdraw()">SUBMIT REQUEST</button>
+    </div>
+
+    <div class="req-card">
+        <div id="req-ref" class="req-item"><i class="fas fa-circle-check"></i> 1 Active Referral Required</div>
+        <div id="req-daily" class="req-item"><i class="fas fa-circle-check"></i> Daily Limit: 3 Times Max</div>
+    </div>
+
+<script>
+    // --- Firebase Configuration ---
+    const firebaseConfig = {
+      apiKey: "AIzaSyBFPd0umYUjpFBH08GNhpvjPA00kTh6Y5c",
+      authDomain: "unlimited-73d64.firebaseapp.com",
+      databaseURL: "https://unlimited-73d64-default-rtdb.firebaseio.com",
+      projectId: "unlimited-73d64",
+      storageBucket: "unlimited-73d64.firebasestorage.app",
+      messagingSenderId: "1089467648940",
+      appId: "1:1089467648940:web:ed748a5a93b27ee408c809"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    let selectedMethod = 'Recharge';
+    let currentMin = 20;
+    let userBalance = 0;
+    let activeRefs = 0;
+    let dailyCount = 0;
+    let adminSettings = {};
+
+    auth.onAuthStateChanged(user => {
+        if (user) { loadUserData(user); }
+        else { window.location.href = 'index.html'; }
+    });
+
+    async function loadUserData(user) {
+        // 1. Load Admin Settings
+        db.ref('admin_settings/withdraw').on('value', snap => {
+            adminSettings = snap.val() || { minRecharge: 20, minNagad: 40, minBkash: 60, reqRef: 1 };
+            updateMinLabel();
+        });
+
+        // 2. Load User Data
+        db.ref('users/' + user.uid).on('value', snap => {
+            const data = snap.val();
+            userBalance = data.balance || 0;
+            document.getElementById('user-balance').innerText = userBalance.toFixed(2);
+            
+            // Daily Limit Check
+            const today = new Date().toLocaleDateString();
+            if(data.lastWithdrawDate === today) {
+                dailyCount = data.dailyWithdrawCount || 0;
+            } else {
+                dailyCount = 0;
+            }
+            document.getElementById('daily-limit-count').innerText = dailyCount + "/3";
+            updateRequirementUI('req-daily', dailyCount < 3);
+
+            // 3. Count Active Referrals
+            countActiveRefs(data.name);
+        });
+    }
+
+    function countActiveRefs(userName) {
+        db.ref('users').orderByChild('referralBy').equalTo(userName).on('value', snap => {
+            activeRefs = 0;
+            if(snap.exists()){
+                snap.forEach(child => { if(child.val().status === 'active') activeRefs++; });
+            }
+            updateRequirementUI('req-ref', activeRefs >= (adminSettings.reqRef || 1));
+        });
+    }
+
+    function selectMethod(method, min, el) {
+        selectedMethod = method;
+        currentMin = (method === 'Recharge') ? adminSettings.minRecharge : 
+                     (method === 'Nagad') ? adminSettings.minNagad : adminSettings.minBkash;
+        
+        document.querySelectorAll('.method-card').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+        updateMinLabel();
+    }
+
+    function updateMinLabel() {
+        let minVal = (selectedMethod === 'Recharge') ? (adminSettings.minRecharge || 20) : 
+                     (selectedMethod === 'Nagad') ? (adminSettings.minNagad || 40) : (adminSettings.minBkash || 60);
+        document.getElementById('min-label').innerText = "৳" + minVal;
+        currentMin = minVal;
+    }
+
+    async function processWithdraw() {
+        const amount = parseFloat(document.getElementById('w-amount').value);
+        const number = document.getElementById('w-number').value;
+        const btn = document.getElementById('withdraw-btn');
+
+        // Validations
+        if(!number || !amount) return showToast("Please enter all details!");
+        if(amount < currentMin) return showToast("Minimum " + selectedMethod + " is ৳" + currentMin);
+        if(amount > userBalance) return showToast("Insufficient Balance!");
+        if(activeRefs < (adminSettings.reqRef || 1)) return showToast("At least 1 active referral required!");
+        if(dailyCount >= 3) return showToast("Daily limit (3 times) reached!");
+
+        // 2-Second Lock
+        btn.disabled = true;
+        
+        const user = auth.currentUser;
+        const today = new Date().toLocaleDateString();
+
+        const requestData = {
+            uid: user.uid,
+            name: document.getElementById('user-balance').parentElement.parentElement.querySelector('#user-balance').innerText, // Placeholder logic
+            userName: "", // Will fetch properly below
+            number: number,
+            amount: amount,
+            method: selectedMethod,
+            status: 'pending',
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+        };
+
+        // Fetch user name again to be sure
+        const userSnap = await db.ref('users/' + user.uid).get();
+        requestData.userName = userSnap.val().name;
+
+        // Push to Admin and Update User
+        try {
+            await db.ref('withdraw_requests').push(requestData);
+            await db.ref('users/' + user.uid).update({
+                balance: userBalance - amount,
+                dailyWithdrawCount: dailyCount + 1,
+                lastWithdrawDate: today
+            });
+            
+            // Success History
+            await db.ref('history/' + user.uid).push({
+                type: 'Withdraw',
+                amount: amount,
+                method: selectedMethod,
+                status: 'Pending',
+                date: new Date().toLocaleString()
+            });
+
+            showToast("Withdraw Request Sent!", "success");
+            document.getElementById('w-amount').value = "";
+        } catch (e) {
+            showToast("Something went wrong!");
+        }
+
+        setTimeout(() => { btn.disabled = false; }, 2000);
+    }
+
+    function updateRequirementUI(id, isDone) {
+        const el = document.getElementById(id);
+        if(isDone) {
+            el.classList.add('done'); el.classList.remove('fail');
+            el.querySelector('i').className = "fas fa-check-circle";
+        } else {
+            el.classList.add('fail'); el.classList.remove('done');
+            el.querySelector('i').className = "fas fa-times-circle";
+        }
+    }
+
+    function showToast(msg, type = "error") {
+        const t = document.getElementById('toast');
+        t.innerText = msg;
+        t.style.background = (type === "success") ? "var(--success)" : "var(--danger)";
+        t.style.color = (type === "success") ? "#000" : "#fff";
+        t.style.display = "block";
+        setTimeout(() => { t.style.display = "none"; }, 3000);
+    }
+</script>
+
+</body>
+</html>

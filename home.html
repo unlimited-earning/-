@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Unlimited Earning</title>
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    
+    <!-- Icons & Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #00d2ff;
+            --secondary: #3a7bd5;
+            --success: #00ff88;
+            --warning: #ffcc00;
+            --danger: #ff0055;
+            --bg: #0b0e1a;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+
+        body {
+            background: #0b0e1a;
+            background: radial-gradient(circle at top left, #1a1c2c, #0b0e1a);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 30px;
+        }
+
+        /* Top Profile Section */
+        .top-bar {
+            width: 100%;
+            max-width: 500px;
+            padding: 25px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 55px; height: 55px;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; font-weight: 700; color: white;
+            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.2);
+        }
+
+        .user-info { flex-grow: 1; }
+        .user-info h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 5px;
+            font-size: 11px; padding: 3px 10px; border-radius: 20px;
+            font-weight: 600; text-transform: uppercase;
+        }
+        .status-active { background: rgba(0, 255, 136, 0.15); color: var(--success); }
+        .status-inactive { background: rgba(255, 204, 0, 0.15); color: var(--warning); }
+
+        .uid-box { font-size: 11px; color: #666; margin-top: 2px; }
+
+        /* Main Balance Card */
+        .balance-card {
+            width: 90%; max-width: 450px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            padding: 30px; border-radius: 30px;
+            text-align: center; margin-top: 10px;
+            position: relative; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 210, 255, 0.25);
+        }
+
+        .balance-card::after {
+            content: ''; position: absolute; top: -50%; right: -20%;
+            width: 200px; height: 200px; background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .balance-card p { font-size: 14px; opacity: 0.8; font-weight: 400; }
+        .balance-card h1 { font-size: 42px; font-weight: 800; margin: 10px 0; }
+        
+        .refer-stat {
+            background: rgba(255, 255, 255, 0.15);
+            display: inline-block; padding: 6px 15px;
+            border-radius: 12px; font-size: 13px; font-weight: 600;
+        }
+
+        /* Menu Grid */
+        .menu-grid {
+            width: 90%; max-width: 450px;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 15px; margin-top: 30px;
+        }
+
+        .menu-item {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 25px 15px; border-radius: 24px;
+            display: flex; flex-direction: column; align-items: center;
+            cursor: pointer; transition: 0.3s;
+        }
+
+        .menu-item:hover { background: rgba(255,255,255,0.08); transform: translateY(-5px); }
+        .menu-item i { font-size: 28px; margin-bottom: 12px; }
+
+        .menu-item.task i { color: #ffcc00; }
+        .menu-item.refer i { color: #00d2ff; }
+        .menu-item.withdraw i { color: #00ff88; }
+        .menu-item.history i { color: #ff007a; }
+
+        .menu-item span { font-weight: 600; font-size: 15px; }
+
+        /* Logout Button */
+        .logout-btn {
+            margin-top: 40px; color: var(--danger);
+            display: flex; align-items: center; gap: 8px;
+            font-weight: 600; cursor: pointer; padding: 10px 20px;
+            background: rgba(255, 0, 85, 0.1); border-radius: 15px;
+            border: 1px solid rgba(255, 0, 85, 0.2);
+            transition: 0.3s;
+        }
+        .logout-btn:hover { background: rgba(255, 0, 85, 0.2); }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="top-bar">
+        <div class="avatar" id="avatar-letter">U</div>
+        <div class="user-info">
+            <h2 id="user-name">Loading...</h2>
+            <div id="status-badge" class="status-badge status-inactive">
+                <i class="fas fa-circle-notch fa-spin"></i> Checking
+            </div>
+            <div class="uid-box">UID: <span id="user-uid">00000000</span></div>
+        </div>
+    </div>
+
+    <!-- Balance Card -->
+    <div class="balance-card">
+        <p>Available Balance</p>
+        <h1>৳<span id="user-balance">0.00</span></h1>
+        <div class="refer-stat">
+            <i class="fas fa-user-check"></i> Active Referrals: <span id="active-refer-count">0</span>
+        </div>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="menu-grid">
+        <div class="menu-item task" onclick="location.href='task.html'">
+            <i class="fas fa-tasks"></i>
+            <span>Task</span>
+        </div>
+        <div class="menu-item refer" onclick="location.href='referral.html'">
+            <i class="fas fa-user-plus"></i>
+            <span>Referral</span>
+        </div>
+        <div class="menu-item withdraw" onclick="location.href='withdraw.html'">
+            <i class="fas fa-wallet"></i>
+            <span>Withdraw</span>
+        </div>
+        <div class="menu-item history" onclick="location.href='history.html'">
+            <i class="fas fa-history"></i>
+            <span>History</span>
+        </div>
+    </div>
+
+    <!-- Logout -->
+    <div class="logout-btn" onclick="handleLogout()">
+        <i class="fas fa-sign-out-alt"></i> Logout Account
+    </div>
+
+<script>
+    // --- Firebase Configuration ---
+    const firebaseConfig = {
+      apiKey: "AIzaSyBFPd0umYUjpFBH08GNhpvjPA00kTh6Y5c",
+      authDomain: "unlimited-73d64.firebaseapp.com",
+      databaseURL: "https://unlimited-73d64-default-rtdb.firebaseio.com",
+      projectId: "unlimited-73d64",
+      storageBucket: "unlimited-73d64.firebasestorage.app",
+      messagingSenderId: "1089467648940",
+      appId: "1:1089467648940:web:ed748a5a93b27ee408c809"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    // Check Authentication
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            loadDashboardData(user);
+        } else {
+            window.location.href = 'index.html';
+        }
+    });
+
+    function loadDashboardData(user) {
+        const uid = user.uid;
+        document.getElementById('user-uid').innerText = uid.substring(0, 8).toUpperCase();
+
+        // 1. Get User Details and Status Logic
+        db.ref('users/' + uid).on('value', snap => {
+            const data = snap.val();
+            if (!data) return;
+
+            document.getElementById('user-name').innerText = data.name;
+            document.getElementById('user-balance').innerText = (data.balance || 0).toFixed(2);
+            document.getElementById('avatar-letter').innerText = data.name.charAt(0).toUpperCase();
+
+            // Status Update Logic: 2 success tasks = Active
+            const badge = document.getElementById('status-badge');
+            if (data.taskSuccess >= 2) {
+                if (data.status !== 'active') {
+                    // Update status in DB if not already active
+                    db.ref('users/' + uid).update({ status: 'active' });
+                }
+                badge.innerHTML = '<i class="fas fa-check-circle"></i> Active';
+                badge.className = "status-badge status-active";
+            } else {
+                badge.innerHTML = '<i class="fas fa-clock"></i> Inactive';
+                badge.className = "status-badge status-inactive";
+            }
+
+            // 2. Count ONLY Active Referrals
+            countActiveReferrals(data.name);
+        });
+    }
+
+    function countActiveReferrals(myName) {
+        // Search all users whose referralBy is myName AND status is active
+        db.ref('users').orderByChild('referralBy').equalTo(myName).on('value', snap => {
+            let activeCount = 0;
+            if (snap.exists()) {
+                snap.forEach(child => {
+                    if (child.val().status === 'active') {
+                        activeCount++;
+                    }
+                });
+            }
+            document.getElementById('active-refer-count').innerText = activeCount;
+        });
+    }
+
+    function handleLogout() {
+        if (confirm("Are you sure you want to logout?")) {
+            localStorage.setItem('remembered', 'false');
+            auth.signOut().then(() => {
+                window.location.href = 'index.html';
+            });
+        }
+    }
+</script>
+
+</body>
+</html>
