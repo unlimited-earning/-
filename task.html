@@ -3,20 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Work Terminal - Unlimited Earning</title>
+    <title>Universal Work Terminal</title>
     
-    <!-- 
-    ======================================================
-    PREMIUM ASSETS & EXTERNAL LIBRARIES (150+ Lines)
-    ======================================================
-    -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Premium Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* 
         ======================================================
-        ADVANCED DESIGN SYSTEM (CSS)
+        EXTENDED PREMIUM CSS ARCHITECTURE (200+ Lines)
         ======================================================
         */
         :root {
@@ -28,33 +24,26 @@
             --info: #0fbcf9;
             --bg: #f5f6fa;
             --white: #ffffff;
-            --text-dark: #2d3436;
-            --text-light: #636e72;
-            --shadow-lg: 0 20px 40px rgba(72, 52, 212, 0.12);
-            --card-radius: 35px;
+            --text-main: #2d3436;
+            --text-sub: #636e72;
+            --shadow-premium: 0 20px 40px rgba(72, 52, 212, 0.12);
+            --card-radius: 40px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        
-        body { 
-            background-color: var(--bg); 
-            color: var(--text-dark); 
-            padding-bottom: 50px;
-            overflow-x: hidden;
-            -webkit-user-select: none; /* User can't select text but can copy through buttons */
-        }
+        body { background-color: var(--bg); color: var(--text-main); padding-bottom: 60px; overflow-x: hidden; }
 
-        /* Smoothing Animations */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
-        @keyframes rotateSpinner { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        /* Animation Keyframes */
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes flashRed { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .animate-view { animation: fadeIn 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+        .animate { animation: slideUp 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
 
-        /* Header Premium Styling */
-        .task-header {
+        /* Header UI Section */
+        .dashboard-header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            padding: 30px 20px 50px 20px;
+            padding: 30px 20px 60px 20px;
             color: white;
             border-bottom-left-radius: 50px;
             border-bottom-right-radius: 50px;
@@ -64,306 +53,312 @@
             box-shadow: 0 15px 35px rgba(72, 52, 212, 0.2);
         }
 
-        .stat-card {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 15px;
-            border-radius: 22px;
+        .stat-widget {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 18px 10px;
+            border-radius: 25px;
             text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .stat-card p { font-size: 10px; text-transform: uppercase; font-weight: 700; opacity: 0.9; margin-bottom: 3px; }
-        .stat-card h4 { font-size: 20px; font-weight: 800; }
+        .stat-widget p { font-size: 10px; text-transform: uppercase; font-weight: 700; opacity: 0.8; letter-spacing: 0.5px; }
+        .stat-widget h4 { font-size: 22px; font-weight: 800; margin-top: 2px; }
 
-        .container { padding: 25px; max-width: 550px; margin: 0 auto; }
+        .content-body { padding: 25px; max-width: 500px; margin: 0 auto; }
 
-        /* Review Policy Banner */
-        .policy-banner {
+        /* Warning Policy Box */
+        .notice-banner {
             background: #fff9e6;
             border: 1.5px dashed var(--warning);
-            padding: 18px;
-            border-radius: 25px;
+            padding: 20px;
+            border-radius: 28px;
             margin-bottom: 25px;
-            display: flex; gap: 12px;
-            font-size: 12px;
+            display: flex; gap: 15px;
+            font-size: 12.5px;
             color: #856404;
             line-height: 1.6;
+            font-weight: 500;
         }
-        .policy-banner i { font-size: 20px; margin-top: 2px; color: var(--warning); }
+        .notice-banner i { font-size: 22px; color: var(--warning); margin-top: 2px; }
 
-        /* Main Workspace Card */
-        .workspace-card {
+        /* Master Task Terminal Card */
+        .terminal-card {
             background: var(--white);
             border-radius: var(--card-radius);
-            padding: 40px 30px;
-            box-shadow: var(--shadow-lg);
+            padding: 45px 30px;
+            box-shadow: var(--shadow-premium);
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             position: relative;
             overflow: hidden;
-            border: 1px solid #f0f0f0;
+            border: 1px solid rgba(255,255,255,0.8);
         }
 
-        /* Timer UI */
-        .master-timer {
-            font-size: 42px;
-            font-weight: 800;
+        /* Server Synchronized Timer */
+        .timer-display {
+            font-size: 50px;
+            font-weight: 900;
             color: var(--danger);
-            margin: 10px 0 25px 0;
-            letter-spacing: -1px;
+            margin: 10px 0 30px 0;
+            letter-spacing: -2px;
             font-family: 'JetBrains Mono', monospace;
+            text-shadow: 0 5px 15px rgba(231, 76, 60, 0.2);
         }
 
-        /* Buttons Styling */
-        .btn-universal {
+        /* Unified Button Component */
+        .btn-core {
             width: 100%;
             padding: 20px;
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 22px;
-            font-size: 17px;
-            font-weight: 700;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(72, 52, 212, 0.3);
+            box-shadow: 0 12px 30px rgba(72, 52, 212, 0.3);
             transition: 0.4s;
             display: flex; justify-content: center; align-items: center; gap: 12px;
+            letter-spacing: 0.5px;
         }
-        .btn-universal:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(72, 52, 212, 0.4); }
-        .btn-universal:disabled { background: #cbd5e0; cursor: not-allowed; box-shadow: none; transform: none; }
+        .btn-core:hover { transform: translateY(-4px); box-shadow: 0 18px 35px rgba(72, 52, 212, 0.4); }
+        .btn-core:active { transform: scale(0.96); }
+        .btn-core:disabled { background: #cbd5e0; cursor: not-allowed; box-shadow: none; transform: none; }
         
-        .btn-submit-task { background: var(--success); box-shadow: 0 8px 20px rgba(46, 204, 113, 0.2); }
+        .btn-success-mode { background: var(--success); box-shadow: 0 10px 25px rgba(46, 204, 113, 0.25); }
 
-        /* Data Fields for Working State */
-        .data-display-box { text-align: left; margin: 25px 0; }
-        .data-display-box .label-head { font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-bottom: 15px; display: block; }
+        /* Working Data Rows */
+        .work-data-grid { text-align: left; margin: 30px 0; }
+        .grid-header { font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
         
-        .info-row {
-            background: #f8f9fd;
-            padding: 14px 18px;
-            border-radius: 18px;
+        .data-row {
+            background: #f8faff;
+            padding: 16px 20px;
+            border-radius: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
-            border: 1px solid #eef0f7;
+            border: 1px solid #f0f3ff;
+            transition: 0.3s;
         }
-        .info-row .field-name { font-size: 11px; color: #999; font-weight: 700; text-transform: uppercase; }
-        .info-row .field-val { font-size: 14px; font-weight: 700; color: #333; flex: 1; text-align: right; margin: 0 10px; word-break: break-all; }
+        .data-row:hover { border-color: var(--secondary); background: #fff; }
+        .data-row .label { font-size: 10.5px; color: #a4b0be; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .data-row .val { font-size: 14.5px; font-weight: 700; color: #2f3542; flex: 1; text-align: right; margin: 0 15px; word-break: break-all; }
         
-        .copy-trigger {
-            background: #eeeaff;
+        .btn-copy-sm {
+            background: #eef2ff;
             color: var(--primary);
             border: none;
-            padding: 6px 14px;
-            border-radius: 10px;
+            padding: 8px 16px;
+            border-radius: 12px;
             font-size: 11px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
             transition: 0.3s;
         }
-        .copy-trigger:active { background: var(--success); color: white; }
+        .btn-copy-sm:active { background: var(--success); color: white; }
 
-        /* Submission Input Form */
-        .form-container { margin-top: 35px; text-align: left; border-top: 1.5px solid #f5f6fa; padding-top: 25px; }
-        .form-container h4 { font-size: 15px; font-weight: 800; margin-bottom: 20px; color: #2d3436; }
-        .form-group { margin-bottom: 18px; }
-        .form-group label { display: block; font-size: 12px; font-weight: 700; color: #7f8c8d; margin-bottom: 8px; margin-left: 5px; }
-        .form-group input {
+        /* Form Controls */
+        .submit-area { margin-top: 40px; text-align: left; border-top: 2px solid #f5f6fa; padding-top: 30px; }
+        .submit-area h4 { font-size: 16px; font-weight: 800; margin-bottom: 20px; color: #1e272e; }
+        .input-box { margin-bottom: 20px; }
+        .input-box label { display: block; font-size: 12px; font-weight: 700; color: #7f8c8d; margin-bottom: 8px; margin-left: 5px; }
+        .input-box input {
             width: 100%;
-            padding: 16px;
-            border-radius: 18px;
-            border: 2px solid #f0f0f0;
+            padding: 16px 20px;
+            border-radius: 20px;
+            border: 2px solid #f1f2f6;
             background: #fdfdfd;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             outline: none;
-            transition: 0.3s;
+            transition: 0.4s;
         }
-        .form-group input:focus { border-color: var(--primary); background: #fff; }
+        .input-box input:focus { border-color: var(--primary); background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
 
-        /* Result Notice Card */
-        .status-alert-box {
+        /* Cleanup Notice Overlay */
+        .cleanup-notice {
             background: #fff5f5;
-            padding: 30px 20px;
-            border-radius: 30px;
+            padding: 35px 25px;
+            border-radius: var(--card-radius);
             border: 1px solid #ffebeb;
             display: none;
-            animation: pulse 2s infinite;
+            animation: flashRed 2s infinite;
         }
-        .status-alert-box p { color: var(--danger); font-size: 14px; font-weight: 700; line-height: 1.6; }
+        .cleanup-notice p { color: var(--danger); font-size: 14px; font-weight: 700; line-height: 1.6; }
 
-        /* History Section */
-        .history-section { padding: 0 25px 50px 25px; }
-        .history-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; color: #444; display: flex; align-items: center; gap: 10px; }
-        .history-title i { color: var(--primary); background: #eeeaff; padding: 10px; border-radius: 12px; }
+        /* Submissions Feed */
+        .feed-section { padding: 0 25px 60px 25px; }
+        .feed-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; color: #333; display: flex; align-items: center; gap: 12px; }
+        .feed-title i { color: var(--primary); background: #eeeaff; padding: 12px; border-radius: 15px; }
 
-        .sub-card {
+        .feed-card {
             background: var(--white);
-            padding: 18px 25px;
-            border-radius: 25px;
+            padding: 20px 25px;
+            border-radius: 28px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
-            border: 1px solid #fcfcfc;
-            animation: fadeIn 0.5s ease;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+            border: 1px solid #f9f9f9;
+            animation: slideUp 0.5s ease;
         }
-        .sub-info b { font-size: 15px; color: #333; display: block; margin-bottom: 2px; }
-        .sub-info span { font-size: 11px; color: #bdc3c7; font-weight: 500; }
+        .feed-card b { font-size: 15px; color: #2d3436; display: block; }
+        .feed-card span { font-size: 11px; color: #bdc3c7; font-weight: 600; }
 
-        .status-badge {
+        .tag {
             font-size: 10px;
             font-weight: 800;
-            padding: 5px 16px;
+            padding: 6px 18px;
             border-radius: 50px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .st-pend { background: #fff9e6; color: var(--warning); }
-        .st-succ { background: #e3fcef; color: var(--success); }
-        .st-fail { background: #ffebee; color: var(--danger); }
+        .tag-p { background: #fff9e6; color: var(--warning); }
+        .tag-s { background: #e3fcef; color: var(--success); }
+        .tag-f { background: #ffebee; color: var(--danger); }
 
-        /* Helper Classes */
-        .hidden { display: none !important; }
-        .loading-cover { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--white); z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        /* Global Helpers */
+        .hidden-element { display: none !important; }
+        #masterLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; display: flex; justify-content: center; align-items: center; }
 
     </style>
 </head>
 <body>
 
-    <!-- Initial Page Loader -->
-    <div id="pageLoader" class="loading-cover">
-        <i class="fas fa-circle-notch fa-spin fa-2x" style="color:var(--primary);"></i>
+    <!-- Splash Loader -->
+    <div id="masterLoader">
+        <i class="fas fa-spinner fa-spin fa-2x" style="color:var(--primary);"></i>
     </div>
 
-    <!-- Stats Header Bar -->
-    <div class="task-header animate-view">
-        <div class="stat-card">
+    <!-- Header Stats -->
+    <header class="dashboard-header animate">
+        <div class="stat-widget">
             <p>Job Success</p>
-            <h4 id="countSuccess">0</h4>
+            <h4 id="statSucc">0</h4>
         </div>
-        <div class="stat-card">
-            <p>In Review</p>
-            <h4 id="countPending">0</h4>
+        <div class="stat-widget">
+            <p>Verification</p>
+            <h4 id="statPend">0</h4>
         </div>
-        <div class="stat-card">
-            <p>Task Failed</p>
-            <h4 id="countFailed">0</h4>
+        <div class="stat-widget">
+            <p>Failed Task</p>
+            <h4 id="statFail">0</h4>
         </div>
-        <div class="stat-card">
-            <p>Total Submits</p>
-            <h4 id="countTotal">0</h4>
+        <div class="stat-widget">
+            <p>Total Cycle</p>
+            <h4 id="statTotal">0</h4>
         </div>
-    </div>
+    </header>
 
-    <div class="container">
-        <!-- Review Policy Info -->
-        <div class="policy-banner animate-view" style="animation-delay: 0.1s;">
-            <i class="fas fa-circle-exclamation"></i>
+    <div class="content-body">
+        <!-- Review Policy Banner -->
+        <div class="notice-banner animate" style="animation-delay: 0.1s;">
+            <i class="fas fa-info-circle"></i>
             <p>একটি টাস্ক রিভিউ টাইম ১ ঘণ্টা ৪ মিনিট থেকে ৭২ ঘণ্টা পর্যন্ত আপনার টাস্কটি রিভিউতে থাকবে। টাস্কটি ভালোভাবে চেক করার পর আপনাকে পেমেন্ট দেওয়া হবে।</p>
         </div>
 
-        <div class="workspace-card animate-view" style="animation-delay: 0.2s;">
+        <div class="terminal-card animate" style="animation-delay: 0.2s;">
             
-            <!-- STATE: IDLE (User is ready to apply) -->
-            <div id="stateIdle" class="state-idle">
-                <i class="fas fa-envelope-open-text" style="font-size: 60px; color: var(--primary); margin-bottom: 20px;"></i>
-                <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">Claim Your Task</h3>
-                <p style="font-size: 14px; color: var(--text-light); margin-bottom: 30px;">Apply to fetch exclusive Gmail account details from the Administrator server.</p>
-                <button class="btn-universal" id="applyMainBtn" onclick="initiateTaskApplication()">
-                    <i class="fas fa-rocket"></i> APPLY NOW
+            <!-- VIEW: IDLE -->
+            <div id="viewIdle" class="view-state">
+                <i class="fas fa-envelope-open-text" style="font-size: 65px; color: var(--primary); margin-bottom: 25px;"></i>
+                <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 10px;">Ready to Start?</h3>
+                <p style="font-size: 14px; color: var(--text-sub); margin-bottom: 35px;">Apply now to receive encrypted Gmail details and start your work session.</p>
+                <button class="btn-core" id="applyTriggerBtn" onclick="sendTaskRequest()">
+                    <i class="fas fa-bolt"></i> GET NEW TASK
                 </button>
             </div>
 
-            <!-- STATE: WAITING (Admin Response Lock - 2 Mins) -->
-            <div id="stateWaiting" class="hidden">
-                <div class="master-timer" id="waitTimerText">02:00</div>
-                <p style="font-size: 15px; color: #666; font-weight: 600;">Request Dispatching...</p>
-                <p style="font-size: 12px; color: #999; margin-top: 12px;">Waiting for Admin to allocate account data. Don't close this page.</p>
+            <!-- VIEW: WAITING (2 Mins Locked) -->
+            <div id="viewWaiting" class="hidden-element">
+                <div class="timer-display" id="waitClock">02:00</div>
+                <p style="font-size: 16px; color: #555; font-weight: 700;">Server Handshake...</p>
+                <p style="font-size: 12px; color: #999; margin-top: 15px;">Administrator is allocating data for you. Please stay on this screen.</p>
             </div>
 
-            <!-- STATE: ACTIVE (Work Session - 13 Mins) -->
-            <div id="stateActive" class="hidden">
-                <div class="master-timer" id="taskTimerText">13:00</div>
+            <!-- VIEW: WORKING (13 Mins Locked) -->
+            <div id="viewWorking" class="hidden-element">
+                <div class="timer-display" id="workClock">13:00</div>
                 
-                <div class="data-display-box">
-                    <span class="label-head">Account Creation Blueprint</span>
+                <div class="work-data-grid">
+                    <span class="grid-header"><i class="fas fa-database"></i> Allocation Details</span>
                     
-                    <div class="info-row">
-                        <span class="field-name">First Name</span>
-                        <b class="field-val" id="dbFn">--</b>
-                        <button class="copy-trigger" onclick="handleCopy('dbFn')">COPY</button>
+                    <div class="data-row">
+                        <span class="label">First Name</span>
+                        <b class="val" id="dispFn">--</b>
+                        <button class="btn-copy-sm" onclick="smartCopy('dispFn')">COPY</button>
                     </div>
-                    <div class="info-row">
-                        <span class="field-name">Last Name</span>
-                        <b class="field-val" id="dbLn">--</b>
-                        <button class="copy-trigger" onclick="handleCopy('dbLn')">COPY</button>
+                    <div class="data-row">
+                        <span class="label">Last Name</span>
+                        <b class="val" id="dispLn">--</b>
+                        <button class="btn-copy-sm" onclick="smartCopy('dispLn')">COPY</button>
                     </div>
-                    <div class="info-row">
-                        <span class="field-name">Birthday</span>
-                        <b class="field-val" id="dbBd">--</b>
-                        <button class="copy-trigger" onclick="handleCopy('dbBd')">COPY</button>
+                    <div class="data-row">
+                        <span class="label">Birthday</span>
+                        <b class="val" id="dispBd">--</b>
+                        <button class="btn-copy-sm" onclick="smartCopy('dispBd')">COPY</button>
                     </div>
-                    <div class="info-row">
-                        <span class="field-name">System Email</span>
-                        <b class="field-val" id="dbEm">--</b>
-                        <button class="copy-trigger" onclick="handleCopy('dbEm')">COPY</button>
+                    <div class="data-row">
+                        <span class="label">Gmail</span>
+                        <b class="val" id="dispEm">--</b>
+                        <button class="btn-copy-sm" onclick="smartCopy('dispEm')">COPY</button>
                     </div>
-                    <div class="info-row">
-                        <span class="field-name">Key Pass</span>
-                        <b class="field-val" id="dbPs">--</b>
-                        <button class="copy-trigger" onclick="handleCopy('dbPs')">COPY</button>
+                    <div class="data-row">
+                        <span class="label">Key Pass</span>
+                        <b class="val" id="dispPs">--</b>
+                        <button class="btn-copy-sm" onclick="smartCopy('dispPs')">COPY</button>
                     </div>
-                    <div class="info-row">
-                        <span class="field-name">Recovery</span>
-                        <b class="field-val" id="dbRe">--</b>
-                        <button class="copy-trigger" onclick="handleCopy('dbRe')">COPY</button>
+                    <div class="data-row">
+                        <span class="label">Recovery</span>
+                        <b class="val" id="dispRe">--</b>
+                        <button class="btn-copy-sm" onclick="smartCopy('dispRe')">COPY</button>
                     </div>
                 </div>
 
-                <!-- Input Submission -->
-                <div class="form-container">
+                <!-- Input Field for Submission -->
+                <div class="submit-area">
                     <h4>Submit Your Progress</h4>
-                    <div class="form-group">
-                        <label>Exact Gmail Address Created</label>
-                        <input type="email" id="subGmail" placeholder="example@gmail.com">
+                    <div class="input-box">
+                        <label>Created Gmail Address</label>
+                        <input type="email" id="inputGmail" placeholder="example@gmail.com">
                     </div>
-                    <div class="form-group">
-                        <label>Account Password Provided</label>
-                        <input type="text" id="subPass" placeholder="Enter password">
+                    <div class="input-box">
+                        <label>Password Used</label>
+                        <input type="text" id="inputPass" placeholder="Enter password">
                     </div>
-                    <button class="btn-universal btn-submit-task" onclick="finalizeSubmission()">
-                        <i class="fas fa-cloud-arrow-up"></i> SUBMIT WORK
+                    <button class="btn-core btn-success-mode" onclick="performJobSubmission()">
+                        <i class="fas fa-cloud-upload-alt"></i> FINALIZE SUBMIT
                     </button>
                 </div>
             </div>
 
-            <!-- STATE: NOTICE (Post-Submission Cleanup - 2 Mins) -->
-            <div id="stateNotice" class="status-alert-box">
-                <i class="fas fa-triangle-exclamation" style="font-size: 35px; color: var(--danger); margin-bottom: 15px;"></i>
-                <p>Task Submitted Successfully!</p>
-                <p style="margin-top: 10px;">পরবর্তী <b><span id="cleanupTimerText">02:00</span></b> মিনিটের মধ্যে আপনার ফোন থেকে তৈরি করা জিমেইলটি রিমুভ করে দিন।</p>
+            <!-- VIEW: CLEANUP (2 Mins Notice) -->
+            <div id="viewCleanup" class="cleanup-notice">
+                <i class="fas fa-shield-virus" style="font-size: 40px; color: var(--danger); margin-bottom: 20px;"></i>
+                <p>Task Dispatched Successfully!</p>
+                <p style="margin-top: 12px; opacity: 0.9;">পরবর্তী <b><span id="cleanupClock">02:00</span></b> মিনিটের মধ্যে আপনার ডিভাইস থেকে জিমেইলটি রিমুভ করে দিন।</p>
             </div>
 
         </div>
     </div>
 
-    <!-- List of submissions -->
-    <section class="history-section animate-view" style="animation-delay: 0.3s;">
-        <div class="history-title">
-            <i class="fas fa-clock-rotate-left"></i>
-            <span>Submission Log</span>
+    <!-- Live Submission Log -->
+    <section class="feed-section animate" style="animation-delay: 0.3s;">
+        <div class="feed-title">
+            <i class="fas fa-list-check"></i>
+            <span>Verified Work Log</span>
         </div>
-        <div id="submissionGrid">
-            <!-- Dynamic Submissions Feed -->
+        <div id="liveFeedGrid">
+            <!-- Items load dynamically -->
         </div>
     </section>
 
     <!-- 
     ======================================================
-    FIREBASE CORE & PERSISTENT LOGIC (350+ Lines)
+    FIREBASE CORE & SERVER-PERSISTENCE (350+ Lines)
     ======================================================
     -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -388,349 +383,101 @@
         const db = firebase.database();
         const auth = firebase.auth();
 
-        let uPhone = "";
-        let masterInterval = null;
-        let isTaskActiveGlobal = false;
+        let phoneKey = "";
+        let masterClock = null;
+        let isTaskRunning = false;
 
-        // CONSTANTS
-        const LIMIT_APPLY = 120; // 2 Mins
-        const LIMIT_WORK = 780;  // 13 Mins
-        const LIMIT_NOTICE = 120; // 2 Mins
+        // SERVER TIMEOUTS (Seconds)
+        const WAIT_LIMIT = 120;
+        const WORK_LIMIT = 780; // 13 MINS
+        const CLEANUP_LIMIT = 120;
 
         /**
-         * 2. AUTHENTICATION & BOOTSTRAP
+         * 2. AUTH WATCHER
          */
         auth.onAuthStateChanged(user => {
             if (user) {
-                uPhone = user.email.split('@')[0];
-                console.log("Terminal Access Granted:", uPhone);
-                bootstrapTerminal();
+                phoneKey = user.email.split('@')[0];
+                launchMasterTerminal();
             } else {
                 window.location.href = "index.html";
             }
         });
 
-        async function bootstrapTerminal() {
-            syncUserDashboardStats();
-            listenForNetworkSubmissions();
+        async function launchMasterTerminal() {
+            syncUserStatsFeed();
+            runLogMonitoring();
             
-            // Initializing Persistent State Watcher
-            runPersistentCycle();
+            // Critical: Initialize Persistence Cycle
+            await startServerTimeWatch();
             
-            // Finalize loader
-            setTimeout(() => { document.getElementById('pageLoader').style.display = 'none'; }, 1000);
+            // Hide Loader
+            setTimeout(() => { document.getElementById('masterLoader').style.display = 'none'; }, 800);
         }
 
         /**
-         * 3. REALTIME STATS SYNC
+         * 3. MASTER STATS SYNC
          */
-        function syncUserDashboardStats() {
-            db.ref('users/' + uPhone).on('value', snap => {
-                const d = snap.val();
-                if(!d) return;
+        function syncUserStatsFeed() {
+            db.ref('users/' + phoneKey).on('value', snap => {
+                const u = snap.val();
+                if(!u) return;
 
-                const s = d.successTasks || 0;
-                const p = d.pendingTasks || 0;
-                const f = d.failedTasks || 0;
+                const s = u.successTasks || 0;
+                const p = u.pendingTasks || 0;
+                const f = u.failedTasks || 0;
 
-                document.getElementById('countSuccess').innerText = s;
-                document.getElementById('countPending').innerText = p;
-                document.getElementById('countFailed').innerText = f;
-                document.getElementById('countTotal').innerText = s + p + f;
+                document.getElementById('statSucc').innerText = s;
+                document.getElementById('statPend').innerText = p;
+                document.getElementById('statFail').innerText = f;
+                document.getElementById('statTotal').innerText = s + p + f;
             });
         }
 
         /**
-         * 4. PERSISTENT CORE CYCLE
-         * This function manages the UI states based on live data and timestamps.
+         * 4. SERVER-TIME PERSISTENCE CORE
+         * This logic ensures the timer remains accurate across devices and sessions.
          */
-        function runPersistentCycle() {
-            // Monitor Active Task Node
-            db.ref('active_tasks/' + uPhone).on('value', async snap => {
+        async function startServerTimeWatch() {
+            // A. Check for Active Task Node
+            db.ref('active_tasks/' + phoneKey).on('value', async snap => {
                 if(snap.exists()) {
-                    const task = snap.val();
+                    const data = snap.val();
                     const now = Date.now();
-                    const startTime = task.taskStartTime || now;
-                    const elapsed = Math.floor((now - startTime) / 1000);
-                    const remaining = LIMIT_WORK - elapsed;
+                    const expiry = data.expireAt || (now + (WORK_LIMIT * 1000));
+                    
+                    const remaining = Math.floor((expiry - now) / 1000);
 
                     if(remaining <= 0) {
-                        // EXPIRED: Auto Fail
-                        await autoFailActiveTask(task);
+                        await autoExecuteTaskFailure(data);
                     } else {
-                        // ACTIVE: Resume Timer
-                        isTaskActiveGlobal = true;
-                        activateWorkView(task, remaining);
+                        isTaskRunning = true;
+                        switchToWorkingView(data, remaining);
                     }
                 } else {
-                    isTaskActiveGlobal = false;
-                    // Check if user is in Apply state
-                    checkApplyNodePersistence();
+                    isTaskRunning = false;
+                    checkWaitingPersistence();
                 }
             });
         }
 
-        function checkApplyNodePersistence() {
-            db.ref('task_requests/' + uPhone).on('value', snap => {
-                if(isTaskActiveGlobal) return;
+        function checkWaitingPersistence() {
+            db.ref('task_requests/' + phoneKey).on('value', snap => {
+                if(isTaskRunning) return;
 
                 if(snap.exists()) {
                     const req = snap.val();
-                    const elapsed = Math.floor((Date.now() - req.timestamp) / 1000);
-                    const remaining = LIMIT_APPLY - elapsed;
+                    const now = Date.now();
+                    const expiry = (req.timestamp || now) + (WAIT_LIMIT * 1000);
+                    const remaining = Math.floor((expiry - now) / 1000);
 
                     if(remaining <= 0) {
-                        db.ref('task_requests/' + uPhone).remove();
-                        resetTerminalToIdle();
+                        db.ref('task_requests/' + phoneKey).remove();
+                        resetToIdleMode();
                     } else {
-                        activateWaitingView(remaining);
+                        switchToWaitingView(remaining);
                     }
                 } else {
                     // Check Local Notice Persistence
-                    const noticeExp = localStorage.getItem('cleanup_expiry');
-                    if(noticeExp) {
-                        const remaining = Math.floor((noticeExp - Date.now()) / 1000);
-                        if(remaining > 0) activateNoticeView(remaining);
-                        else {
-                            localStorage.removeItem('cleanup_expiry');
-                            resetTerminalToIdle();
-                        }
-                    } else {
-                        resetTerminalToIdle();
-                    }
-                }
-            });
-        }
-
-        /**
-         * 5. STATE: APPLY (INITIATE)
-         */
-        async function initiateTaskApplication() {
-            const btn = document.getElementById('applyMainBtn');
-            btn.disabled = true;
-
-            try {
-                const userSnap = await db.ref('users/' + uPhone).once('value');
-                const uData = userSnap.val();
-
-                const applyObj = {
-                    phone: uPhone,
-                    name: uData.name,
-                    uid: uData.uid,
-                    timestamp: firebase.database.ServerValue.TIMESTAMP
-                };
-
-                await db.ref('task_requests/' + uPhone).set(applyObj);
-                // Waiting for persistent cycle to detect the node and start timer
-            } catch (e) {
-                alert("Apply Error: " + e.message);
-                btn.disabled = false;
-            }
-        }
-
-        /**
-         * 6. STATE: WORKING (Timer & Data)
-         */
-        function activateWorkView(data, secondsLeft) {
-            switchUI('stateActive');
-            
-            document.getElementById('dbFn').innerText = data.firstName || '--';
-            document.getElementById('dbLn').innerText = data.lastName || '--';
-            document.getElementById('dbBd').innerText = data.birthdate || '--';
-            document.getElementById('dbEm').innerText = data.email || '--';
-            document.getElementById('dbPs').innerText = data.password || '--';
-            document.getElementById('dbRe').innerText = data.recoveryEmail || '--';
-
-            startMasterCountdown(secondsLeft, 'taskTimerText', () => {
-                autoFailActiveTask(data);
-            });
-        }
-
-        /**
-         * 7. STATE: SUBMISSION
-         */
-        async function finalizeSubmission() {
-            const gmail = document.getElementById('subGmail').value.trim();
-            const pass = document.getElementById('subPass').value.trim();
-
-            if(!gmail || !pass) return alert("Verify both Gmail and Password!");
-            if(!gmail.toLowerCase().includes("@gmail.com")) return alert("Valid Gmail required!");
-
-            clearInterval(masterInterval);
-            const taskID = Date.now();
-            const fullName = document.getElementById('dbFn').innerText + " " + document.getElementById('dbLn').innerText;
-
-            const submitData = {
-                taskID: taskID,
-                phone: uPhone,
-                name: fullName,
-                email: gmail,
-                details: {
-                    password: pass,
-                    firstName: document.getElementById('dbFn').innerText,
-                    lastName: document.getElementById('dbLn').innerText,
-                    recoveryEmail: document.getElementById('dbRe').innerText
-                },
-                status: 'pending',
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            };
-
-            try {
-                // 1. Move to reviews
-                await db.ref('task_reviews/' + taskID).set(submitData);
-                // 2. Clear Active node
-                await db.ref('active_tasks/' + uPhone).remove();
-                // 3. Update User counter
-                await db.ref('users/' + uPhone + '/pendingTasks').transaction(c => (c || 0) + 1);
-
-                // Set Local Cleanup Timer
-                const cleanupExpiry = Date.now() + (LIMIT_NOTICE * 1000);
-                localStorage.setItem('cleanup_expiry', cleanupExpiry);
-                
-                activateNoticeView(LIMIT_NOTICE);
-            } catch (err) { alert(err.message); }
-        }
-
-        /**
-         * 8. CRITICAL: AUTO FAIL LOGIC
-         */
-        async function autoFailActiveTask(taskData) {
-            clearInterval(masterInterval);
-            console.warn("Cycle Expired. Auto failing task...");
-
-            try {
-                const failEmail = taskData.email || "Expired Task";
-                
-                // 1. Record Fail in History
-                await db.ref('history/' + uPhone).push({
-                    type: 'task',
-                    title: `Task Failed (${failEmail})`,
-                    amount: 0,
-                    status: 'Failed',
-                    timestamp: firebase.database.ServerValue.TIMESTAMP
-                });
-
-                // 2. Increment Fail Counter
-                await db.ref('users/' + uPhone).transaction(user => {
-                    if (user) {
-                        user.failedTasks = (user.failedTasks || 0) + 1;
-                    }
-                    return user;
-                });
-
-                // 3. Remove Active Task
-                await db.ref('active_tasks/' + uPhone).remove();
-                
-                alert("Time Expired! Task marked as failed.");
-                resetTerminalToIdle();
-            } catch (e) { console.error("AutoFail Error:", e); }
-        }
-
-        /**
-         * 9. NETWORK LISTENER (LOG)
-         */
-        function listenForNetworkSubmissions() {
-            const feed = document.getElementById('submissionGrid');
-
-            // Fetch Reviews
-            db.ref('task_reviews').orderByChild('phone').equalTo(uPhone).on('value', snapR => {
-                // Fetch History
-                db.ref('history/' + uPhone).limitToLast(15).on('value', snapH => {
-                    feed.innerHTML = "";
-                    
-                    // Render Active Reviews
-                    snapR.forEach(c => {
-                        const itm = c.val();
-                        feed.innerHTML += buildCardHTML(itm.email, 'Pending', 'st-pend');
-                    });
-
-                    // Render Completed from History
-                    let log = [];
-                    snapH.forEach(c => { if(c.val().type === 'task') log.push(c.val()); });
-                    
-                    log.reverse().forEach(h => {
-                        const email = h.title.match(/\(([^)]+)\)/) ? h.title.match(/\(([^)]+)\)/)[1] : "Job";
-                        const cls = h.status === 'Success' ? 'st-succ' : 'st-fail';
-                        feed.innerHTML += buildCardHTML(email, h.status, cls);
-                    });
-
-                    if(feed.innerHTML === "") {
-                        feed.innerHTML = '<p style="text-align:center; color:#ccc; font-size:12px; padding:20px;">No records yet.</p>';
-                    }
-                });
-            });
-        }
-
-        function buildCardHTML(title, status, css) {
-            return `<div class="sub-card"><div class="sub-info"><b>${title}</b><span>Verified Tracking</span></div><div class="status-badge ${css}">${status}</div></div>`;
-        }
-
-        /**
-         * 10. UTILITIES & UI ENGINE
-         */
-        function switchUI(stateId) {
-            const states = ['stateIdle', 'stateWaiting', 'stateActive', 'stateNotice'];
-            states.forEach(s => document.getElementById(s).classList.add('hidden'));
-            document.getElementById(stateId).classList.remove('hidden');
-            if(stateId === 'stateNotice') document.getElementById(stateId).style.display = 'block';
-            else document.getElementById('stateNotice').style.display = 'none';
-        }
-
-        function startMasterCountdown(duration, displayId, callback) {
-            clearInterval(masterInterval);
-            let timer = duration;
-            const display = document.getElementById(displayId);
-
-            masterInterval = setInterval(() => {
-                let minutes = parseInt(timer / 60, 10);
-                let seconds = parseInt(timer % 60, 10);
-
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                display.textContent = minutes + ":" + seconds;
-
-                if (--timer < 0) {
-                    clearInterval(masterInterval);
-                    if(callback) callback();
-                }
-            }, 1000);
-        }
-
-        function activateWaitingView(secs) {
-            switchUI('stateWaiting');
-            startMasterCountdown(secs, 'waitTimerText', () => {
-                db.ref('task_requests/' + uPhone).remove();
-                resetTerminalToIdle();
-            });
-        }
-
-        function activateNoticeView(secs) {
-            switchUI('stateNotice');
-            startMasterCountdown(secs, 'cleanupTimerText', () => {
-                localStorage.removeItem('cleanup_expiry');
-                resetTerminalToIdle();
-            });
-        }
-
-        function resetTerminalToIdle() {
-            clearInterval(masterInterval);
-            switchUI('stateIdle');
-            document.getElementById('applyMainBtn').disabled = false;
-            document.getElementById('subGmail').value = "";
-            document.getElementById('subPass').value = "";
-        }
-
-        function handleCopy(id) {
-            const val = document.getElementById(id).innerText;
-            if(val === '--') return;
-            navigator.clipboard.writeText(val).then(() => { alert("Copied!"); });
-        }
-
-        function formatTime(s) {
-            let m = Math.floor(s/60); let sec = s % 60;
-            return `${m < 10 ? '0'+m : m}:${sec < 10 ? '0'+sec : sec}`;
-        }
-    </script>
-</body>
-</html>
+                    const noticeExpiry = localStorage.getItem('cleanup_end_' + phoneKey);
+                  
