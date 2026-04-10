@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access - Unlimited Earning</title>
+    
+    <!-- Premium Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* 
+        ========================================
+        PREMIUM AUTH CSS STYLING (150+ Lines)
+        ========================================
+        */
+        :root {
+            --primary: #4834d4;
+            --secondary: #686de0;
+            --accent: #eb4d4b;
+            --bg-dark: #130f40;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.98);
+            --shadow: 0 25px 50px rgba(0,0,0,0.2);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-dark), var(--primary));
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* Background Animated Circles */
+        .circle { position: absolute; border-radius: 50%; filter: blur(80px); z-index: -1; animation: move 15s infinite; }
+        .circle-1 { width: 400px; height: 400px; background: var(--secondary); top: -150px; left: -100px; }
+        .circle-2 { width: 300px; height: 300px; background: var(--accent); bottom: -100px; right: -50px; opacity: 0.6; }
+        @keyframes move { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(40px, 30px); } }
+
+        /* Auth Card Layout */
+        .auth-card {
+            background: var(--glass);
+            width: 100%;
+            max-width: 480px;
+            padding: 45px 35px;
+            border-radius: 40px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow-y: auto;
+            max-height: 95vh;
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: cardEnter 0.8s ease;
+        }
+        @keyframes cardEnter { from { opacity: 0; transform: scale(0.9) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+        .auth-card::-webkit-scrollbar { width: 0; }
+
+        .logo-header { text-align: center; margin-bottom: 35px; }
+        .logo-header i { font-size: 55px; color: var(--primary); margin-bottom: 12px; filter: drop-shadow(0 5px 10px rgba(72, 52, 212, 0.3)); }
+        .logo-header h2 { font-weight: 800; font-size: 28px; color: var(--bg-dark); letter-spacing: -0.5px; }
+        .logo-header p { font-size: 14px; color: #777; margin-top: 5px; }
+
+        /* Input Controls */
+        .input-group { margin-bottom: 20px; position: relative; }
+        .input-group label { display: block; font-size: 12px; font-weight: 700; color: #444; margin-bottom: 8px; margin-left: 8px; text-transform: uppercase; }
+        
+        .input-field { position: relative; display: flex; align-items: center; }
+        .input-field i:not(.eye-icon) { position: absolute; left: 18px; color: var(--primary); font-size: 18px; }
+        
+        .input-field input {
+            width: 100%;
+            padding: 15px 15px 15px 50px;
+            border: 2px solid #f0f0f0;
+            border-radius: 18px;
+            outline: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+            background: #fafafa;
+        }
+        .input-field input:focus { border-color: var(--primary); background: #fff; box-shadow: 0 8px 20px rgba(72, 52, 212, 0.1); }
+
+        .eye-icon { position: absolute; right: 18px; cursor: pointer; color: #bbb; transition: 0.3s; padding: 5px; }
+        .eye-icon:hover { color: var(--primary); }
+
+        /* Buttons Styling */
+        .btn-action {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(72, 52, 212, 0.3);
+            transition: var(--transition);
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            letter-spacing: 1px;
+        }
+        .btn-action:hover { transform: translateY(-4px); box-shadow: 0 15px 30px rgba(72, 52, 212, 0.4); filter: brightness(1.1); }
+        .btn-action:active { transform: scale(0.97); }
+        .btn-action:disabled { background: #cbd5e0; box-shadow: none; cursor: not-allowed; }
+
+        .footer-text { text-align: center; margin-top: 30px; font-size: 14px; color: #666; }
+        .footer-text b { color: var(--primary); cursor: pointer; text-decoration: underline; margin-left: 5px; }
+
+        /* Alert System */
+        .alert-box {
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            font-size: 13px;
+            display: none;
+            text-align: center;
+            font-weight: 600;
+            animation: shake 0.5s ease;
+        }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+        .alert-danger { background: #ffebeb; color: var(--accent); border: 1px solid #ffcccc; }
+        .alert-success { background: #e3fcef; color: var(--success); border: 1px solid #ccf5e1; }
+
+        /* Sections Toggle */
+        #registrationPart { display: none; }
+
+        /* Loader */
+        .loading-spinner {
+            width: 22px; height: 22px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    </style>
+</head>
+<body>
+
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+
+    <div class="auth-card">
+        <!-- Global Alert -->
+        <div id="msgAlert" class="alert-box"></div>
+
+        <!-- LOGIN PANEL -->
+        <div id="loginPart">
+            <div class="logo-header">
+                <i class="fas fa-shield-halved"></i>
+                <h2>User Login</h2>
+                <p>Access your dashboard and earnings</p>
+            </div>
+
+            <div class="input-group">
+                <label>Phone Number</label>
+                <div class="input-field">
+                    <i class="fas fa-phone-volume"></i>
+                    <input type="number" id="logPhone" placeholder="01XXXXXXXXX">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <div class="input-field">
+                    <i class="fas fa-key"></i>
+                    <input type="password" id="logPass" placeholder="Enter password">
+                    <i class="fas fa-eye eye-icon" onclick="viewPass('logPass', this)"></i>
+                </div>
+            </div>
+
+            <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 25px; font-size: 13px;">
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color:#555;">
+                    <input type="checkbox" id="keepLogged" style="width:18px; height:18px; accent-color:var(--primary);"> Remember Me
+                </label>
+            </div>
+
+            <button class="btn-action" id="btnLog" onclick="processLogin()">
+                <div class="loading-spinner" id="logLoad"></div>
+                <span id="logTxt">SECURE LOGIN</span>
+            </button>
+
+            <div class="footer-text">
+                Don't have an account? <b onclick="switchSection('reg')">Create One</b>
+            </div>
+        </div>
+
+        <!-- REGISTRATION PANEL -->
+        <div id="registrationPart">
+            <div class="logo-header">
+                <i class="fas fa-user-plus"></i>
+                <h2>Register</h2>
+                <p>Start your earning journey today</p>
+            </div>
+
+            <div class="input-group">
+                <label>Your Full Name</label>
+                <div class="input-field">
+                    <i class="fas fa-user-tag"></i>
+                    <input type="text" id="regName" placeholder="Full name">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Mobile Number</label>
+                <div class="input-field">
+                    <i class="fas fa-phone"></i>
+                    <input type="number" id="regPhone" placeholder="01XXXXXXXXX">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Create Password</label>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="regPass" placeholder="Minimum 6 digits">
+                    <i class="fas fa-eye eye-icon" onclick="viewPass('regPass', this)"></i>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <div class="input-field">
+                    <i class="fas fa-check-double"></i>
+                    <input type="password" id="regConfirm" placeholder="Re-type password">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Referral Code <span style="color:var(--accent);">(Required)</span></label>
+                <div class="input-field">
+                    <i class="fas fa-users-rays"></i>
+                    <input type="text" id="regRefer" placeholder="Example: UE5839">
+                </div>
+                <p style="font-size: 10px; color: #999; margin-top: 5px; padding-left: 10px;">রেফারেল কোড ছাড়া রেজিস্ট্রেশন করা যাবে না।</p>
+            </div>
+
+            <button class="btn-action" id="btnReg" onclick="processRegistration()">
+                <div class="loading-spinner" id="regLoad"></div>
+                <span id="regTxt">CREATE MY ACCOUNT</span>
+            </button>
+
+            <div class="footer-text">
+                Already member? <b onclick="switchSection('login')">Login Instead</b>
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+    ========================================
+    FIREBASE LOGIC ENGINE (200+ Lines)
+    ========================================
+    -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOdWqPh69SEG-Z6P71xL6jlcFcNb9gMNs",
+            authDomain: "unlimited-earning-28639.firebaseapp.com",
+            databaseURL: "https://unlimited-earning-28639-default-rtdb.firebaseio.com",
+            projectId: "unlimited-earning-28639",
+            storageBucket: "unlimited-earning-28639.firebasestorage.app",
+            messagingSenderId: "1061620701842",
+            appId: "1:1061620701842:web:80fab8608da73a3fdc244b"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
+
+        /**
+         * AUTOMATIC REFERRAL CAPTURE
+         */
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const capturedRef = urlParams.get('ref');
+            if(capturedRef) {
+                document.getElementById('regRefer').value = capturedRef;
+                switchSection('reg'); // Auto show register if link is used
+            }
+
+            // Check if already logged in
+            auth.onAuthStateChanged(user => {
+                if(user) window.location.href = "home.html";
+            });
+        };
+
+        /**
+         * REGISTRATION LOGIC
+         */
+        async function processRegistration() {
+            const name = document.getElementById('regName').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const pass = document.getElementById('regPass').value;
+            const confirm = document.getElementById('regConfirm').value;
+            const refer = document.getElementById('regRefer').value.trim();
+
+            // Strict Validations
+            if(!name || !phone || !pass || !confirm) return showNotice("Please fill all fields!");
+            if(!refer) return showNotice("Referral Code is REQUIRED to join!");
+            if(phone.length < 10) return showNotice("Enter a valid phone number!");
+            if(pass !== confirm) return showNotice("Passwords do not match!");
+            if(pass.length < 6) return showNotice("Password should be 6+ digits!");
+
+            setUIState('reg', true);
+
+            try {
+                // 1. Check if user exists
+                const userSnapshot = await db.ref('users/' + phone).once('value');
+                if(userSnapshot.exists()) {
+                    setUIState('reg', false);
+                    return showNotice("This phone number is already registered!");
+                }
+
+                // 2. Authenticate
+                const email = phone + "@earning.com";
+                await auth.createUserWithEmailAndPassword(email, pass);
+
+                // 3. Generate ID
+                const newUID = "UE" + Math.floor(1000 + Math.random() * 9000);
+
+                // 4. RTDB Entry
+                const newUser = {
+                    uid: newUID,
+                    name: name,
+                    phone: phone,
+                    password: pass,
+                    referBy: refer,
+                    balance: 0,
+                    referralEarnings: 0,
+                    successTasks: 0,
+                    failedTasks: 0,
+                    pendingTasks: 0,
+                    status: "unactive",
+                    joinedDate: new Date().toLocaleDateString(),
+                    timestamp: Date.now()
+                };
+
+                await db.ref('users/' + phone).set(newUser);
+                
+                showNotice("Registration Successful! Welcome.", "success");
+                setTimeout(() => { window.location.href = "home.html"; }, 1500);
+
+            } catch (err) {
+                showNotice(err.message);
+                setUIState('reg', false);
+            }
+        }
+
+        /**
+         * LOGIN LOGIC
+         */
+        async function processLogin() {
+            const phone = document.getElementById('logPhone').value.trim();
+            const pass = document.getElementById('logPass').value;
+            const remember = document.getElementById('keepLogged').checked;
+
+            if(!phone || !pass) return showNotice("Enter number and password!");
+
+            setUIState('log', true);
+
+            try {
+                const persistence = remember ? firebase.auth.Auth.Persistence.LOCAL : firebase.auth.Auth.Persistence.SESSION;
+                await auth.setPersistence(persistence);
+
+                const email = phone + "@earning.com";
+                await auth.signInWithEmailAndPassword(email, pass);
+                window.location.href = "home.html";
+
+            } catch (err) {
+                showNotice("Login Failed! Check number or password.");
+                setUIState('log', false);
+            }
+        }
+
+        /**
+         * UTILS
+         */
+        function switchSection(part) {
+            const login = document.getElementById('loginPart');
+            const reg = document.getElementById('registrationPart');
+            if(part === 'reg') {
+                login.style.display = "none";
+                reg.style.display = "block";
+            } else {
+                reg.style.display = "none";
+                login.style.display = "block";
+            }
+        }
+
+        function viewPass(id, icon) {
+            const input = document.getElementById(id);
+            if(input.type === "password") {
+                input.type = "text";
+                icon.className = "fas fa-eye-slash eye-icon";
+            } else {
+                input.type = "password";
+                icon.className = "fas fa-eye eye-icon";
+            }
+        }
+
+        function showNotice(msg, type = 'error') {
+            const box = document.getElementById('msgAlert');
+            box.innerText = msg;
+            box.className = type === 'error' ? 'alert-box alert-danger' : 'alert-box alert-success';
+            box.style.display = "block";
+            setTimeout(() => { box.style.display = "none"; }, 5000);
+        }
+
+        function setUIState(mode, loading) {
+            const btn = mode === 'log' ? document.getElementById('btnLog') : document.getElementById('btnReg');
+            const loader = mode === 'log' ? document.getElementById('logLoad') : document.getElementById('regLoad');
+            const txt = mode === 'log' ? document.getElementById('logTxt') : document.getElementById('regTxt');
+            const label = mode === 'log' ? "LOGGING IN..." : "CREATING...";
+
+            if(loading) {
+                btn.disabled = true;
+                loader.style.display = "block";
+                txt.innerText = label;
+            } else {
+                btn.disabled = false;
+                loader.style.display = "none";
+                txt.innerText = mode === 'log' ? "SECURE LOGIN" : "CREATE MY ACCOUNT";
+            }
+        }
+    </script>
+</body>
+</html>

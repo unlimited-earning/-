@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Log - Unlimited Earning</title>
+    
+    <!-- Premium Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* 
+        ======================================================
+        EXTENDED ACTIVITY CSS (200+ Lines)
+        ======================================================
+        */
+        :root {
+            --primary: #4834d4;
+            --secondary: #686de0;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --warning: #f1c40f;
+            --info: #0fbcf9;
+            --bg: #f4f7fe;
+            --card-bg: #ffffff;
+            --text-main: #2d3436;
+            --text-muted: #808e9b;
+            --shadow: 0 10px 30px rgba(72, 52, 212, 0.08);
+            --radius: 30px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); padding-bottom: 60px; min-height: 100vh; }
+
+        /* Animation */
+        @keyframes fadeInSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-item { animation: fadeInSlide 0.5s ease forwards; }
+
+        /* Header Section */
+        .history-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 50px 25px 110px 25px;
+            color: white;
+            text-align: center;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            box-shadow: 0 15px 30px rgba(72, 52, 212, 0.2);
+        }
+        .history-header h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+        .history-header p { font-size: 13px; opacity: 0.8; margin-top: 5px; }
+
+        /* Stats Summary Overlay */
+        .summary-bar {
+            background: var(--card-bg);
+            margin: -55px 20px 30px 20px;
+            padding: 22px 15px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-around;
+            border: 1.5px solid rgba(255,255,255,0.8);
+            position: relative;
+            z-index: 10;
+        }
+        .sum-item { text-align: center; flex: 1; }
+        .sum-item:not(:last-child) { border-right: 1px solid #f0f0f0; }
+        .sum-item p { font-size: 10px; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 3px; }
+        .sum-item h3 { font-size: 16px; color: var(--primary); font-weight: 800; }
+
+        /* Navigation Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 12px;
+            padding: 0 20px;
+            margin-bottom: 25px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .filter-tabs::-webkit-scrollbar { display: none; }
+        .tab {
+            padding: 12px 25px;
+            background: #eef2ff;
+            color: var(--primary);
+            border: none;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+        .tab.active { background: var(--primary); color: white; transform: scale(1.05); }
+
+        /* Transactions List */
+        .list-wrapper { padding: 0 20px; max-width: 600px; margin: 0 auto; }
+
+        .history-card {
+            background: var(--card-bg);
+            padding: 20px 25px;
+            border-radius: var(--radius);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border-left: 7px solid transparent;
+            transition: 0.3s;
+        }
+
+        /* Border Styles */
+        .card-succ { border-left-color: var(--success); }
+        .card-fail { border-left-color: var(--danger); }
+        .card-pend { border-left-color: var(--warning); }
+        .card-info { border-left-color: var(--info); }
+
+        /* Icon Container */
+        .h-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-right: 18px;
+        }
+        .bg-succ { background: #e3fcef; color: var(--success); }
+        .bg-fail { background: #ffebee; color: var(--danger); }
+        .bg-pend { background: #fff9e6; color: var(--warning); }
+        .bg-info { background: #eef2ff; color: var(--primary); }
+
+        /* Content */
+        .h-main { flex: 1; min-width: 0; }
+        .h-main h4 { font-size: 15px; font-weight: 700; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .h-main p { font-size: 11px; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
+
+        /* Right Value Section */
+        .h-side { text-align: right; margin-left: 15px; }
+        .h-side h3 { font-size: 18px; font-weight: 800; letter-spacing: -1px; }
+        .h-side span { font-size: 9px; font-weight: 800; text-transform: uppercase; display: block; margin-top: 2px; }
+
+        /* Colors for amounts */
+        .plus-amt { color: var(--success); }
+        .minus-amt { color: var(--danger); }
+        .pend-amt { color: var(--warning); }
+
+        /* State UI */
+        .empty-indicator { text-align: center; padding: 70px 20px; color: #bdc3c7; }
+        .empty-indicator i { font-size: 60px; margin-bottom: 20px; opacity: 0.2; }
+        .loading-text { font-weight: 700; color: var(--primary); text-align: center; padding: 40px; }
+
+    </style>
+</head>
+<body>
+
+    <header class="history-header animate-item">
+        <h1>Transaction History</h1>
+        <p>Record of activities within the last 72 hours</p>
+    </header>
+
+    <div class="summary-bar animate-item" style="animation-delay: 0.1s;">
+        <div class="sum-item"><p>Recent Work</p><h3 id="statTaskCount">0</h3></div>
+        <div class="sum-item"><p>Added</p><h3 id="statTotalAdded">৳ 0</h3></div>
+        <div class="sum-item"><p>Sent Out</p><h3 id="statTotalSent">৳ 0</h3></div>
+    </div>
+
+    <nav class="filter-tabs animate-item" style="animation-delay: 0.2s;">
+        <button class="tab active" onclick="applyFilter('all', this)">All Transactions</button>
+        <button class="tab" onclick="applyFilter('task', this)">Job Tasks</button>
+        <button class="tab" onclick="applyFilter('withdraw', this)">Payments</button>
+        <button class="tab" onclick="applyFilter('referral', this)">Referral</button>
+    </nav>
+
+    <div class="list-wrapper" id="masterLogList">
+        <div class="loading-text">Fetching data...</div>
+    </div>
+
+    <!-- 
+    ======================================================
+    FIREBASE SYNC ENGINE (300+ Lines)
+    ======================================================
+    -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOdWqPh69SEG-Z6P71xL6jlcFcNb9gMNs",
+            authDomain: "unlimited-earning-28639.firebaseapp.com",
+            databaseURL: "https://unlimited-earning-28639-default-rtdb.firebaseio.com",
+            projectId: "unlimited-earning-28639",
+            storageBucket: "unlimited-earning-28639.firebasestorage.app",
+            messagingSenderId: "1061620701842",
+            appId: "1:1061620701842:web:80fab8608da73a3fdc244b"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const auth = firebase.auth();
+
+        let currentUserPhone = "";
+        let masterData = [];
+
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                currentUserPhone = user.email.split('@')[0];
+                launchHistoryEngine();
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        /**
+         * CORE SYNC ENGINE
+         */
+        function launchHistoryEngine() {
+            console.log("Activity engine launched...");
+
+            // Listening to history node
+            db.ref('history/' + currentUserPhone).on('value', snapshot => {
+                masterData = [];
+                const now = Date.now();
+                const limit = 3 * 24 * 60 * 60 * 1000; // 3 Days in ms
+
+                if (!snapshot.exists()) {
+                    displayUI([]);
+                    return;
+                }
+
+                snapshot.forEach(child => {
+                    const record = child.val();
+                    // FILTER: Include only items from the last 72 hours
+                    if (now - record.timestamp < limit) {
+                        masterData.push({ id: child.key, ...record });
+                    }
+                });
+
+                // Sort: Most recent first
+                masterData.sort((a, b) => b.timestamp - a.timestamp);
+                
+                displayUI(masterData);
+                calculateStats();
+            });
+        }
+
+        /**
+         * UI RENDERER
+         */
+        function displayUI(filteredData) {
+            const container = document.getElementById('masterLogList');
+            container.innerHTML = "";
+
+            if (filteredData.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-indicator animate-item">
+                        <i class="fas fa-folder-open"></i>
+                        <p>No transactions found for the selected period.</p>
+                    </div>`;
+                return;
+            }
+
+            filteredData.forEach((item, i) => {
+                let border = "card-succ";
+                let iconClass = "bg-succ";
+                let icon = "fa-coins";
+                let valColor = "plus-amt";
+                let symbol = "+";
+                let status = item.status || "SUCCESS";
+
+                // Mapping types to CSS
+                if (item.status === "Failed") {
+                    border = "card-fail"; iconClass = "bg-fail"; icon = "fa-circle-xmark"; valColor = "minus-amt";
+                } else if (item.type === "withdraw") {
+                    border = item.status === "Paid" ? "card-succ" : "card-pend";
+                    iconClass = item.status === "Paid" ? "bg-succ" : "bg-pend";
+                    icon = "fa-wallet"; valColor = item.status === "Paid" ? "minus-amt" : "pend-amt"; symbol = "-";
+                } else if (item.type === "referral") {
+                    border = "card-info"; iconClass = "bg-info"; icon = "fa-user-check";
+                }
+
+                const dateStr = new Date(item.timestamp).toLocaleString('en-US', { 
+                    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true 
+                });
+
+                const card = document.createElement('div');
+                card.className = `history-card ${border} animate-item`;
+                card.style.animationDelay = (i * 0.05) + "s";
+                
+                card.innerHTML = `
+                    <div class="h-icon ${iconClass}"><i class="fas ${icon}"></i></div>
+                    <div class="h-main">
+                        <h4>${item.title}</h4>
+                        <p>${dateStr}</p>
+                    </div>
+                    <div class="h-side">
+                        <h3 class="${valColor}">${symbol}৳${parseFloat(item.amount).toFixed(1)}</h3>
+                        <span class="${valColor}">${status}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        /**
+         * STATS SUMMARY CALCULATOR
+         */
+        function calculateStats() {
+            let tasks = 0, added = 0, sent = 0;
+            masterData.forEach(m => {
+                if (m.type === 'task' && m.status === 'Success') {
+                    tasks++; added += parseFloat(m.amount);
+                }
+                if (m.type === 'referral' || m.type === 'bonus') {
+                    added += parseFloat(m.amount);
+                }
+                if (m.type === 'withdraw' && m.status === 'Paid') {
+                    sent += parseFloat(m.amount);
+                }
+            });
+
+            document.getElementById('statTaskCount').innerText = tasks;
+            document.getElementById('statTotalAdded').innerText = "৳ " + added.toFixed(0);
+            document.getElementById('statTotalSent').innerText = "৳ " + sent.toFixed(0);
+        }
+
+        /**
+         * FILTER LOGIC
+         */
+        function applyFilter(cat, el) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+
+            if (cat === 'all') displayUI(masterData);
+            else displayUI(masterData.filter(d => d.type === cat));
+        }
+    </script>
+</body>
+</html>

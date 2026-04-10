@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdraw - Unlimited Earning</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/dist/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4834d4;
+            --secondary: #686de0;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --bg: #f5f6fa;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg); padding-bottom: 30px; }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 30px 20px 60px 20px; color: white; border-bottom-left-radius: 35px; border-bottom-right-radius: 35px; text-align: center;
+        }
+
+        .balance-card {
+            background: var(--white); margin: -40px 20px 20px 20px; padding: 25px; border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center;
+        }
+        .balance-card h2 { font-size: 32px; color: var(--primary); font-weight: 600; margin-top: 5px; }
+
+        /* Status Info */
+        .status-info { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 0 20px 20px 20px; }
+        .info-box { background: white; padding: 12px; border-radius: 12px; text-align: center; border: 1px solid #eee; }
+        .info-box p { font-size: 10px; color: #888; text-transform: uppercase; }
+        .info-box h4 { font-size: 14px; color: var(--primary); }
+
+        /* Methods */
+        .methods-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 20px; margin-bottom: 20px; }
+        .method-item {
+            background: white; padding: 15px 5px; border-radius: 15px; text-align: center; cursor: pointer;
+            border: 2px solid transparent; transition: 0.3s;
+        }
+        .method-item img { width: 30px; margin-bottom: 8px; }
+        .method-item p { font-size: 12px; font-weight: 600; }
+        .method-item.active { border-color: var(--primary); background: #f0f3ff; }
+
+        /* Form */
+        .withdraw-form { background: white; margin: 0 20px; padding: 20px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 12px; color: #666; margin-bottom: 5px; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; outline: none; font-size: 15px; }
+
+        .btn-submit {
+            width: 100%; padding: 15px; background: var(--primary); color: white; border: none;
+            border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 5px 15px rgba(72, 52, 212, 0.3);
+        }
+        .btn-submit:disabled { background: #ccc; box-shadow: none; }
+
+        .rules-box { padding: 20px; font-size: 12px; color: #777; line-height: 1.6; }
+        .rules-box b { color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Withdrawal</h1>
+    <p style="font-size: 12px; opacity: 0.8;">Cash out your earnings</p>
+</div>
+
+<div class="balance-card">
+    <p style="font-size: 14px; color: #666;">Total Balance</p>
+    <h2>৳ <span id="uBalance">0.00</span></h2>
+</div>
+
+<div class="status-info">
+    <div class="info-box"><p>Req. Ref</p><h4 id="reqRef">0</h4></div>
+    <div class="info-box"><p>Active Ref</p><h4 id="myActiveRef">0</h4></div>
+    <div class="info-box"><p>Daily Limit</p><h4 id="dailyLimit">0/3</h4></div>
+</div>
+
+<div class="methods-grid">
+    <div class="method-item active" onclick="setMethod('Recharge', this)">
+        <img src="https://cdn-icons-png.flaticon.com/512/3159/3159045.png">
+        <p>Recharge</p>
+    </div>
+    <div class="method-item" onclick="setMethod('Nagad', this)">
+        <img src="https://it-bari.com/wp-content/uploads/2021/05/Nagad-Logo-Vector.png">
+        <p>Nagad</p>
+    </div>
+    <div class="method-item" onclick="setMethod('Bkash', this)">
+        <img src="https://www.logo.wine/a/logo/BKash/BKash-Icon-Logo.wine.svg">
+        <p>Bkash</p>
+    </div>
+</div>
+
+<div class="withdraw-form">
+    <div class="form-group">
+        <label>Selected Method</label>
+        <input type="text" id="methodDisplay" value="Recharge" readonly style="background: #f8f9fd; color: #888;">
+    </div>
+    <div class="form-group">
+        <label>Enter Amount</label>
+        <input type="number" id="wAmt" placeholder="Minimum ৳ 20">
+    </div>
+    <div class="form-group">
+        <label>Account Number</label>
+        <input type="number" id="wNum" placeholder="01XXXXXXXXX">
+    </div>
+    <button class="btn-submit" id="btnSub" onclick="handleWithdraw()">Submit Request</button>
+</div>
+
+<div class="rules-box">
+    <b>Withdrawal Rules:</b><br>
+    • Recharge: <span id="rLimit">20 - 39</span> TK<br>
+    • Nagad: Min <span id="nLimit">40</span> TK<br>
+    • Bkash: Min <span id="bLimit">60</span> TK<br>
+    • One <b>Active Referral</b> is required to withdraw.
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyAOdWqPh69SEG-Z6P71xL6jlcFcNb9gMNs",
+        authDomain: "unlimited-earning-28639.firebaseapp.com",
+        databaseURL: "https://unlimited-earning-28639-default-rtdb.firebaseio.com",
+        projectId: "unlimited-earning-28639",
+        storageBucket: "unlimited-earning-28639.firebasestorage.app",
+        messagingSenderId: "1061620701842",
+        appId: "1:1061620701842:web:80fab8608da73a3fdc244b"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const auth = firebase.auth();
+
+    let userData = null;
+    let settings = { minRecharge: 20, maxRecharge: 39, minNagad: 40, minBkash: 60, requiredRef: 1 };
+    let selectedMethod = "Recharge";
+
+    auth.onAuthStateChanged(user => {
+        if(user) {
+            const phone = user.email.split('@')[0];
+            loadData(phone);
+        } else {
+            window.location.href = "index.html";
+        }
+    });
+
+    function loadData(phone) {
+        // Load Settings
+        db.ref('settings/withdraw').on('value', snap => {
+            if(snap.exists()){
+                settings = snap.val();
+                document.getElementById('rLimit').innerText = `${settings.minRecharge} - ${settings.maxRecharge}`;
+                document.getElementById('nLimit').innerText = settings.minNagad;
+                document.getElementById('bLimit').innerText = settings.minBkash;
+                document.getElementById('reqRef').innerText = settings.requiredRef;
+            }
+        });
+
+        // Load User Info
+        db.ref('users/' + phone).on('value', snap => {
+            userData = snap.val();
+            if(userData) {
+                document.getElementById('uBalance').innerText = (userData.balance || 0).toFixed(2);
+                
+                // Count Real Active Referrals
+                db.ref('users').orderByChild('referBy').equalTo(userData.uid.toString()).on('value', refSnap => {
+                    let count = 0;
+                    refSnap.forEach(c => { if(c.val().status === "active") count++; });
+                    document.getElementById('myActiveRef').innerText = count;
+                    userData.realActiveRef = count;
+                });
+
+                // Check Daily Limit
+                const today = new Date().toLocaleDateString();
+                if(userData.lastWithdrawDate !== today) {
+                    db.ref('users/' + phone).update({ dailyWithdrawCount: 0, lastWithdrawDate: today });
+                    document.getElementById('dailyLimit').innerText = "0/3";
+                } else {
+                    document.getElementById('dailyLimit').innerText = (userData.dailyWithdrawCount || 0) + "/3";
+                }
+            }
+        });
+    }
+
+    function setMethod(m, el) {
+        selectedMethod = m;
+        document.getElementById('methodDisplay').value = m;
+        document.querySelectorAll('.method-item').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    async function handleWithdraw() {
+        const amt = parseFloat(document.getElementById('wAmt').value);
+        const num = document.getElementById('wNum').value.trim();
+        const btn = document.getElementById('btnSub');
+
+        if(!amt || !num) return alert("Fill all fields!");
+        if(num.length < 10) return alert("Invalid Number!");
+        if(amt > userData.balance) return alert("Insufficient Balance!");
+        if((userData.dailyWithdrawCount || 0) >= 3) return alert("Daily limit reached!");
+        if((userData.realActiveRef || 0) < settings.requiredRef) return alert(`Minimum ${settings.requiredRef} active referral required!`);
+
+        // Validate Method Limits
+        if(selectedMethod === "Recharge") {
+            if(amt < settings.minRecharge || amt > settings.maxRecharge) return alert(`Recharge limit: ৳${settings.minRecharge} - ৳${settings.maxRecharge}`);
+        } else if(selectedMethod === "Nagad") {
+            if(amt < settings.minNagad) return alert(`Min Nagad: ৳${settings.minNagad}`);
+        } else if(selectedMethod === "Bkash") {
+            if(amt < settings.minBkash) return alert(`Min Bkash: ৳${settings.minBkash}`);
+        }
+
+        btn.disabled = true;
+        const reqID = Date.now();
+
+        try {
+            // 1. Add to Admin Requests
+            await db.ref('withdrawal_requests/' + reqID).set({
+                id: reqID, uid: userData.uid, name: userData.name, 
+                userPhone: userData.phone, withdrawNumber: num,
+                amount: amt, method: selectedMethod, status: "pending", timestamp: reqID
+            });
+
+            // 2. Add to User History
+            await db.ref('history/' + userData.phone).push({
+                type: 'withdraw', title: `Withdraw Pending (${selectedMethod})`,
+                amount: amt, status: 'Pending', timestamp: reqID
+            });
+
+            // 3. Deduct Balance & Update Count
+            await db.ref('users/' + userData.phone).update({
+                balance: (userData.balance - amt),
+                dailyWithdrawCount: (userData.dailyWithdrawCount || 0) + 1
+            });
+
+            alert("Request Submitted Successfully!");
+            document.getElementById('wAmt').value = "";
+            document.getElementById('wNum').value = "";
+        } catch (e) {
+            alert(e.message);
+        }
+        btn.disabled = false;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Unlimited Earning</title>
+    
+    <!-- 
+    ======================================================
+    PREMIUM LIBRARIES & FONTS
+    ======================================================
+    -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* 
+        ======================================================
+        EXTENDED CSS ARCHITECTURE (200+ Lines)
+        ======================================================
+        */
+        :root {
+            --primary: #4834d4;
+            --secondary: #686de0;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --warning: #f1c40f;
+            --info: #0fbcf9;
+            --dark: #130f40;
+            --light-bg: #f4f7fe;
+            --white: #ffffff;
+            --glass-white: rgba(255, 255, 255, 0.9);
+            --card-shadow: 0 15px 35px rgba(72, 52, 212, 0.12);
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; outline: none; }
+        
+        body { 
+            background-color: var(--light-bg); 
+            color: var(--dark); 
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Smoothing Animations */
+        @keyframes slideInUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .animate-card { animation: slideInUp 0.7s ease forwards; }
+
+        /* Header Premium Styling */
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 50px 20px 90px 20px;
+            color: white;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            box-shadow: 0 20px 40px rgba(72, 52, 212, 0.25);
+            position: relative;
+        }
+
+        .user-identity { display: flex; justify-content: space-between; align-items: center; }
+        .user-identity h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+        
+        .uid-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 11px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-badge {
+            padding: 8px 20px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .status-active { background: var(--white); color: var(--success); }
+        .status-unactive { background: rgba(255, 255, 255, 0.3); color: white; border: 1px solid rgba(255,255,255,0.4); }
+
+        /* Activation Progress Card */
+        .activation-card {
+            background: var(--white);
+            margin: -50px 20px 25px 20px;
+            padding: 30px 25px;
+            border-radius: 30px;
+            box-shadow: var(--card-shadow);
+            display: none; /* Auto Toggle via JS */
+            flex-direction: column;
+            gap: 15px;
+            border: 1px solid #f0f0f0;
+            position: relative;
+            z-index: 100;
+        }
+        .activation-card h3 { font-size: 16px; color: #333; display: flex; align-items: center; gap: 10px; }
+        .activation-card h3 i { color: var(--warning); }
+
+        .goal-row {
+            background: #f9f9ff;
+            padding: 15px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1.5px solid #eee;
+        }
+        .goal-row.done { border-color: var(--success); background: #f0fff4; }
+        .goal-row span { font-size: 13px; font-weight: 600; color: #666; }
+        .goal-row b { color: var(--primary); font-size: 15px; }
+
+        /* Main Statistics Boxes */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 0 20px 25px 20px;
+        }
+        .stat-card {
+            background: var(--white);
+            padding: 22px 15px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #fff;
+        }
+        .stat-card i { font-size: 22px; color: var(--primary); margin-bottom: 10px; opacity: 0.8; }
+        .stat-card p { font-size: 11px; color: #999; text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+        .stat-card h4 { font-size: 20px; font-weight: 800; color: #1a1a1a; }
+
+        /* Balance Premium Display */
+        .balance-hero {
+            background: var(--white);
+            margin: 0 20px 30px 20px;
+            padding: 40px 20px;
+            border-radius: 35px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #fff;
+            background-image: radial-gradient(at top left, #fff, #f4f6ff);
+        }
+        .balance-hero p { font-size: 14px; color: #777; font-weight: 500; margin-bottom: 8px; }
+        .balance-hero h2 { font-size: 50px; color: var(--primary); font-weight: 900; letter-spacing: -1.5px; }
+
+        /* Navigation Menu Grid */
+        .nav-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding: 0 20px 50px 20px;
+        }
+        .nav-item {
+            background: var(--white);
+            padding: 28px 15px;
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #444;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.02);
+            border: 1px solid #f5f5f5;
+            transition: var(--transition);
+        }
+        .nav-item:active { transform: scale(0.93); }
+        .nav-item i { font-size: 32px; color: var(--primary); transition: 0.3s; }
+        .nav-item span { font-weight: 700; font-size: 15px; }
+
+        /* Specials */
+        .nav-lock { opacity: 0.5; filter: grayscale(1); pointer-events: none; }
+        .logout-box { grid-column: span 2; background: #fff5f5; border: 1px solid #ffebeb; }
+        .logout-box i, .logout-box span { color: var(--danger); }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header UI -->
+    <header class="dashboard-header animate-card">
+        <div class="user-identity">
+            <div class="info">
+                <h1 id="uName">---</h1>
+                <div class="uid-tag">
+                    <i class="fas fa-fingerprint"></i>
+                    <span id="uUID">UID: 000000</span>
+                </div>
+            </div>
+            <div id="uStatus" class="status-badge status-unactive">Checking...</div>
+        </div>
+    </header>
+
+    <!-- Activation Logic Display -->
+    <div id="activationNotice" class="activation-card animate-card">
+        <h3><i class="fas fa-crown"></i> Activate Account</h3>
+        <div class="goal-row" id="rowTask">
+            <span>2 Successful Tasks</span>
+            <b id="progTask">0/2</b>
+        </div>
+        <div class="goal-row" id="rowRef">
+            <span>2 Active Referrals</span>
+            <b id="progRef">0/2</b>
+        </div>
+    </div>
+
+    <!-- Counters -->
+    <div class="stats-grid">
+        <div class="stat-card animate-card">
+            <i class="fas fa-envelope-open-text"></i>
+            <p>Tasks Success</p>
+            <h4 id="uTasks">0</h4>
+        </div>
+        <div class="stat-card animate-card">
+            <i class="fas fa-user-group"></i>
+            <p>Active Partners</p>
+            <h4 id="uRefs">0</h4>
+        </div>
+    </div>
+
+    <!-- Balance Hero -->
+    <div class="balance-hero animate-card">
+        <p>Current Earnings</p>
+        <h2>৳ <span id="uBalance">0.00</span></h2>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-grid">
+        <a href="task.html" class="nav-item animate-card">
+            <i class="fas fa-laptop-code"></i>
+            <span>Work Task</span>
+        </a>
+        <a href="referral.html" class="nav-item animate-card">
+            <i class="fas fa-user-plus"></i>
+            <span>Team Center</span>
+        </a>
+        <a href="withdraw.html" id="btnWithdraw" class="nav-item nav-lock animate-card">
+            <i class="fas fa-wallet"></i>
+            <span>Cash Out</span>
+        </a>
+        <a href="history.html" class="nav-item animate-card">
+            <i class="fas fa-receipt"></i>
+            <span>Activity Log</span>
+        </a>
+        <div onclick="processLogout()" class="nav-item logout-box animate-card">
+            <i class="fas fa-power-off"></i>
+            <span>Logout Account</span>
+        </div>
+    </div>
+
+    <!-- 
+    ======================================================
+    FIREBASE CORE ENGINE (300+ Lines)
+    ======================================================
+    -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        /**
+         * INITIALIZATION CONFIG
+         */
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOdWqPh69SEG-Z6P71xL6jlcFcNb9gMNs",
+            authDomain: "unlimited-earning-28639.firebaseapp.com",
+            databaseURL: "https://unlimited-earning-28639-default-rtdb.firebaseio.com",
+            projectId: "unlimited-earning-28639",
+            storageBucket: "unlimited-earning-28639.firebasestorage.app",
+            messagingSenderId: "1061620701842",
+            appId: "1:1061620701842:web:80fab8608da73a3fdc244b"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const auth = firebase.auth();
+
+        let loggedUserPhone = "";
+
+        /**
+         * AUTHENTICATION MONITOR
+         */
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                loggedUserPhone = user.email.split('@')[0];
+                console.log("Session Verified for:", loggedUserPhone);
+                bootstrapDashboard();
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        /**
+         * DASHBOARD BOOTSTRAPPER
+         */
+        function bootstrapDashboard() {
+            const userRef = db.ref('users/' + loggedUserPhone);
+
+            userRef.on('value', snapshot => {
+                const userData = snapshot.val();
+                if (!userData) return;
+
+                // Sync Basic Profile
+                document.getElementById('uName').innerText = "Hello, " + userData.name;
+                document.getElementById('uUID').innerText = "UID: " + userData.uid;
+                document.getElementById('uBalance').innerText = (userData.balance || 0).toFixed(2);
+                document.getElementById('uTasks').innerText = userData.successTasks || 0;
+
+                // Sync Live Active Referrals
+                db.ref('users').orderByChild('referBy').equalTo(userData.uid.toString()).on('value', rSnap => {
+                    let activeCount = 0;
+                    rSnap.forEach(c => { if(c.val().status === "active") activeCount++; });
+                    document.getElementById('uRefs').innerText = activeCount;
+
+                    // Execute Activation Engine
+                    handleActivationEngine(userData, activeCount);
+                });
+            }, error => {
+                console.error("Dashboard Sync Failed:", error);
+            });
+        }
+
+        /**
+         * CORE ENGINE: ACTIVATION & REWARD TRIGGER
+         */
+        async function handleActivationEngine(data, liveActiveRefs) {
+            const withdrawBtn = document.getElementById('btnWithdraw');
+            const statusLabel = document.getElementById('uStatus');
+            const noticeBox = document.getElementById('activationNotice');
+
+            const successTasks = data.successTasks || 0;
+            const meetsCondition = (successTasks >= 2 || liveActiveRefs >= 2);
+
+            if (meetsCondition) {
+                // UI: Active State
+                statusLabel.innerText = "Active";
+                statusLabel.className = "status-badge status-active";
+                withdrawBtn.classList.remove('nav-lock');
+                noticeBox.style.display = "none";
+
+                // Database: Process Rewards if previously unactive
+                if (data.status === "unactive") {
+                    console.log("Account meets activation. Distributing rewards...");
+                    await db.ref('users/' + loggedUserPhone).update({ status: "active" });
+                    executeChainReward(data.name, data.referBy);
+                }
+            } else {
+                // UI: Unactive State
+                statusLabel.innerText = "Unactive";
+                statusLabel.className = "status-badge status-unactive";
+                withdrawBtn.classList.add('nav-lock');
+                noticeBox.style.display = "flex";
+
+                // Progress Update
+                document.getElementById('progTask').innerText = successTasks + "/2";
+                document.getElementById('progRef').innerText = liveActiveRefs + "/2";
+                
+                document.getElementById('rowTask').className = successTasks >= 2 ? "goal-row done" : "goal-row";
+                document.getElementById('rowRef').className = liveActiveRefs >= 2 ? "goal-row done" : "goal-row";
+            }
+        }
+
+        /**
+         * CHAIN REACTION: LEVEL 1 & LEVEL 2 PAYMENTS
+         */
+        async function executeChainReward(newActiveName, referByUID) {
+            if (!referByUID || referByUID === "none") return;
+
+            // 1. Fetch Latest Bonus Rates from Admin Settings
+            const settingsSnap = await db.ref('settings/referral').once('value');
+            const rates = settingsSnap.val() || { directPrice: 0, downlinePrice: 0 };
+            
+            const l1_bonus = parseFloat(rates.directPrice);
+            const l2_bonus = parseFloat(rates.downlinePrice);
+
+            // 2. Find and Reward Direct Parent (Level 1)
+            db.ref('users').orderByChild('uid').equalTo(referByUID).once('value', snapshot => {
+                snapshot.forEach(async (child) => {
+                    const parentPhone = child.key;
+                    const parentData = child.val();
+
+                    // Update Parent Profile
+                    await db.ref('users/' + parentPhone).update({
+                        balance: (parentData.balance || 0) + l1_bonus,
+                        referralEarnings: (parentData.referralEarnings || 0) + l1_bonus
+                    });
+
+                    // Push to Parent History (Crucial Fix)
+                    await db.ref('history/' + parentPhone).push({
+                        type: 'referral',
+                        title: `Referral Bonus (${newActiveName})`,
+                        amount: l1_bonus,
+                        status: 'Success',
+                        timestamp: Date.now()
+                    });
+
+                    console.log("Level 1 Bonus (৳"+l1_bonus+") sent to:", parentPhone);
+
+                    // 3. Find and Reward Grandparent (Level 2)
+                    if (parentData.referBy && parentData.referBy !== "none") {
+                        db.ref('users').orderByChild('uid').equalTo(parentData.referBy).once('value', gSnap => {
+                            gSnap.forEach(async (gChild) => {
+                                const gPhone = gChild.key;
+                                const gData = gChild.val();
+
+                                await db.ref('users/' + gPhone).update({
+                                    balance: (gData.balance || 0) + l2_bonus,
+                                    referralEarnings: (gData.referralEarnings || 0) + l2_bonus
+                                });
+
+                                // Push to Grandparent History
+                                await db.ref('history/' + gPhone).push({
+                                    type: 'referral',
+                                    title: `Downline Bonus (From ${newActiveName})`,
+                                    amount: l2_bonus,
+                                    status: 'Success',
+                                    timestamp: Date.now()
+                                });
+                                console.log("Level 2 Bonus (৳"+l2_bonus+") sent to:", gPhone);
+                            });
+                        });
+                    }
+                });
+            });
+            
+            // Mark user as processed
+            await db.ref('users/' + loggedUserPhone).update({ rewardDone: true });
+        }
+
+        function processLogout() {
+            if (confirm("Sign out of Unlimited Earning?")) {
+                auth.signOut().then(() => window.location.href = "index.html");
+            }
+        }
+    </script>
+</body>
+</html>
