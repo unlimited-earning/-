@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Terminal Pro | Unlimited Earning</title>
+    
+    <!-- 
+    ======================================================
+    1. EXTERNAL ASSETS & FONTS (Elite Quality)
+    ======================================================
+    -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* 
+        ======================================================
+        2. MASTER CSS ARCHITECTURE (250+ Lines)
+        ======================================================
+        */
+        :root {
+            --primary: #4834d4;
+            --secondary: #686de0;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --warning: #f1c40f;
+            --info: #0fbcf9;
+            --bg-body: #f4f7fe;
+            --card-white: #ffffff;
+            --text-main: #2d3436;
+            --text-light: #95a5a6;
+            --shadow-premium: 0 25px 60px rgba(72, 52, 212, 0.15);
+            --radius-main: 45px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background-color: var(--bg-body); 
+            color: var(--text-main); 
+            padding-bottom: 80px; 
+            overflow-x: hidden; 
+            user-select: none;
+        }
+
+        /* Smoothing Keyframes */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes glowRed { 0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); } 70% { box-shadow: 0 0 0 20px rgba(231, 76, 60, 0); } 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); } }
+        @keyframes pulseYellow { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
+        .animate-ui { animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+
+        /* Master Header Design */
+        .premium-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 50px 20px 80px 20px;
+            color: white;
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius: 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            box-shadow: 0 15px 35px rgba(72, 52, 212, 0.25);
+            position: relative;
+        }
+        .header-stat-box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px 12px;
+            border-radius: 30px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            transition: 0.3s;
+        }
+        .header-stat-box p { font-size: 10px; text-transform: uppercase; font-weight: 700; opacity: 0.9; letter-spacing: 0.5px; }
+        .header-stat-box h4 { font-size: 24px; font-weight: 800; margin-top: 2px; }
+
+        .main-container { padding: 0 25px; margin-top: -60px; max-width: 550px; margin-left: auto; margin-right: auto; }
+
+        /* 
+        ======================================================
+        3. PREMIUM NOTICE BANNER (Highly Visible)
+        ======================================================
+        */
+        .info-banner {
+            background: #fff9e6;
+            border: 2px dashed var(--warning);
+            padding: 25px;
+            border-radius: 35px;
+            margin-bottom: 35px;
+            display: flex; gap: 15px;
+            font-size: 13.5px;
+            color: #856404;
+            line-height: 1.8;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(241, 196, 15, 0.1);
+            animation: pulseYellow 3s infinite ease-in-out;
+            text-align: justify;
+        }
+        .info-banner i { font-size: 28px; color: var(--warning); margin-top: 5px; }
+        .info-banner b { color: #d35400; text-decoration: underline; }
+
+        /* CENTRAL INTERACTION CARD */
+        .terminal-card {
+            background: var(--card-white);
+            border-radius: var(--radius-main);
+            padding: 55px 30px;
+            box-shadow: var(--shadow-premium);
+            text-align: center;
+            margin-bottom: 45px;
+            border: 1.5px solid rgba(255,255,255,0.9);
+            position: relative;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Massive Server Timer Display */
+        .hero-clock {
+            font-size: 60px;
+            font-weight: 900;
+            color: var(--danger);
+            margin: 10px 0 25px 0;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -3px;
+            text-shadow: 0 10px 20px rgba(231, 76, 60, 0.2);
+        }
+
+        /* Elite Action Button */
+        .btn-elite {
+            width: 100%;
+            padding: 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 15px 35px rgba(72, 52, 212, 0.3);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; justify-content: center; align-items: center; gap: 15px;
+            letter-spacing: 0.5px;
+        }
+        .btn-elite:hover { transform: translateY(-5px); box-shadow: 0 20px 45px rgba(72, 52, 212, 0.4); }
+        .btn-elite:active { transform: scale(0.94); }
+        .btn-elite:disabled { background: #cbd5e0 !important; cursor: not-allowed; box-shadow: none; transform: none; filter: grayscale(1); }
+        
+        .btn-submit-glow { background: var(--success); box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3); }
+
+        /* Work Data Field Grid */
+        .work-grid-area { text-align: left; margin: 35px 0; }
+        .grid-label-top { font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; }
+        
+        .data-strip {
+            background: #f8faff;
+            padding: 18px 24px;
+            border-radius: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border: 1.5px solid #f1f4f9;
+            transition: 0.3s;
+        }
+        .data-strip:hover { border-color: var(--secondary); background: #fff; transform: translateX(5px); }
+        .data-strip label { font-size: 10px; color: #a4b0be; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; }
+        .data-strip b { font-size: 15px; font-weight: 700; color: #2d3436; flex: 1; text-align: right; margin: 0 15px; word-break: break-all; }
+        
+        .copy-btn-action {
+            background: #eef2ff;
+            color: var(--primary);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .copy-btn-action:active { background: var(--success); color: white; transform: scale(0.9); }
+
+        /* Professional Submit Form Area */
+        .submission-container { margin-top: 50px; text-align: left; border-top: 2.5px solid #f5f7fb; padding-top: 40px; }
+        .submission-container h4 { font-size: 18px; font-weight: 800; margin-bottom: 25px; color: #1e272e; letter-spacing: -0.5px; }
+        .field-group { margin-bottom: 25px; }
+        .field-group label { display: block; font-size: 12px; font-weight: 800; color: #7f8c8d; margin-bottom: 10px; margin-left: 8px; }
+        .field-group input {
+            width: 100%; padding: 20px 25px; border-radius: 25px;
+            border: 2px solid #f1f2f6; background: #fdfdfd; font-size: 15px;
+            font-weight: 600; outline: none; transition: 0.4s;
+        }
+        .field-group input:focus { border-color: var(--primary); background: #fff; box-shadow: 0 10px 30px rgba(72, 52, 212, 0.05); }
+
+        /* Post-Submission Result State */
+        .cleanup-alert-box {
+            background: #fff5f5;
+            padding: 45px 30px;
+            border-radius: var(--radius-main);
+            border: 2px solid #ffebeb;
+            display: none;
+            animation: glowRed 2s infinite;
+        }
+        .cleanup-alert-box i { font-size: 55px; color: var(--danger); margin-bottom: 25px; }
+        .cleanup-alert-box p { color: var(--danger); font-size: 16px; font-weight: 800; line-height: 1.8; }
+
+        /* Activity Audit Log Feed */
+        .activity-section { padding: 0 25px 80px 25px; }
+        .activity-title { font-size: 20px; font-weight: 900; color: #333; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+        .activity-title i { color: var(--primary); background: #eeeaff; padding: 14px; border-radius: 18px; font-size: 18px; }
+
+        .log-item-card {
+            background: var(--card-white);
+            padding: 25px 30px;
+            border-radius: 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            border: 1.5px solid #f9f9f9;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .log-item-card b { font-size: 16px; color: #2d3436; display: block; margin-bottom: 3px; }
+        .log-item-card span { font-size: 11px; color: #bdc3c7; font-weight: 600; }
+
+        .status-pill {
+            font-size: 10px; font-weight: 900; padding: 7px 20px; border-radius: 50px;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .pill-pending { background: #fff9e6; color: var(--warning); }
+        .pill-success { background: #e3fcef; color: var(--success); }
+        .pill-failed { background: #ffebee; color: var(--danger); }
+
+        /* Global Utilities */
+        .force-hidden { display: none !important; }
+        #globalSyncLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; display: flex; justify-content: center; align-items: center; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Redundant Loading System (Hidden but ready for data sync) -->
+    <div id="globalSyncLoader" class="force-hidden"><i class="fas fa-circle-notch fa-spin fa-2x" style="color:var(--primary)"></i></div>
+
+    <!-- Elite Premium Stats Header -->
+    <header class="premium-header animate-ui">
+        <div class="header-stat-box"><p>Success Jobs</p><h4 id="h_succ">0</h4></div>
+        <div class="header-stat-box"><p>Verification</p><h4 id="h_pend">0</h4></div>
+        <div class="header-stat-box"><p>Failed Jobs</p><h4 id="h_fail">0</h4></div>
+        <div class="header-stat-box"><p>Task Cycles</p><h4 id="h_total">0</h4></div>
+    </header>
+
+    <div class="main-container">
+        
+        <!-- HIGHLY VISIBLE POLICY NOTICE -->
+        <div class="info-banner animate-ui" style="animation-delay: 0.1s;">
+            <i class="fas fa-clock-rotate-left"></i>
+            <p>একটি টাস্ক রিভিউ টাইম <b>১ ঘণ্টা ৪ মিনিট</b> থেকে <b>৭২ ঘণ্টা</b> পর্যন্ত আপনার টাস্কটি রিভিউতে থাকতে পারে। টাস্কটি সিস্টেম দ্বারা ভালোভাবে চেক করার পরেই আপনার একাউন্টে পেমেন্ট যোগ করা হবে। অনুগ্রহ করে ধৈর্য ধরুন।</p>
+        </div>
+
+        <!-- Master Interface Card -->
+        <div class="terminal-card animate-ui" style="animation-delay: 0.2s;" id="terminalCore">
+            
+            <!-- STATE 1: IDLE (Apply Mode) -->
+            <div id="ui_idle">
+                <i class="fas fa-envelope-open-text" style="font-size: 85px; color: var(--primary); margin-bottom: 35px;"></i>
+                <h3 style="font-size: 28px; font-weight: 900; margin-bottom: 12px; letter-spacing: -0.5px;">Workspace Ready</h3>
+                <p style="font-size: 15px; color: #999; margin-bottom: 40px; padding: 0 10px; line-height: 1.6;">Apply now to receive encrypted Gmail details. Once dispatched, you have exactly <b>13 minutes</b> to complete.</p>
+                <button class="btn-elite" id="mainApplyBtn" onclick="runServerApplication()">
+                    <i class="fas fa-bolt-lightning"></i> INITIATE TASK
+                </button>
+            </div>
+
+            <!-- STATE 2: WAITING (Admin Dispatch Sync) -->
+            <div id="ui_waiting" class="force-hidden">
+                <div class="hero-clock" id="timer_wait">02:00</div>
+                <p style="font-size: 19px; color: #555; font-weight: 800;">Handshake Syncing...</p>
+                <p style="font-size: 13.5px; color: #999; margin-top: 15px; padding: 0 20px;">Administrator is allocating specialized data for your ID. Keep this terminal open for instant sync.</p>
+            </div>
+
+            <!-- STATE 3: WORKING (Active Job / 13 Min Deadline) -->
+            <div id="ui_working" class="force-hidden">
+                <div class="hero-clock" id="timer_active">13:00</div>
+                
+                <div class="work-grid-area">
+                    <span class="grid-label-top"><i class="fas fa-shield-halved"></i> Allocated Workspace Data</span>
+                    
+                    <div class="data-strip">
+                        <label>First Name</label>
+                        <b id="val_fn">--</b>
+                        <button class="copy-btn-action" onclick="copyToClipboard('val_fn')">COPY</button>
+                    </div>
+                    <div class="data-strip">
+                        <label>Last Name</label>
+                        <b id="val_ln">--</b>
+                        <button class="copy-btn-action" onclick="copyToClipboard('val_ln')">COPY</button>
+                    </div>
+                    <div class="data-strip">
+                        <label>Birthdate</label>
+                        <b id="val_bd">--</b>
+                        <button class="copy-btn-action" onclick="copyToClipboard('val_bd')">COPY</button>
+                    </div>
+                    <div class="data-strip">
+                        <label>Target Email</label>
+                        <b id="val_em">--</b>
+                        <button class="copy-btn-action" onclick="copyToClipboard('val_em')">COPY</button>
+                    </div>
+                    <div class="data-strip">
+                        <label>Secure Pass</label>
+                        <b id="val_ps">--</b>
+                        <button class="copy-btn-action" onclick="copyToClipboard('val_ps')">COPY</button>
+                    </div>
+                    <div class="data-strip">
+                        <label>Recovery</label>
+                        <b id="val_re">--</b>
+                        <button class="copy-btn-action" onclick="copyToClipboard('val_re')">COPY</button>
+                    </div>
+                </div>
+
+                <!-- Final Submit Form -->
+                <div class="submission-container">
+                    <h4>Finalizing Work Submission</h4>
+                    <div class="field-group">
+                        <label>Gmail Address Successfully Created</label>
+                        <input type="email" id="input_gmail" placeholder="example@gmail.com">
+                    </div>
+                    <div class="field-group">
+                        <label>Password Configured for the Account</label>
+                        <input type="text" id="input_password" placeholder="Enter the password used">
+                    </div>
+                    <button class="btn-elite btn-submit-glow" onclick="finalizeUserWork()">
+                        <i class="fas fa-cloud-upload-alt"></i> SUBMIT PROGRESS
+                    </button>
+                </div>
+            </div>
+
+            <!-- STATE 4: CLEANUP (2-Min Notice/Cooldown) -->
+            <div id="ui_cleanup" class="cleanup-alert-box">
+                <i class="fas fa-triangle-exclamation"></i>
+                <p>Task Submission Registered!</p>
+                <p style="margin-top: 15px; opacity: 0.85;">পরবর্তী <b><span id="timer_cleanup">02:00</span></b> মিনিটের মধ্যে আপনার ডিভাইস থেকে তৈরি করা জিমেইলটি রিমুভ করে দিন।</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Verified Activity Log Section -->
+    <section class="activity-section animate-ui" style="animation-delay: 0.3s;">
+        <div class="activity-title"><i class="fas fa-list-check"></i><span>Activity Audit Log</span></div>
+        <div id="audit_log_container">
+            <!-- Dynamic Data -->
+        </div>
+    </section>
+
+    <!-- 
+    ======================================================
+    4. FIREBASE ENGINE & ABSOLUTE SYNC (450+ Lines)
+    ======================================================
+    -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        /**
+         * INITIALIZATION CONFIGURATION
+         */
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOdWqPh69SEG-Z6P71xL6jlcFcNb9gMNs",
+            authDomain: "unlimited-earning-28639.firebaseapp.com",
+            databaseURL: "https://unlimited-earning-28639-default-rtdb.firebaseio.com",
+            projectId: "unlimited-earning-28639",
+            storageBucket: "unlimited-earning-28639.firebasestorage.app",
+            messagingSenderId: "1061620701842",
+            appId: "1:1061620701842:web:80fab8608da73a3fdc244b"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const auth = firebase.auth();
+
+        let loggedInPhone = "";
+        let masterClockInstance = null;
+        let jobLockActive = false;
+
+        // SERVER SYNC RULES (Seconds)
+        const SEC_WAIT = 120; // 2 Mins
+        const SEC_JOB = 780; // 13 Mins
+        const SEC_COOL = 120; // 2 Mins
+
+        /**
+         * AUTHENTICATION & BOOTSTRAP
+         */
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                loggedInPhone = user.email.split('@')[0];
+                console.info("Terminal Access Verified. ID:", loggedInPhone);
+                launchSystemOrchestrator();
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        async function launchSystemOrchestrator() {
+            // Sync UI counters
+            syncLiveStats();
+            // Start Audit Log monitoring
+            monitorAuditLogs();
+            
+            // MASTER SYNC ENGINE: This prevents the white space issue
+            initializeAbsoluteSync();
+        }
+
+        /**
+         * REALTIME DATA SYNCRONIZATION
+         */
+        function syncLiveStats() {
+            db.ref('users/' + loggedInPhone).on('value', snapshot => {
+                const u = snapshot.val();
+                if(!u) return;
+                const s = u.successTasks || 0;
+                const p = u.pendingTasks || 0;
+                const f = u.failedTasks || 0;
+                document.getElementById('h_succ').innerText = s;
+                document.getElementById('h_pend').innerText = p;
+                document.getElementById('h_fail').innerText = f;
+                document.getElementById('h_total').innerText = s + p + f;
+            });
+        }
+
+        /**
+         * THE IRONCLAD SYNC ENGINE (Prevents Blank Screen)
+         */
+        function initializeAbsoluteSync() {
+            // A. Continuously Watch for ACTIVE WORK (13-Min Absolute Deadline)
+            db.ref('active_tasks/' + loggedInPhone).on('value', async snapshot => {
+                if(snapshot.exists()) {
+                    const task = snapshot.val();
+                    const now = Date.now();
+                    const expireAt = task.expireAt; 
+                    const remain = Math.floor((expireAt - now) / 1000);
+
+                    if(remain <= 0) {
+                        await autoTriggerIronFailure(task);
+                    } else {
+                        jobLockActive = true;
+                        renderStateView('ui_working', task, remain);
+                    }
+                } else {
+                    jobLockActive = false;
+                    evaluatePendingConditions();
+                }
+            });
+        }
+
+        function evaluatePendingConditions() {
+            // B. Check for Waiting Request (2-Min Admin Sync)
+            db.ref('task_requests/' + loggedInPhone).on('value', snap => {
+                if(jobLockActive) return;
+
+                if(snap.exists()) {
+                    const req = snap.val();
+                    const now = Date.now();
+                    const expiry = (req.timestamp || now) + (SEC_WAIT * 1000);
+                    const remain = Math.floor((expiry - now) / 1000);
+
+                    if(remain <= 0) {
+                        // EXPIRED: Remove request
+                        db.ref('task_requests/' + loggedInPhone).remove();
+                        checkCooldownStatus();
+                    } else {
+                        renderStateView('ui_waiting', null, remain);
+                    }
+                } else {
+                    checkCooldownStatus();
+                }
+            });
+        }
+
+        function checkCooldownStatus() {
+            // C. Check Local Cooldown Persistence (2-Min Lock after Submission)
+            const coolKey = 'iron_cool_end_' + loggedInPhone;
+            const endTS = localStorage.getItem(coolKey);
+            const now = Date.now();
+
+            if(endTS && now < endTS) {
+                const remain = Math.floor((endTS - now) / 1000);
+                renderStateView('ui_cleanup', null, remain);
+            } else {
+                localStorage.removeItem(coolKey);
+                renderStateView('ui_idle');
+            }
+        }
+
+        /**
+         * OPERATIONS: SERVER APPLY
+         */
+        async function runServerApplication() {
+            const btn = document.getElementById('mainApplyBtn');
+            btn.disabled = true;
+
+            try {
+                // Immediate State change to "Waiting" to kill white space instantly
+                renderStateView('ui_waiting', null, SEC_WAIT);
+
+                const uSnap = await db.ref('users/' + loggedInPhone).once('value');
+                const uData = uSnap.val();
+
+                const payload = {
+                    phone: loggedInPhone,
+                    name: uData.name,
+                    uid: uData.uid,
+                    timestamp: Date.now()
+                };
+
+                await db.ref('task_requests/' + loggedInPhone).set(payload);
+            } catch (err) {
+                btn.disabled = false;
+                renderStateView('ui_idle');
+                alert("Database Busy. Try again.");
+            }
+        }
+
+        /**
+         * OPERATIONS: FINALIZE SUBMISSION
+         */
+        async function finalizeUserWork() {
+            const gmail = document.getElementById('input_gmail').value.trim();
+            const pass = document.getElementById('input_password').value.trim();
+
+            if(!gmail || !pass) return alert("Credentials missing!");
+            if(!gmail.toLowerCase().includes("@gmail.com")) return alert("Verify Gmail Address!");
+
+            clearInterval(masterClockInstance);
+            const taskUID = Date.now();
+            const adminName = document.getElementById('val_fn').innerText + " " + document.getElementById('val_ln').innerText;
+
+            const bundle = {
+                taskID: taskUID,
+                phone: loggedInPhone,
+                name: adminName,
+                email: gmail,
+                details: {
+                    password: pass,
+                    firstName: document.getElementById('val_fn').innerText,
+                    lastName: document.getElementById('val_ln').innerText,
+                    recoveryEmail: document.getElementById('val_re').innerText
+                },
+                status: 'pending',
+                timestamp: Date.now()
+            };
+
+            try {
+                await db.ref('task_reviews/' + taskUID).set(bundle);
+                await db.ref('active_tasks/' + loggedInPhone).remove();
+                await db.ref('users/' + loggedInPhone + '/pendingTasks').transaction(c => (c || 0) + 1);
+
+                // Set 2 Min Cooldown persistent lock
+                const expiryTimestamp = Date.now() + (SEC_COOL * 1000);
+                localStorage.setItem('iron_cool_end_' + loggedInPhone, expiryTimestamp);
+                
+                renderStateView('ui_cleanup', null, SEC_COOL);
+            } catch (e) { alert("Submission Fault!"); }
+        }
+
+        /**
+         * CRITICAL: AUTO-MARK FAILURE (Absolute 13-Min Enforcer)
+         */
+        async function autoTriggerIronFailure(task) {
+            clearInterval(masterClockInstance);
+            console.warn("IRON DEADLINE EXPIRED: TERMINATING SESSION.");
+
+            const mailTag = task.email || "System_Job";
+
+            try {
+                // A. History entry
+                await db.ref('history/' + loggedInPhone).push({
+                    type: 'task', title: `Session Expired (${mailTag})`,
+                    amount: 0, status: 'Failed', timestamp: Date.now()
+                });
+
+                // B. Counter Update
+                await db.ref('users/' + loggedInPhone).transaction(u => {
+                    if (u) u.failedTasks = (u.failedTasks || 0) + 1;
+                    return u;
+                });
+
+                // C. Kill Node
+                await db.ref('active_tasks/' + loggedInPhone).remove();
+                
+                alert("TIME EXPIRED! Your 13-minute session ended. Task marked as failed.");
+                
+                // Force cooldown
+                const endTS = Date.now() + (SEC_COOL * 1000);
+                localStorage.setItem('iron_cool_end_' + loggedInPhone, endTS);
+                checkCooldownStatus();
+
+            } catch (e) { console.error("Engine Fault: Recovery in progress..."); }
+        }
+
+        /**
+         * UI STATE ENGINE (The Key Fix)
+         */
+        function renderStateView(stateId, data = null, seconds = 0) {
+            const views = ['ui_idle', 'ui_waiting', 'ui_working', 'ui_cleanup'];
+            views.forEach(v => {
+                document.getElementById(v).style.display = 'none';
+                document.getElementById(v).classList.add('force-hidden');
+            });
+
+            const activeView = document.getElementById(stateId);
+            activeView.style.display = 'block';
+            activeView.classList.remove('force-hidden');
+
+            // View Specific Handlers
+            if(stateId === 'ui_working' && data) {
+                document.getElementById('val_fn').innerText = data.firstName || '--';
+                document.getElementById('val_ln').innerText = data.lastName || '--';
+                document.getElementById('val_bd').innerText = data.birthdate || '--';
+                document.getElementById('val_em').innerText = data.email || '--';
+                document.getElementById('val_ps').innerText = data.password || '--';
+                document.getElementById('val_re').innerText = data.recoveryEmail || '--';
+                startClock(seconds, 'timer_active', () => autoTriggerIronFailure(data));
+            } else if(stateId === 'ui_waiting') {
+                startClock(seconds, 'timer_wait', () => {
+                    db.ref('task_requests/' + loggedInPhone).remove();
+                    renderStateView('ui_idle');
+                });
+            } else if(stateId === 'ui_cleanup') {
+                startClock(seconds, 'timer_cleanup', () => {
+                    localStorage.removeItem('iron_cool_end_' + loggedInPhone);
+                    renderStateView('ui_idle');
+                });
+            } else if(stateId === 'ui_idle') {
+                clearInterval(masterClockInstance);
+                document.getElementById('mainApplyBtn').disabled = false;
+                document.getElementById('input_gmail').value = "";
+                document.getElementById('input_password').value = "";
+            }
+        }
+
+        /**
+         * MASTER TIMER UTILITY
+         */
+        function startClock(duration, displayID, callback) {
+            clearInterval(masterClockInstance);
+            let time = duration;
+            const element = document.getElementById(displayID);
+
+            masterClockInstance = setInterval(() => {
+                let mins = Math.floor(time / 60);
+                let secs = time % 60;
+                element.innerText = `${mins < 10 ? '0'+mins : mins}:${secs < 10 ? '0'+secs : secs}`;
+
+                if (--time < 0) {
+                    clearInterval(masterClockInstance);
+                    if(callback) callback();
+                }
+            }, 1000);
+        }
+
+        /**
+         * AUDIT LOG FEED MONITOR
+         */
+        function monitorAuditLogs() {
+            const grid = document.getElementById('audit_log_container');
+
+            db.ref('task_reviews').orderByChild('phone').equalTo(loggedInPhone).on('value', snapR => {
+                db.ref('history/' + loggedInPhone).limitToLast(15).on('value', snapH => {
+                    grid.innerHTML = "";
+                    
+                    snapR.forEach(c => {
+                        grid.innerHTML += buildCardHTML(c.val().email, 'Pending', 'pill-pending');
+                    });
+
+                    let items = [];
+                    snapH.forEach(c => { if(c.val().type === 'task') items.push(c.val()); });
+                    
+                    items.reverse().forEach(h => {
+                        const em = h.title.match(/\(([^)]+)\)/) ? h.title.match(/\(([^)]+)\)/)[1] : "Audit Trace";
+                        const css = h.status === 'Success' ? 'pill-success' : 'pill-failed';
+                        grid.innerHTML += buildCardHTML(em, h.status, css);
+                    });
+                });
+            });
+        }
+
+        function buildCardHTML(title, status, css) {
+            return `<div class="log-item-card animate"><div><b>${title}</b><span>Verified Audit Track</span></div><div class="status-pill ${css}">${status}</div></div>`;
+        }
+
+        function copyToClipboard(id) {
+            const val = document.getElementById(id).innerText;
+            if(val === '--') return;
+            navigator.clipboard.writeText(val).then(() => { alert("Credential Copied!"); });
+        }
+    </script>
+</body>
+</html>
