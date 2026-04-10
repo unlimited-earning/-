@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Terminal - Unlimited Earning</title>
+    
+    <!-- 
+    ======================================================
+    PREMIUM ASSETS & EXTERNAL LIBRARIES (150+ Lines)
+    ======================================================
+    -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* 
+        ======================================================
+        ADVANCED DESIGN SYSTEM (CSS)
+        ======================================================
+        */
+        :root {
+            --primary: #4834d4;
+            --secondary: #686de0;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --warning: #f1c40f;
+            --info: #0fbcf9;
+            --bg: #f5f6fa;
+            --white: #ffffff;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --shadow-lg: 0 20px 40px rgba(72, 52, 212, 0.12);
+            --card-radius: 35px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body { 
+            background-color: var(--bg); 
+            color: var(--text-dark); 
+            padding-bottom: 50px;
+            overflow-x: hidden;
+            -webkit-user-select: none; /* User can't select text but can copy through buttons */
+        }
+
+        /* Smoothing Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        @keyframes rotateSpinner { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .animate-view { animation: fadeIn 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+
+        /* Header Premium Styling */
+        .task-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 30px 20px 50px 20px;
+            color: white;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            box-shadow: 0 15px 35px rgba(72, 52, 212, 0.2);
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 22px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+        }
+        .stat-card p { font-size: 10px; text-transform: uppercase; font-weight: 700; opacity: 0.9; margin-bottom: 3px; }
+        .stat-card h4 { font-size: 20px; font-weight: 800; }
+
+        .container { padding: 25px; max-width: 550px; margin: 0 auto; }
+
+        /* Review Policy Banner */
+        .policy-banner {
+            background: #fff9e6;
+            border: 1.5px dashed var(--warning);
+            padding: 18px;
+            border-radius: 25px;
+            margin-bottom: 25px;
+            display: flex; gap: 12px;
+            font-size: 12px;
+            color: #856404;
+            line-height: 1.6;
+        }
+        .policy-banner i { font-size: 20px; margin-top: 2px; color: var(--warning); }
+
+        /* Main Workspace Card */
+        .workspace-card {
+            background: var(--white);
+            border-radius: var(--card-radius);
+            padding: 40px 30px;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #f0f0f0;
+        }
+
+        /* Timer UI */
+        .master-timer {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--danger);
+            margin: 10px 0 25px 0;
+            letter-spacing: -1px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Buttons Styling */
+        .btn-universal {
+            width: 100%;
+            padding: 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 22px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(72, 52, 212, 0.3);
+            transition: 0.4s;
+            display: flex; justify-content: center; align-items: center; gap: 12px;
+        }
+        .btn-universal:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(72, 52, 212, 0.4); }
+        .btn-universal:disabled { background: #cbd5e0; cursor: not-allowed; box-shadow: none; transform: none; }
+        
+        .btn-submit-task { background: var(--success); box-shadow: 0 8px 20px rgba(46, 204, 113, 0.2); }
+
+        /* Data Fields for Working State */
+        .data-display-box { text-align: left; margin: 25px 0; }
+        .data-display-box .label-head { font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-bottom: 15px; display: block; }
+        
+        .info-row {
+            background: #f8f9fd;
+            padding: 14px 18px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            border: 1px solid #eef0f7;
+        }
+        .info-row .field-name { font-size: 11px; color: #999; font-weight: 700; text-transform: uppercase; }
+        .info-row .field-val { font-size: 14px; font-weight: 700; color: #333; flex: 1; text-align: right; margin: 0 10px; word-break: break-all; }
+        
+        .copy-trigger {
+            background: #eeeaff;
+            color: var(--primary);
+            border: none;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .copy-trigger:active { background: var(--success); color: white; }
+
+        /* Submission Input Form */
+        .form-container { margin-top: 35px; text-align: left; border-top: 1.5px solid #f5f6fa; padding-top: 25px; }
+        .form-container h4 { font-size: 15px; font-weight: 800; margin-bottom: 20px; color: #2d3436; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 12px; font-weight: 700; color: #7f8c8d; margin-bottom: 8px; margin-left: 5px; }
+        .form-group input {
+            width: 100%;
+            padding: 16px;
+            border-radius: 18px;
+            border: 2px solid #f0f0f0;
+            background: #fdfdfd;
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            transition: 0.3s;
+        }
+        .form-group input:focus { border-color: var(--primary); background: #fff; }
+
+        /* Result Notice Card */
+        .status-alert-box {
+            background: #fff5f5;
+            padding: 30px 20px;
+            border-radius: 30px;
+            border: 1px solid #ffebeb;
+            display: none;
+            animation: pulse 2s infinite;
+        }
+        .status-alert-box p { color: var(--danger); font-size: 14px; font-weight: 700; line-height: 1.6; }
+
+        /* History Section */
+        .history-section { padding: 0 25px 50px 25px; }
+        .history-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; color: #444; display: flex; align-items: center; gap: 10px; }
+        .history-title i { color: var(--primary); background: #eeeaff; padding: 10px; border-radius: 12px; }
+
+        .sub-card {
+            background: var(--white);
+            padding: 18px 25px;
+            border-radius: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+            border: 1px solid #fcfcfc;
+            animation: fadeIn 0.5s ease;
+        }
+        .sub-info b { font-size: 15px; color: #333; display: block; margin-bottom: 2px; }
+        .sub-info span { font-size: 11px; color: #bdc3c7; font-weight: 500; }
+
+        .status-badge {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 5px 16px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .st-pend { background: #fff9e6; color: var(--warning); }
+        .st-succ { background: #e3fcef; color: var(--success); }
+        .st-fail { background: #ffebee; color: var(--danger); }
+
+        /* Helper Classes */
+        .hidden { display: none !important; }
+        .loading-cover { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--white); z-index: 9999; display: flex; justify-content: center; align-items: center; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Initial Page Loader -->
+    <div id="pageLoader" class="loading-cover">
+        <i class="fas fa-circle-notch fa-spin fa-2x" style="color:var(--primary);"></i>
+    </div>
+
+    <!-- Stats Header Bar -->
+    <div class="task-header animate-view">
+        <div class="stat-card">
+            <p>Job Success</p>
+            <h4 id="countSuccess">0</h4>
+        </div>
+        <div class="stat-card">
+            <p>In Review</p>
+            <h4 id="countPending">0</h4>
+        </div>
+        <div class="stat-card">
+            <p>Task Failed</p>
+            <h4 id="countFailed">0</h4>
+        </div>
+        <div class="stat-card">
+            <p>Total Submits</p>
+            <h4 id="countTotal">0</h4>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Review Policy Info -->
+        <div class="policy-banner animate-view" style="animation-delay: 0.1s;">
+            <i class="fas fa-circle-exclamation"></i>
+            <p>একটি টাস্ক রিভিউ টাইম ১ ঘণ্টা ৪ মিনিট থেকে ৭২ ঘণ্টা পর্যন্ত আপনার টাস্কটি রিভিউতে থাকবে। টাস্কটি ভালোভাবে চেক করার পর আপনাকে পেমেন্ট দেওয়া হবে।</p>
+        </div>
+
+        <div class="workspace-card animate-view" style="animation-delay: 0.2s;">
+            
+            <!-- STATE: IDLE (User is ready to apply) -->
+            <div id="stateIdle" class="state-idle">
+                <i class="fas fa-envelope-open-text" style="font-size: 60px; color: var(--primary); margin-bottom: 20px;"></i>
+                <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">Claim Your Task</h3>
+                <p style="font-size: 14px; color: var(--text-light); margin-bottom: 30px;">Apply to fetch exclusive Gmail account details from the Administrator server.</p>
+                <button class="btn-universal" id="applyMainBtn" onclick="initiateTaskApplication()">
+                    <i class="fas fa-rocket"></i> APPLY NOW
+                </button>
+            </div>
+
+            <!-- STATE: WAITING (Admin Response Lock - 2 Mins) -->
+            <div id="stateWaiting" class="hidden">
+                <div class="master-timer" id="waitTimerText">02:00</div>
+                <p style="font-size: 15px; color: #666; font-weight: 600;">Request Dispatching...</p>
+                <p style="font-size: 12px; color: #999; margin-top: 12px;">Waiting for Admin to allocate account data. Don't close this page.</p>
+            </div>
+
+            <!-- STATE: ACTIVE (Work Session - 13 Mins) -->
+            <div id="stateActive" class="hidden">
+                <div class="master-timer" id="taskTimerText">13:00</div>
+                
+                <div class="data-display-box">
+                    <span class="label-head">Account Creation Blueprint</span>
+                    
+                    <div class="info-row">
+                        <span class="field-name">First Name</span>
+                        <b class="field-val" id="dbFn">--</b>
+                        <button class="copy-trigger" onclick="handleCopy('dbFn')">COPY</button>
+                    </div>
+                    <div class="info-row">
+                        <span class="field-name">Last Name</span>
+                        <b class="field-val" id="dbLn">--</b>
+                        <button class="copy-trigger" onclick="handleCopy('dbLn')">COPY</button>
+                    </div>
+                    <div class="info-row">
+                        <span class="field-name">Birthday</span>
+                        <b class="field-val" id="dbBd">--</b>
+                        <button class="copy-trigger" onclick="handleCopy('dbBd')">COPY</button>
+                    </div>
+                    <div class="info-row">
+                        <span class="field-name">System Email</span>
+                        <b class="field-val" id="dbEm">--</b>
+                        <button class="copy-trigger" onclick="handleCopy('dbEm')">COPY</button>
+                    </div>
+                    <div class="info-row">
+                        <span class="field-name">Key Pass</span>
+                        <b class="field-val" id="dbPs">--</b>
+                        <button class="copy-trigger" onclick="handleCopy('dbPs')">COPY</button>
+                    </div>
+                    <div class="info-row">
+                        <span class="field-name">Recovery</span>
+                        <b class="field-val" id="dbRe">--</b>
+                        <button class="copy-trigger" onclick="handleCopy('dbRe')">COPY</button>
+                    </div>
+                </div>
+
+                <!-- Input Submission -->
+                <div class="form-container">
+                    <h4>Submit Your Progress</h4>
+                    <div class="form-group">
+                        <label>Exact Gmail Address Created</label>
+                        <input type="email" id="subGmail" placeholder="example@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Account Password Provided</label>
+                        <input type="text" id="subPass" placeholder="Enter password">
+                    </div>
+                    <button class="btn-universal btn-submit-task" onclick="finalizeSubmission()">
+                        <i class="fas fa-cloud-arrow-up"></i> SUBMIT WORK
+                    </button>
+                </div>
+            </div>
+
+            <!-- STATE: NOTICE (Post-Submission Cleanup - 2 Mins) -->
+            <div id="stateNotice" class="status-alert-box">
+                <i class="fas fa-triangle-exclamation" style="font-size: 35px; color: var(--danger); margin-bottom: 15px;"></i>
+                <p>Task Submitted Successfully!</p>
+                <p style="margin-top: 10px;">পরবর্তী <b><span id="cleanupTimerText">02:00</span></b> মিনিটের মধ্যে আপনার ফোন থেকে তৈরি করা জিমেইলটি রিমুভ করে দিন।</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- List of submissions -->
+    <section class="history-section animate-view" style="animation-delay: 0.3s;">
+        <div class="history-title">
+            <i class="fas fa-clock-rotate-left"></i>
+            <span>Submission Log</span>
+        </div>
+        <div id="submissionGrid">
+            <!-- Dynamic Submissions Feed -->
+        </div>
+    </section>
+
+    <!-- 
+    ======================================================
+    FIREBASE CORE & PERSISTENT LOGIC (350+ Lines)
+    ======================================================
+    -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        /**
+         * 1. SYSTEM INITIALIZATION
+         */
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOdWqPh69SEG-Z6P71xL6jlcFcNb9gMNs",
+            authDomain: "unlimited-earning-28639.firebaseapp.com",
+            databaseURL: "https://unlimited-earning-28639-default-rtdb.firebaseio.com",
+            projectId: "unlimited-earning-28639",
+            storageBucket: "unlimited-earning-28639.firebasestorage.app",
+            messagingSenderId: "1061620701842",
+            appId: "1:1061620701842:web:80fab8608da73a3fdc244b"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const auth = firebase.auth();
+
+        let uPhone = "";
+        let masterInterval = null;
+        let isTaskActiveGlobal = false;
+
+        // CONSTANTS
+        const LIMIT_APPLY = 120; // 2 Mins
+        const LIMIT_WORK = 780;  // 13 Mins
+        const LIMIT_NOTICE = 120; // 2 Mins
+
+        /**
+         * 2. AUTHENTICATION & BOOTSTRAP
+         */
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                uPhone = user.email.split('@')[0];
+                console.log("Terminal Access Granted:", uPhone);
+                bootstrapTerminal();
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        async function bootstrapTerminal() {
+            syncUserDashboardStats();
+            listenForNetworkSubmissions();
+            
+            // Initializing Persistent State Watcher
+            runPersistentCycle();
+            
+            // Finalize loader
+            setTimeout(() => { document.getElementById('pageLoader').style.display = 'none'; }, 1000);
+        }
+
+        /**
+         * 3. REALTIME STATS SYNC
+         */
+        function syncUserDashboardStats() {
+            db.ref('users/' + uPhone).on('value', snap => {
+                const d = snap.val();
+                if(!d) return;
+
+                const s = d.successTasks || 0;
+                const p = d.pendingTasks || 0;
+                const f = d.failedTasks || 0;
+
+                document.getElementById('countSuccess').innerText = s;
+                document.getElementById('countPending').innerText = p;
+                document.getElementById('countFailed').innerText = f;
+                document.getElementById('countTotal').innerText = s + p + f;
+            });
+        }
+
+        /**
+         * 4. PERSISTENT CORE CYCLE
+         * This function manages the UI states based on live data and timestamps.
+         */
+        function runPersistentCycle() {
+            // Monitor Active Task Node
+            db.ref('active_tasks/' + uPhone).on('value', async snap => {
+                if(snap.exists()) {
+                    const task = snap.val();
+                    const now = Date.now();
+                    const startTime = task.taskStartTime || now;
+                    const elapsed = Math.floor((now - startTime) / 1000);
+                    const remaining = LIMIT_WORK - elapsed;
+
+                    if(remaining <= 0) {
+                        // EXPIRED: Auto Fail
+                        await autoFailActiveTask(task);
+                    } else {
+                        // ACTIVE: Resume Timer
+                        isTaskActiveGlobal = true;
+                        activateWorkView(task, remaining);
+                    }
+                } else {
+                    isTaskActiveGlobal = false;
+                    // Check if user is in Apply state
+                    checkApplyNodePersistence();
+                }
+            });
+        }
+
+        function checkApplyNodePersistence() {
+            db.ref('task_requests/' + uPhone).on('value', snap => {
+                if(isTaskActiveGlobal) return;
+
+                if(snap.exists()) {
+                    const req = snap.val();
+                    const elapsed = Math.floor((Date.now() - req.timestamp) / 1000);
+                    const remaining = LIMIT_APPLY - elapsed;
+
+                    if(remaining <= 0) {
+                        db.ref('task_requests/' + uPhone).remove();
+                        resetTerminalToIdle();
+                    } else {
+                        activateWaitingView(remaining);
+                    }
+                } else {
+                    // Check Local Notice Persistence
+                    const noticeExp = localStorage.getItem('cleanup_expiry');
+                    if(noticeExp) {
+                        const remaining = Math.floor((noticeExp - Date.now()) / 1000);
+                        if(remaining > 0) activateNoticeView(remaining);
+                        else {
+                            localStorage.removeItem('cleanup_expiry');
+                            resetTerminalToIdle();
+                        }
+                    } else {
+                        resetTerminalToIdle();
+                    }
+                }
+            });
+        }
+
+        /**
+         * 5. STATE: APPLY (INITIATE)
+         */
+        async function initiateTaskApplication() {
+            const btn = document.getElementById('applyMainBtn');
+            btn.disabled = true;
+
+            try {
+                const userSnap = await db.ref('users/' + uPhone).once('value');
+                const uData = userSnap.val();
+
+                const applyObj = {
+                    phone: uPhone,
+                    name: uData.name,
+                    uid: uData.uid,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                };
+
+                await db.ref('task_requests/' + uPhone).set(applyObj);
+                // Waiting for persistent cycle to detect the node and start timer
+            } catch (e) {
+                alert("Apply Error: " + e.message);
+                btn.disabled = false;
+            }
+        }
+
+        /**
+         * 6. STATE: WORKING (Timer & Data)
+         */
+        function activateWorkView(data, secondsLeft) {
+            switchUI('stateActive');
+            
+            document.getElementById('dbFn').innerText = data.firstName || '--';
+            document.getElementById('dbLn').innerText = data.lastName || '--';
+            document.getElementById('dbBd').innerText = data.birthdate || '--';
+            document.getElementById('dbEm').innerText = data.email || '--';
+            document.getElementById('dbPs').innerText = data.password || '--';
+            document.getElementById('dbRe').innerText = data.recoveryEmail || '--';
+
+            startMasterCountdown(secondsLeft, 'taskTimerText', () => {
+                autoFailActiveTask(data);
+            });
+        }
+
+        /**
+         * 7. STATE: SUBMISSION
+         */
+        async function finalizeSubmission() {
+            const gmail = document.getElementById('subGmail').value.trim();
+            const pass = document.getElementById('subPass').value.trim();
+
+            if(!gmail || !pass) return alert("Verify both Gmail and Password!");
+            if(!gmail.toLowerCase().includes("@gmail.com")) return alert("Valid Gmail required!");
+
+            clearInterval(masterInterval);
+            const taskID = Date.now();
+            const fullName = document.getElementById('dbFn').innerText + " " + document.getElementById('dbLn').innerText;
+
+            const submitData = {
+                taskID: taskID,
+                phone: uPhone,
+                name: fullName,
+                email: gmail,
+                details: {
+                    password: pass,
+                    firstName: document.getElementById('dbFn').innerText,
+                    lastName: document.getElementById('dbLn').innerText,
+                    recoveryEmail: document.getElementById('dbRe').innerText
+                },
+                status: 'pending',
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            };
+
+            try {
+                // 1. Move to reviews
+                await db.ref('task_reviews/' + taskID).set(submitData);
+                // 2. Clear Active node
+                await db.ref('active_tasks/' + uPhone).remove();
+                // 3. Update User counter
+                await db.ref('users/' + uPhone + '/pendingTasks').transaction(c => (c || 0) + 1);
+
+                // Set Local Cleanup Timer
+                const cleanupExpiry = Date.now() + (LIMIT_NOTICE * 1000);
+                localStorage.setItem('cleanup_expiry', cleanupExpiry);
+                
+                activateNoticeView(LIMIT_NOTICE);
+            } catch (err) { alert(err.message); }
+        }
+
+        /**
+         * 8. CRITICAL: AUTO FAIL LOGIC
+         */
+        async function autoFailActiveTask(taskData) {
+            clearInterval(masterInterval);
+            console.warn("Cycle Expired. Auto failing task...");
+
+            try {
+                const failEmail = taskData.email || "Expired Task";
+                
+                // 1. Record Fail in History
+                await db.ref('history/' + uPhone).push({
+                    type: 'task',
+                    title: `Task Failed (${failEmail})`,
+                    amount: 0,
+                    status: 'Failed',
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                });
+
+                // 2. Increment Fail Counter
+                await db.ref('users/' + uPhone).transaction(user => {
+                    if (user) {
+                        user.failedTasks = (user.failedTasks || 0) + 1;
+                    }
+                    return user;
+                });
+
+                // 3. Remove Active Task
+                await db.ref('active_tasks/' + uPhone).remove();
+                
+                alert("Time Expired! Task marked as failed.");
+                resetTerminalToIdle();
+            } catch (e) { console.error("AutoFail Error:", e); }
+        }
+
+        /**
+         * 9. NETWORK LISTENER (LOG)
+         */
+        function listenForNetworkSubmissions() {
+            const feed = document.getElementById('submissionGrid');
+
+            // Fetch Reviews
+            db.ref('task_reviews').orderByChild('phone').equalTo(uPhone).on('value', snapR => {
+                // Fetch History
+                db.ref('history/' + uPhone).limitToLast(15).on('value', snapH => {
+                    feed.innerHTML = "";
+                    
+                    // Render Active Reviews
+                    snapR.forEach(c => {
+                        const itm = c.val();
+                        feed.innerHTML += buildCardHTML(itm.email, 'Pending', 'st-pend');
+                    });
+
+                    // Render Completed from History
+                    let log = [];
+                    snapH.forEach(c => { if(c.val().type === 'task') log.push(c.val()); });
+                    
+                    log.reverse().forEach(h => {
+                        const email = h.title.match(/\(([^)]+)\)/) ? h.title.match(/\(([^)]+)\)/)[1] : "Job";
+                        const cls = h.status === 'Success' ? 'st-succ' : 'st-fail';
+                        feed.innerHTML += buildCardHTML(email, h.status, cls);
+                    });
+
+                    if(feed.innerHTML === "") {
+                        feed.innerHTML = '<p style="text-align:center; color:#ccc; font-size:12px; padding:20px;">No records yet.</p>';
+                    }
+                });
+            });
+        }
+
+        function buildCardHTML(title, status, css) {
+            return `<div class="sub-card"><div class="sub-info"><b>${title}</b><span>Verified Tracking</span></div><div class="status-badge ${css}">${status}</div></div>`;
+        }
+
+        /**
+         * 10. UTILITIES & UI ENGINE
+         */
+        function switchUI(stateId) {
+            const states = ['stateIdle', 'stateWaiting', 'stateActive', 'stateNotice'];
+            states.forEach(s => document.getElementById(s).classList.add('hidden'));
+            document.getElementById(stateId).classList.remove('hidden');
+            if(stateId === 'stateNotice') document.getElementById(stateId).style.display = 'block';
+            else document.getElementById('stateNotice').style.display = 'none';
+        }
+
+        function startMasterCountdown(duration, displayId, callback) {
+            clearInterval(masterInterval);
+            let timer = duration;
+            const display = document.getElementById(displayId);
+
+            masterInterval = setInterval(() => {
+                let minutes = parseInt(timer / 60, 10);
+                let seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(masterInterval);
+                    if(callback) callback();
+                }
+            }, 1000);
+        }
+
+        function activateWaitingView(secs) {
+            switchUI('stateWaiting');
+            startMasterCountdown(secs, 'waitTimerText', () => {
+                db.ref('task_requests/' + uPhone).remove();
+                resetTerminalToIdle();
+            });
+        }
+
+        function activateNoticeView(secs) {
+            switchUI('stateNotice');
+            startMasterCountdown(secs, 'cleanupTimerText', () => {
+                localStorage.removeItem('cleanup_expiry');
+                resetTerminalToIdle();
+            });
+        }
+
+        function resetTerminalToIdle() {
+            clearInterval(masterInterval);
+            switchUI('stateIdle');
+            document.getElementById('applyMainBtn').disabled = false;
+            document.getElementById('subGmail').value = "";
+            document.getElementById('subPass').value = "";
+        }
+
+        function handleCopy(id) {
+            const val = document.getElementById(id).innerText;
+            if(val === '--') return;
+            navigator.clipboard.writeText(val).then(() => { alert("Copied!"); });
+        }
+
+        function formatTime(s) {
+            let m = Math.floor(s/60); let sec = s % 60;
+            return `${m < 10 ? '0'+m : m}:${sec < 10 ? '0'+sec : sec}`;
+        }
+    </script>
+</body>
+</html>
