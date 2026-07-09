@@ -1,539 +1,651 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Affiliate Terminal - Unlimited Earning</title>
-    
-    <!-- 
-    ======================================================
-    PREMIUM ASSETS & EXTERNAL LIBRARIES
-    ======================================================
-    -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        /* 
-        ======================================================
-        ADVANCED CSS ARCHITECTURE (150+ Lines)
-        ======================================================
-        */
-        :root {
-            --primary-blue: #4834d4;
-            --secondary-blue: #686de0;
-            --success-green: #2ecc71;
-            --danger-red: #e74c3c;
-            --warning-gold: #f1c40f;
-            --bg-light: #f8faff;
-            --white: #ffffff;
-            --text-dark: #1e272e;
-            --text-muted: #808e9b;
-            --gradient-main: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            --shadow-card: 0 15px 40px rgba(72, 52, 212, 0.12);
-            --shadow-sm: 0 5px 15px rgba(0, 0, 0, 0.05);
-            --radius-lg: 40px;
-            --radius-md: 25px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>TNMINING - Referral Team</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-primary: #05020c;
+      --bg-secondary: #0d061f;
+      --bg-card: rgba(18, 10, 36, 0.65);
+      --border-color: rgba(168, 85, 247, 0.2);
+      --border-focus: rgba(6, 182, 212, 0.6);
+      --primary: #a855f7;
+      --secondary: #06b6d4;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --error: #ef4444;
+      --success: #10b981;
+    }
 
-        /* Smoothing & Resets */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
+    body {
+      background-color: var(--bg-primary);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 40%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 100px;
+    }
 
-        /* Animation Effects */
-        @keyframes fadeInSlide {
-            from { opacity: 0; transform: translateY(25px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes rotateSpinner {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+    .container {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
 
-        .animate-view { animation: fadeInSlide 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+    /* Page Header */
+    .page-title-section {
+      text-align: center;
+      margin-bottom: 22px;
+    }
 
-        /* Header Premium Styling */
-        .page-header {
-            background: var(--gradient-main);
-            padding: 60px 25px 120px 25px;
-            color: var(--white);
-            text-align: center;
-            border-bottom-left-radius: 60px;
-            border-bottom-right-radius: 60px;
-            box-shadow: 0 15px 35px rgba(72, 52, 212, 0.25);
-            position: relative;
-        }
+    .page-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
 
-        .page-header h1 {
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 10px;
-        }
+    .page-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
 
-        .page-header p {
-            font-size: 14px;
-            opacity: 0.9;
-            font-weight: 300;
-            max-width: 80%;
-            margin: 0 auto;
-        }
+    /* Affiliate Link Generator */
+    .referral-card {
+      background: linear-gradient(135deg, rgba(20, 10, 45, 0.8) 0%, rgba(8, 4, 25, 0.8) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
 
-        /* Main Content Grid */
-        .content-area {
-            padding: 0 20px;
-            margin-top: -80px;
-            flex-grow: 1;
-            max-width: 550px;
-            margin-left: auto;
-            margin-right: auto;
-            width: 100%;
-        }
+    .gift-icon {
+      font-size: 32px;
+      color: var(--secondary);
+      margin-bottom: 10px;
+      animation: float-icon 3s ease-in-out infinite;
+    }
 
-        /* Invite/Referral Code Card */
-        .invite-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 40px 30px;
-            box-shadow: var(--shadow-card);
-            text-align: center;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.9);
-        }
+    @keyframes float-icon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
 
-        .invite-card .label {
-            font-size: 11px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            font-weight: 800;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            display: block;
-        }
+    .ref-header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
 
-        .referral-box {
-            background: #f0f3ff;
-            padding: 24px;
-            border-radius: var(--radius-md);
-            margin: 10px 0 25px 0;
-            border: 2.5px dashed var(--primary-blue);
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--primary-blue);
-            letter-spacing: 6px;
-            position: relative;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .referral-box:active { transform: scale(0.96); background: #e2e8ff; }
-        .referral-box i {
-            position: absolute;
-            right: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 20px;
-            opacity: 0.3;
-        }
+    .ref-header-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
 
-        .btn-action {
-            width: 100%;
-            padding: 20px;
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            border-radius: var(--radius-md);
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            box-shadow: 0 12px 30px rgba(72, 52, 212, 0.3);
-            transition: 0.4s;
-        }
-        .btn-action:hover { background: #341f97; transform: translateY(-2px); }
+    /* Shareable link input block */
+    .link-field-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
 
-        /* Commission Rates Info Panel */
-        .info-panel {
-            background: var(--white);
-            padding: 25px;
-            border-radius: var(--radius-md);
-            margin-bottom: 30px;
-            box-shadow: var(--shadow-sm);
-            border-left: 8px solid var(--primary-blue);
-        }
+    .link-display {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: var(--secondary);
+      font-size: 12px;
+      font-family: 'Share Tech Mono', monospace;
+      outline: none;
+      text-align: left;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
 
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-        }
-        .info-row span { font-size: 14px; color: var(--text-muted); font-weight: 600; }
-        .info-row b { color: var(--primary-blue); font-size: 18px; font-weight: 800; }
+    .btn-action-copy {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 0 16px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        /* Stats Dashboard Section */
-        .stats-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 40px;
-        }
+    .btn-action-copy:active {
+      transform: scale(0.96);
+    }
 
-        .stat-card {
-            background: var(--white);
-            padding: 28px 15px;
-            border-radius: var(--radius-md);
-            text-align: center;
-            box-shadow: var(--shadow-sm);
-            transition: 0.3s;
-            border-bottom: 6px solid transparent;
-        }
-        .stat-card:hover { transform: translateY(-5px); }
-        .stat-card i { font-size: 28px; color: var(--primary-blue); margin-bottom: 12px; }
-        .stat-card p { font-size: 11px; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-bottom: 5px; }
-        .stat-card h4 { font-size: 24px; font-weight: 800; color: var(--text-dark); }
+    .btn-action-share {
+      width: 100%;
+      padding: 13px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      border-radius: 12px;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
 
-        .active-widget { border-bottom-color: var(--primary-blue); }
-        .earning-widget { border-bottom-color: var(--success-green); }
+    .btn-action-share:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--secondary);
+    }
 
-        /* Team List Layout */
-        .team-title {
-            font-size: 19px;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 20px;
-            padding-left: 10px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .team-title i { color: var(--primary-blue); background: #f0edff; padding: 12px; border-radius: 15px; font-size: 18px; }
+    /* Grid statistics metrics */
+    .ref-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
 
-        .team-list-wrapper { display: flex; flex-direction: column; gap: 15px; padding-bottom: 50px; }
+    .stat-metric-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px 8px;
+      text-align: center;
+    }
 
-        .partner-card {
-            background: var(--white);
-            padding: 22px 28px;
-            border-radius: var(--radius-md);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid #f2f2f2;
-            animation: fadeInSlide 0.6s ease backwards;
-        }
+    .metric-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+    }
 
-        /* --- UI CHANGE: ONLY NAME --- */
-        .p-info h5 { font-size: 17px; font-weight: 800; color: #2d3436; }
-        
-        .status-tag {
-            font-size: 11px;
-            padding: 6px 18px;
-            border-radius: 50px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-        }
-        .status-active { background: #e3fcef; color: var(--success-green); box-shadow: 0 4px 10px rgba(46, 204, 113, 0.1); }
-        .status-pending { background: #f1f2f6; color: #95a5a6; }
+    .metric-val {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
 
-        /* Empty Handler */
-        .empty-state { text-align: center; padding: 70px 20px; color: #bdc3c7; }
-        .empty-state i { font-size: 60px; margin-bottom: 20px; opacity: 0.5; }
+    .metric-val.purple { color: var(--primary); }
+    .metric-val.cyan { color: var(--secondary); }
 
-        /* Hidden link holder */
-        #linkVault { display: none; }
+    /* Team Lists */
+    .team-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 20px;
+      padding: 20px;
+    }
 
-        /* Toast Component */
-        .toast-popup {
-            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
-            background: #2d3436; color: white; padding: 15px 35px; border-radius: 60px;
-            font-size: 14px; z-index: 9999; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            font-weight: 500;
-        }
+    .team-card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
-    </style>
+    .team-list-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .team-member-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .member-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .member-avatar {
+      width: 34px;
+      height: 34px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .member-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .member-name {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .member-date {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .member-bonus-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+    }
+
+    .bonus-amt {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--success);
+    }
+
+    .member-status {
+      font-size: 9px;
+      font-weight: 600;
+      padding: 1.5px 6px;
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 25px 0;
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    /* Bottom Navigation Bar Styles */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: rgba(13, 6, 31, 0.9);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(168, 85, 247, 0.15);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 999;
+      padding: 0 10px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      color: var(--text-muted);
+      width: 60px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item i { font-size: 18px; }
+    .nav-item span { font-size: 10px; font-weight: 500; }
+    .nav-item.active { color: var(--primary); }
+
+    /* Center floating button */
+    .nav-item-mining {
+      position: relative;
+      top: -15px;
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff !important;
+      box-shadow: 0 8px 25px rgba(168, 85, 247, 0.45);
+      border: 4px solid var(--bg-primary);
+    }
+
+    .nav-item-mining i {
+      font-size: 24px;
+    }
+
+    /* Alert system */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      background: rgba(18, 10, 36, 0.95);
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 12px 20px;
+      border-radius: 12px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transform: translateX(120%);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .toast.show { transform: translateX(0); }
+    .toast.error { border-left: 4px solid var(--error); }
+    .toast.success { border-left: 4px solid var(--success); }
+    .toast.error i { color: var(--error); }
+    .toast.success i { color: var(--success); }
+  </style>
 </head>
 <body>
 
-    <!-- Header Section -->
-    <header class="page-header animate-view">
-        <h1>Affiliate Network</h1>
-        <p>Invite your direct partners and start earning daily commissions automatically.</p>
-    </header>
-
-    <div class="content-area">
-        
-        <!-- Invite Module Card -->
-        <div class="invite-card animate-view" style="animation-delay: 0.1s;">
-            <span class="label">My Referral ID</span>
-            <div class="referral-box" id="refCardBody" onclick="copyToClipboard('refCardBody')">
-                <span id="targetUID">UE----</span>
-                <i class="far fa-copy"></i>
-            </div>
-            
-            <!-- Specific Website Link Integrated -->
-            <button class="btn-action" onclick="copyToClipboard('linkVault')">
-                <i class="fas fa-link"></i> Copy Referral Link
-            </button>
-            <p id="linkVault" class="hidden-node"></p>
-        </div>
-
-        <!-- Bonus Rates Information Panel -->
-        <div class="info-panel animate-view" style="animation-delay: 0.2s;">
-            <div class="info-row">
-                <span>Direct Commission (Level 1)</span>
-                <b id="liveL1Rate">৳ 0</b>
-            </div>
-            <div class="info-row" style="margin-top: 5px; border-top: 1px solid #f8f8f8; padding-top: 12px;">
-                <span>Indirect Team Bonus (Level 2)</span>
-                <b id="liveL2Rate">৳ 0</b>
-            </div>
-        </div>
-
-        <!-- Global Stats Grid -->
-        <div class="stats-container animate-view" style="animation-delay: 0.3s;">
-            <div class="stat-card active-widget">
-                <i class="fas fa-users-check"></i>
-                <p>Active Team</p>
-                <h4 id="activeStatsLabel">0</h4>
-            </div>
-            <div class="stat-card earning-widget">
-                <i class="fas fa-coins"></i>
-                <p>Ref Total Earning</p>
-                <h4 id="earningStatsLabel">৳ 0.00</h4>
-            </div>
-        </div>
-
-        <!-- Team List Section -->
-        <div class="team-title animate-view" style="animation-delay: 0.4s;">
-            <i class="fas fa-user-group"></i> My Direct Team
-        </div>
-
-        <div class="team-list-wrapper" id="partnersContainer">
-            <!-- Loading Indicator -->
-            <div class="empty-state">
-                <i class="fas fa-circle-notch fa-spin" style="animation: rotateSpinner 1s linear infinite;"></i>
-                <p style="margin-top:15px; font-weight:500;">Connecting to cloud...</p>
-            </div>
-        </div>
-
+  <div class="container">
+    
+    <!-- Title Section -->
+    <div class="page-title-section">
+      <h1 class="page-title">Affiliate Network</h1>
+      <p class="page-subtitle">Invite miners and expand your hashrate</p>
     </div>
 
-    <!-- Toast Message -->
-    <div id="toast" class="toast-popup">Copied successfully!</div>
+    <!-- Referral Link Display -->
+    <div class="referral-card">
+      <div class="gift-icon">
+        <i class="fa-solid fa-people-group"></i>
+      </div>
+      <h2 class="ref-header-title">Share the Network</h2>
+      <p class="ref-header-desc">
+        Invite friends and earn **+200 POWER** instantly upon registration! Your friends also get +1,000 POWER starting bonus.
+      </p>
 
-    <!-- 
-    ======================================================
-    FIREBASE LOGIC CORE (200+ Lines)
-    ======================================================
-    -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+      <div class="link-field-row">
+        <div class="link-display" id="refLinkDisplay">Generating link...</div>
+        <button class="btn-action-copy" id="copyLinkBtn">Copy</button>
+      </div>
 
-    <script>
-        /**
-         * INITIALIZATION CONFIGURATION
-         */
-        const firebaseConfig = {
-            apiKey: "AIzaSyAOdWqPh69SEG-Z6P71xL6jlcFcNb9gMNs",
-            authDomain: "unlimited-earning-28639.firebaseapp.com",
-            databaseURL: "https://unlimited-earning-28639-default-rtdb.firebaseio.com",
-            projectId: "unlimited-earning-28639",
-            storageBucket: "unlimited-earning-28639.firebasestorage.app",
-            messagingSenderId: "1061620701842",
-            appId: "1:1061620701842:web:80fab8608da73a3fdc244b"
-        };
+      <button class="btn-action-share" id="shareBtn">
+        <i class="fa-solid fa-share-nodes"></i> Share Link
+      </button>
+    </div>
 
-        // Initialize App
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        const auth = firebase.auth();
+    <!-- Stats Grid -->
+    <div class="ref-stats-grid">
+      <div class="stat-metric-box">
+        <span class="metric-label">Total Invites</span>
+        <span class="metric-val purple" id="totalInvitesDisplay">0</span>
+      </div>
+      <div class="stat-metric-box">
+        <span class="metric-label">Valid Users</span>
+        <span class="metric-val cyan" id="validInvitesDisplay">0</span>
+      </div>
+      <div class="stat-metric-box">
+        <span class="metric-label">Power Gained</span>
+        <span class="metric-val" id="totalGainedDisplay">0 HP</span>
+      </div>
+    </div>
 
-        let loggedInUser = "";
+    <!-- Teammates registration directory -->
+    <div class="team-card">
+      <h2 class="team-card-title">
+        <i class="fa-solid fa-address-book"></i> Active Team List
+      </h2>
+      <div class="team-list-container" id="teamContainer">
+        <div class="empty-state">No teammates have joined using your link.</div>
+      </div>
+    </div>
 
-        /**
-         * AUTH STATE WATCHER
-         */
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                // Parsing phone from auth email
-                loggedInUser = user.email.split('@')[0];
-                console.log("Session Verified:", loggedInUser);
-                launchReferralSystem();
-            } else {
-                window.location.href = "index.html";
-            }
+  </div>
+
+  <!-- Bottom Navigation Menu -->
+  <nav class="bottom-nav">
+    <a href="home.html" class="nav-item">
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+    </a>
+    <a href="task.html" class="nav-item">
+      <i class="fa-solid fa-list-check"></i>
+      <span>Tasks</span>
+    </a>
+    <a href="mining.html" class="nav-item-mining">
+      <i class="fa-solid fa-circle-notch"></i>
+    </a>
+    <a href="referral.html" class="nav-item active">
+      <i class="fa-solid fa-user-group"></i>
+      <span>Referral</span>
+    </a>
+    <a href="account.html" class="nav-item">
+      <i class="fa-solid fa-user"></i>
+      <span>Account</span>
+    </a>
+  </nav>
+
+  <!-- Notification Toasts -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Firebase Legacy Compat Libraries -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDuQICVoC10i62PQMS6cX37t1eoeTg5zsc",
+      authDomain: "mining-c7b26.firebaseapp.com",
+      databaseURL: "https://mining-c7b26-default-rtdb.firebaseio.com",
+      projectId: "mining-c7b26",
+      storageBucket: "mining-c7b26.firebasestorage.app",
+      messagingSenderId: "873757658723",
+      appId: "1:873757658723:web:18a4af95953a08b440b256"
+    };
+
+    // Initialize
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    // DOM Elements
+    const toastContainer = document.getElementById('toastContainer');
+    const refLinkDisplay = document.getElementById('refLinkDisplay');
+    const copyLinkBtn = document.getElementById('copyLinkBtn');
+    const shareBtn = document.getElementById('shareBtn');
+    
+    const totalInvitesDisplay = document.getElementById('totalInvitesDisplay');
+    const validInvitesDisplay = document.getElementById('validInvitesDisplay');
+    const totalGainedDisplay = document.getElementById('totalGainedDisplay');
+    const teamContainer = document.getElementById('teamContainer');
+
+    let currentUser = null;
+    let shareableLink = "";
+
+    // Auth state evaluation
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'index.html';
+      } else {
+        currentUser = user;
+        generateReferralLink();
+        loadReferralTeamLedger();
+      }
+    });
+
+    // Alert system toast
+    function showToast(message, type = 'error') {
+      const toast = document.createElement('div');
+      toast.classList.add('toast', type);
+      const icon = type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation';
+      toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
+      toastContainer.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 50);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Set affiliate links targeting register.html?ref=[UID] on your production domain
+    function generateReferralLink() {
+      // Direct hardcoded integration using your specified GitHub Pages URL:
+      shareableLink = `https://unlimited-earning.github.io/-/register.html?ref=${currentUser.uid}`;
+      refLinkDisplay.textContent = shareableLink;
+    }
+
+    // Copy to clipboard actions
+    copyLinkBtn.addEventListener('click', () => {
+      if (!shareableLink) return;
+
+      navigator.clipboard.writeText(shareableLink)
+        .then(() => {
+          showToast("Referral link copied to clipboard!", "success");
+          copyLinkBtn.textContent = "Copied";
+          copyLinkBtn.style.background = "var(--success)";
+          
+          setTimeout(() => {
+            copyLinkBtn.textContent = "Copy";
+            copyLinkBtn.style.background = "var(--primary)";
+          }, 2000);
+        })
+        .catch(() => {
+          showToast("Failed to copy link.");
+        });
+    });
+
+    // Share link trigger
+    shareBtn.addEventListener('click', () => {
+      if (navigator.share) {
+        navigator.share({
+          title: 'TNMINING Cloud Mining',
+          text: 'Join my cloud mining squad on TNMINING and claim instantly +1000 POWER starting bonus!',
+          url: shareableLink,
+        })
+        .then(() => showToast("Link shared successfully!", "success"))
+        .catch(() => {});
+      } else {
+        copyLinkBtn.click();
+      }
+    });
+
+    // Load teammate logs
+    function loadReferralTeamLedger() {
+      db.ref(`Referrals/${currentUser.uid}`).on('value', (snapshot) => {
+        teamContainer.innerHTML = "";
+
+        if (!snapshot.exists()) {
+          totalInvitesDisplay.textContent = "0";
+          validInvitesDisplay.textContent = "0";
+          totalGainedDisplay.textContent = "0 POWER";
+          teamContainer.innerHTML = `<div class="empty-state">No teammates have joined using your link.</div>`;
+          return;
+        }
+
+        const teamList = snapshot.val();
+        const teamArray = Object.keys(teamList).map(key => teamList[key]);
+
+        // Aggregate statistics
+        const totalReferrals = teamArray.length;
+        let validReferrals = 0;
+        let powerGainedTotal = 0;
+
+        teamArray.forEach((member) => {
+          if (member.status === 'Valid') {
+            validReferrals++;
+            powerGainedTotal += parseInt(member.powerGained || 200);
+          }
         });
 
-        /**
-         * LAUNCHER ENGINE
-         */
-        function launchReferralSystem() {
-            // 1. Sync Live Admin Rates
-            fetchLiveAdminRates();
+        totalInvitesDisplay.textContent = totalReferrals;
+        validInvitesDisplay.textContent = validReferrals;
+        totalGainedDisplay.textContent = `${powerGainedTotal.toLocaleString()} HP`;
 
-            // 2. Sync Personal Records & ID
-            fetchPersonalAccountStats();
-        }
+        // Sort by registration date
+        teamArray.sort((a, b) => b.registeredAt - a.registeredAt);
 
-        /**
-         * 1. SYNC LIVE RATES (Admin Data)
-         */
-        function fetchLiveAdminRates() {
-            db.ref('settings/referral').on('value', snap => {
-                if (snap.exists()) {
-                    const rates = snap.val();
-                    document.getElementById('liveL1Rate').innerText = "৳ " + (rates.directPrice || 0);
-                    document.getElementById('liveL2Rate').innerText = "৳ " + (rates.downlinePrice || 0);
-                }
-            }, error => console.error("Database Connection Failure (Rates):", error));
-        }
+        // Render listings
+        teamArray.forEach((member) => {
+          const registeredDate = new Date(member.registeredAt).toLocaleDateString();
+          const initial = (member.username || "U").charAt(0).toUpperCase();
+          const cleanUsername = member.username ? (member.username.charAt(0).toUpperCase() + member.username.slice(1)) : "Miner";
 
-        /**
-         * 2. SYNC USER DATA (ID & Real-time Total Earnings)
-         */
-        function fetchPersonalAccountStats() {
-            db.ref('users/' + loggedInUser).on('value', snap => {
-                const user = snap.val();
-                if (!user) return;
+          const itemEl = document.createElement('div');
+          itemEl.classList.add('team-member-item');
 
-                // Syncing UID Display
-                const myUID = user.uid;
-                document.getElementById('targetUID').innerText = myUID;
-                
-                // --- ATTACHING THE SPECIFIC GITHUB WEBSITE LINK ---
-                const BASE_URL = "https://unlimited-earning.github.io/-/";
-                const finalInviteLink = `${BASE_URL}?ref=${myUID}`;
-                document.getElementById('linkVault').innerText = finalInviteLink;
-
-                // Syncing Ref Total Earning (Direct + Downline)
-                const grandTotalIncome = parseFloat(user.referralEarnings || 0);
-                document.getElementById('earningStatsLabel').innerText = "৳ " + grandTotalIncome.toFixed(2);
-
-                // Load Direct Partners (ID Hide Logic inside)
-                monitorDirectTeam(myUID);
-            });
-        }
-
-        /**
-         * 3. MONITOR DIRECT TEAM (Team Grid & Hidden ID Logic)
-         */
-        function monitorDirectTeam(uid) {
-            // Optimized query for team members
-            db.ref('users').orderByChild('referBy').equalTo(uid.toString()).on('value', snap => {
-                const partnerArea = document.getElementById('partnersContainer');
-                let liveActiveCount = 0;
-                partnerArea.innerHTML = "";
-
-                if (!snap.exists()) {
-                    partnerArea.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-users-slash"></i>
-                            <p style="font-size:14px; color:#999; margin-top:10px;">You haven't referred anyone yet.</p>
-                            <p style="font-size:11px; color:#ccc;">Invite your friends using your link!</p>
-                        </div>`;
-                    document.getElementById('activeStatsLabel').innerText = "0";
-                    return;
-                }
-
-                // Building the list dynamically
-                snap.forEach(child => {
-                    const person = child.val();
-                    const isActive = (person.status === "active");
-                    
-                    if (isActive) liveActiveCount++;
-
-                    // Creating Card Object
-                    const card = document.createElement('div');
-                    card.className = "partner-card animate-view";
-                    
-                    /**
-                     * IMPORTANT: THE PHONE/ACCOUNT ID IS NOW COMPLETELY REMOVED FROM DISPLAY
-                     * AS PER USER REQUEST. ONLY NAME AND STATUS TAGS ARE VISIBLE.
-                     */
-                    card.innerHTML = `
-                        <div class="p-info">
-                            <h5>${person.name}</h5>
-                        </div>
-                        <div class="status-tag ${isActive ? 'status-active' : 'status-pending'}">
-                            ${isActive ? 'Active' : 'Unactive'}
-                        </div>
-                    `;
-                    partnerArea.appendChild(card);
-                });
-
-                // Update Active Counter Label
-                document.getElementById('activeStatsLabel').innerText = liveActiveCount;
-                console.log("Team List Updated. Active count:", liveActiveCount);
-            });
-        }
-
-        /**
-         * UTILITY: PRO CLIPBOARD COPY
-         */
-        function copyToClipboard(id) {
-            const rawValue = document.getElementById(id).innerText;
-            // Sanitizing string
-            const cleanStr = rawValue.replace(/[^a-zA-Z0-9:/._?=-]/g, '').trim();
-
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(cleanStr).then(() => {
-                    displayToastNotification();
-                }).catch(err => {
-                    console.error("Async Copy Failed:", err);
-                    executeLegacyCopy(cleanStr);
-                });
-            } else {
-                executeLegacyCopy(cleanStr);
-            }
-        }
-
-        /**
-         * FALLBACK: LEGACY CLIPBOARD METHOD
-         */
-        function executeLegacyCopy(str) {
-            const dummy = document.createElement("textarea");
-            dummy.value = str;
-            document.body.appendChild(dummy);
-            dummy.select();
-            try {
-                document.execCommand('copy');
-                displayToastNotification();
-            } catch (err) {
-                console.error('Legacy Copy Failed:', err);
-            }
-            document.body.removeChild(dummy);
-        }
-
-        /**
-         * NOTIFICATION: TOAST POPUP UI
-         */
-        function displayToastNotification() {
-            const toast = document.getElementById('toast');
-            toast.style.display = "block";
-            setTimeout(() => {
-                toast.style.display = "none";
-            }, 2500);
-        }
-
-    </script>
+          itemEl.innerHTML = `
+            <div class="member-meta">
+              <div class="member-avatar">${initial}</div>
+              <div class="member-info">
+                <span class="member-name">${cleanUsername}</span>
+                <span class="member-date">Joined: ${registeredDate}</span>
+              </div>
+            </div>
+            <div class="member-bonus-col">
+              <span class="bonus-amt">+${member.powerGained || 200} HP</span>
+              <span class="member-status">${member.status}</span>
+            </div>
+          `;
+          teamContainer.appendChild(itemEl);
+        });
+      });
+    }
+  </script>
 </body>
 </html>
