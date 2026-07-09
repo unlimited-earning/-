@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>TNMINING - Core Engine</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-primary: #05020c;
+      --bg-secondary: #0d061f;
+      --bg-card: rgba(18, 10, 36, 0.65);
+      --border-color: rgba(168, 85, 247, 0.2);
+      --border-focus: rgba(6, 182, 212, 0.6);
+      --primary: #a855f7;
+      --secondary: #06b6d4;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --error: #ef4444;
+      --success: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 40%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 100px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+
+    .page-title-section {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .page-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .page-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .mining-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 30px 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .core-container {
+      width: 160px;
+      height: 160px;
+      margin: 0 auto 25px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .outer-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 3px dashed rgba(6, 182, 212, 0.2);
+      border-radius: 50%;
+      animation: rotate-ring-clockwise 15s linear infinite;
+    }
+
+    .inner-ring {
+      position: absolute;
+      width: 80%;
+      height: 80%;
+      border: 2px solid rgba(168, 85, 247, 0.2);
+      border-top-color: var(--primary);
+      border-bottom-color: var(--secondary);
+      border-radius: 50%;
+      animation: rotate-ring-counter 6s linear infinite;
+    }
+
+    .active .outer-ring {
+      border: 3px dashed var(--secondary);
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+      animation: rotate-ring-clockwise 4s linear infinite;
+    }
+
+    .active .inner-ring {
+      border: 2.5px solid var(--primary);
+      border-top-color: var(--secondary);
+      border-bottom-color: var(--secondary);
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
+      animation: rotate-ring-counter 1.8s linear infinite;
+    }
+
+    .core-node {
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.9) 0%, rgba(13, 6, 31, 1) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .active .core-node {
+      background: radial-gradient(circle, var(--secondary) 0%, rgba(13, 6, 31, 1) 100%);
+      box-shadow: 0 0 40px var(--secondary);
+      transform: scale(1.05);
+    }
+
+    .core-node i {
+      font-size: 32px;
+      color: #fff;
+      animation: pulse-node 2s infinite ease-in-out;
+    }
+
+    @keyframes rotate-ring-clockwise {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes rotate-ring-counter {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
+    @keyframes pulse-node {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    .live-session-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .live-earnings {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 15px;
+      text-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+    }
+
+    .progress-container {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      height: 8px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+
+    .btn-action-mining {
+      width: 100%;
+      padding: 16px;
+      border-radius: 16px;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.35);
+      transition: all 0.3s ease;
+    }
+
+    .btn-action-mining:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(168, 85, 247, 0.5);
+    }
+
+    .btn-action-mining:disabled {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .countdown-text {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 18px;
+      letter-spacing: 1px;
+    }
+
+    .estimator-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .estimator-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .estimator-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 13px;
+    }
+
+    .estimator-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .estimator-label { color: var(--text-muted); }
+    .estimator-val { font-weight: 600; color: var(--text-main); }
+    .estimator-val.highlight { color: var(--secondary); }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: rgba(13, 6, 31, 0.9);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(168, 85, 247, 0.15);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 999;
+      padding: 0 10px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      color: var(--text-muted);
+      width: 60px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item i { font-size: 18px; }
+    .nav-item span { font-size: 10px; font-weight: 500; }
+    .nav-item.active { color: var(--primary); }
+
+    .nav-item-mining {
+      position: relative;
+      top: -15px;
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff !important;
+      box-shadow: 0 8px 25px rgba(168, 85, 247, 0.45);
+      border: 4px solid var(--bg-primary);
+    }
+
+    .nav-item-mining i {
+      font-size: 24px;
+    }
+
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      background: rgba(18, 10, 36, 0.95);
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 12px 20px;
+      border-radius: 12px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transform: translateX(120%);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .toast.show { transform: translateX(0); }
+    .toast.error { border-left: 4px solid var(--error); }
+    .toast.success { border-left: 4px solid var(--success); }
+    .toast.error i { color: var(--error); }
+    .toast.success i { color: var(--success); }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <div class="page-title-section">
+      <h1 class="page-title">TON Cloud Mining</h1>
+      <p class="page-subtitle">Start cloud sessions manually every 5 hours</p>
+    </div>
+
+    <div class="mining-card" id="miningCard">
+      <div class="core-container">
+        <div class="outer-ring"></div>
+        <div class="inner-ring"></div>
+        <div class="core-node">
+          <i class="fa-solid fa-cube"></i>
+        </div>
+      </div>
+
+      <p class="live-session-label" id="sessionLabel">Session Earnings</p>
+      <div class="live-earnings" id="liveGainsDisplay">$0.00000000</div>
+
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <button class="btn-action-mining" id="miningTriggerBtn">
+        <span id="btnText">Start Mining Session</span>
+      </button>
+    </div>
+
+    <div class="estimator-card">
+      <h2 class="estimator-title">Earnings Breakdown</h2>
+      
+      <div class="estimator-row">
+        <span class="estimator-label">Current Mining Power</span>
+        <span class="estimator-val highlight" id="powerDisplay">1,000 POWER</span>
+      </div>
+      <div class="estimator-row">
+        <span class="estimator-label">Hourly Yield</span>
+        <span class="estimator-val" id="hourlyDisplay">$0.00000000</span>
+      </div>
+      <div class="estimator-row">
+        <span class="estimator-label">Daily Yield (24H)</span>
+        <span class="estimator-val" id="dailyDisplay">$0.00100000</span>
+      </div>
+      <div class="estimator-row">
+        <span class="estimator-label">Monthly Yield (30D)</span>
+        <span class="estimator-val" id="monthlyDisplay">$0.03000000</span>
+      </div>
+      <div class="estimator-row">
+        <span class="estimator-label">Yearly Yield (365D)</span>
+        <span class="estimator-val" id="yearlyDisplay">$0.36500000</span>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="home.html" class="nav-item">
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+    </a>
+    <a href="task.html" class="nav-item">
+      <i class="fa-solid fa-list-check"></i>
+      <span>Tasks</span>
+    </a>
+    <a href="mining.html" class="nav-item-mining">
+      <i class="fa-solid fa-circle-notch"></i>
+    </a>
+    <a href="referral.html" class="nav-item">
+      <i class="fa-solid fa-user-group"></i>
+      <span>Referral</span>
+    </a>
+    <a href="account.html" class="nav-item">
+      <i class="fa-solid fa-user"></i>
+      <span>Account</span>
+    </a>
+  </nav>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDuQICVoC10i62PQMS6cX37t1eoeTg5zsc",
+      authDomain: "mining-c7b26.firebaseapp.com",
+      databaseURL: "https://mining-c7b26-default-rtdb.firebaseio.com",
+      projectId: "mining-c7b26",
+      storageBucket: "mining-c7b26.firebasestorage.app",
+      messagingSenderId: "873757658723",
+      appId: "1:873757658723:web:18a4af95953a08b440b256"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    const toastContainer = document.getElementById('toastContainer');
+    const miningCard = document.getElementById('miningCard');
+    const liveGainsDisplay = document.getElementById('liveGainsDisplay');
+    const progressBar = document.getElementById('progressBar');
+    const miningTriggerBtn = document.getElementById('miningTriggerBtn');
+    const btnTextElement = document.getElementById('btnText');
+    const sessionLabel = document.getElementById('sessionLabel');
+
+    const powerDisplay = document.getElementById('powerDisplay');
+    const hourlyDisplay = document.getElementById('hourlyDisplay');
+    const dailyDisplay = document.getElementById('dailyDisplay');
+    const monthlyDisplay = document.getElementById('monthlyDisplay');
+    const yearlyDisplay = document.getElementById('yearlyDisplay');
+
+    let currentUser = null;
+    let userData = null;
+    let activeInterval = null;
+
+    const CYCLE_DURATION_SECS = 5 * 60 * 60; // 18000 Seconds
+
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'index.html';
+      } else {
+        currentUser = user;
+        setupRealtimeEngine();
+      }
+    });
+
+    function showToast(message, type = 'error') {
+      const toast = document.createElement('div');
+      toast.classList.add('toast', type);
+      const icon = type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation';
+      toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
+      toastContainer.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 50);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    function setupRealtimeEngine() {
+      db.ref(`Users/${currentUser.uid}`).on('value', (snapshot) => {
+        if (!snapshot.exists()) return;
+
+        userData = snapshot.val();
+        const currentPower = parseFloat(userData.power || 1000);
+        
+        const dayYield = currentPower * 0.000001;
+        const hourYield = dayYield / 24;
+        const monthYield = dayYield * 30;
+        const yearYield = dayYield * 365;
+
+        powerDisplay.textContent = `${Number(currentPower).toLocaleString()} POWER`;
+        hourlyDisplay.textContent = `$${hourYield.toFixed(8)}`;
+        dailyDisplay.textContent = `$${dayYield.toFixed(8)}`;
+        monthlyDisplay.textContent = `$${monthYield.toFixed(8)}`;
+        yearlyDisplay.textContent = `$${yearYield.toFixed(8)}`;
+
+        evaluateSessionState();
+      });
+    }
+
+    function evaluateSessionState() {
+      if (activeInterval) clearInterval(activeInterval);
+
+      if (userData.miningStatus === 'active') {
+        miningCard.classList.add('active');
+        sessionLabel.textContent = "Session Earnings";
+        runMiningTickerLoop();
+      } else {
+        miningCard.classList.remove('active');
+        sessionLabel.textContent = "Engine Status: Idle";
+        liveGainsDisplay.textContent = "$0.00000000";
+        progressBar.style.width = "0%";
+        
+        miningTriggerBtn.disabled = false;
+        btnTextElement.textContent = "Start Mining Session";
+      }
+    }
+
+    function runMiningTickerLoop() {
+      const startTime = parseInt(userData.miningStartTime || 0);
+      const currentPower = parseFloat(userData.power || 1000);
+      const dayYield = currentPower * 0.000001;
+      const secYield = dayYield / 86400;
+
+      const tickFunction = () => {
+        const now = Date.now();
+        const elapsedMs = now - startTime;
+        let elapsedSecs = Math.floor(elapsedMs / 1000);
+
+        if (elapsedSecs >= CYCLE_DURATION_SECS) {
+          clearInterval(activeInterval);
+          progressBar.style.width = "100%";
+          
+          const totalSessionEarnings = CYCLE_DURATION_SECS * secYield;
+          liveGainsDisplay.textContent = `$${totalSessionEarnings.toFixed(8)}`;
+          
+          miningTriggerBtn.disabled = false;
+          btnTextElement.textContent = "Claim Earnings";
+          sessionLabel.textContent = "Cycle Completed! Ready to claim";
+        } else {
+          const remainingSecs = CYCLE_DURATION_SECS - elapsedSecs;
+          const percentage = (elapsedSecs / CYCLE_DURATION_SECS) * 100;
+          
+          progressBar.style.width = `${percentage}%`;
+          
+          const currentEarnings = elapsedSecs * secYield;
+          liveGainsDisplay.textContent = `$${currentEarnings.toFixed(8)}`;
+          
+          const hours = Math.floor(remainingSecs / 3600).toString().padStart(2, '0');
+          const minutes = Math.floor((remainingSecs % 3600) / 60).toString().padStart(2, '0');
+          const seconds = (remainingSecs % 60).toString().padStart(2, '0');
+          
+          miningTriggerBtn.disabled = true;
+          btnTextElement.innerHTML = `Mining... <span class="countdown-text">${hours}:${minutes}:${seconds}</span>`;
+        }
+      };
+
+      tickFunction();
+      activeInterval = setInterval(tickFunction, 1000);
+    }
+
+    miningTriggerBtn.addEventListener('click', () => {
+      if (miningTriggerBtn.disabled) return;
+
+      if (userData.miningStatus !== 'active') {
+        const startTime = Date.now();
+        
+        db.ref(`Users/${currentUser.uid}`).update({
+          miningStatus: "active",
+          miningStartTime: startTime
+        }).then(() => {
+          showToast("Cloud mining session initialized!", "success");
+        }).catch((err) => {
+          showToast("Failed to initialize session.");
+        });
+
+      } else {
+        const startTime = parseInt(userData.miningStartTime || 0);
+        const elapsedSecs = Math.floor((Date.now() - startTime) / 1000);
+
+        if (elapsedSecs < CYCLE_DURATION_SECS) {
+          showToast("Your cycle is still actively running.");
+          return;
+        }
+
+        miningTriggerBtn.disabled = true;
+        btnTextElement.textContent = "Processing payout...";
+
+        const currentPower = parseFloat(userData.power || 1000);
+        const cycleEarnings = CYCLE_DURATION_SECS * (currentPower * 0.000001 / 86400);
+
+        const userRef = db.ref(`Users/${currentUser.uid}`);
+        userRef.transaction((curr) => {
+          if (curr) {
+            curr.balance = parseFloat(curr.balance || 0) + cycleEarnings;
+            curr.totalEarnings = parseFloat(curr.totalEarnings || 0) + cycleEarnings;
+            curr.todayEarnings = parseFloat(curr.todayEarnings || 0) + cycleEarnings;
+            curr.miningStatus = "idle";
+            curr.miningStartTime = 0;
+            curr.completedMiningCycles = (curr.completedMiningCycles || 0) + 1; // Increment local completion count
+          }
+          return curr;
+        }, async (error, committed) => {
+          if (committed) {
+            showToast(`Claim successful! +$${cycleEarnings.toFixed(6)} added to balance.`, "success");
+            
+            // Referral Rewards & Milestone Check
+            const referrerUid = userData.referredBy;
+            if (referrerUid) {
+              const referralRef = db.ref(`Referrals/${referrerUid}/${currentUser.uid}`);
+              const snap = await referralRef.get();
+              
+              if (snap.exists()) {
+                const refData = snap.val();
+                const newCyclesCount = (refData.miningCyclesCompleted || 0) + 1;
+                
+                let referralStatus = refData.status || "Pending";
+                let extraPowerReward = 0;
+                let updatePayload = { miningCyclesCompleted: newCyclesCount };
+
+                // 1. Check for first cycle completion (Pending -> Valid)
+                if (referralStatus === "Pending") {
+                  referralStatus = "Valid";
+                  extraPowerReward += 1000; // Referrer receives +1000 POWER base reward
+                  updatePayload.status = "Valid";
+                  updatePayload.powerGained = 1000;
+                }
+
+                // 2. Check for 10th milestone completion
+                if (newCyclesCount >= 10 && !refData.bonus2kClaimed) {
+                  extraPowerReward += 2000; // Award extra premium +2,000 POWER Milestone Reward
+                  updatePayload.bonus2kClaimed = true;
+                  updatePayload.powerGained = (refData.powerGained || 1000) + 2000;
+                }
+
+                // Update the logs under Referrals
+                await referralRef.update(updatePayload);
+
+                // Update Referrer Profile transactionally if any power was earned
+                if (extraPowerReward > 0) {
+                  const referrerUserRef = db.ref(`Users/${referrerUid}`);
+                  await referrerUserRef.transaction((refUser) => {
+                    if (refUser) {
+                      refUser.power = (refUser.power || 1000) + extraPowerReward;
+                      if (updatePayload.status === "Valid") {
+                        refUser.referralsCount = (refUser.referralsCount || 0) + 1;
+                      }
+                    }
+                    return refUser;
+                  });
+                }
+              }
+            }
+          } else {
+            showToast("Transaction failed. Try again.");
+            evaluateSessionState();
+          }
+        });
+      }
+    });
+
+    window.addEventListener('beforeunload', () => {
+      if (activeInterval) clearInterval(activeInterval);
+    });
+  </script>
+</body>
+</html>
