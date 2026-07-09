@@ -100,7 +100,7 @@
     }
     @keyframes shimmer { 100% { transform: translateX(100%); } }
 
-    /* Top Profile Section Card (Imp 1) */
+    /* Top Profile Section Card */
     .profile-hero-card {
       background: radial-gradient(circle at 50% 0%, rgba(24, 12, 54, 0.6) 0%, rgba(9, 4, 25, 0.95) 100%);
       border: 1.5px solid var(--border-color);
@@ -229,7 +229,7 @@
       letter-spacing: 1px;
     }
 
-    /* Statistics Cards Grid (Imp 2) */
+    /* Statistics Cards Grid */
     .account-stats-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -266,7 +266,7 @@
     .acc-stat-val.cyan { color: var(--secondary); }
     .acc-stat-val.gold { color: var(--gold); }
 
-    /* Info Accordion Ledger (Imp 3) */
+    /* Info Accordion Ledger */
     .accordion-card {
       background: var(--bg-card);
       border: 1px solid rgba(255, 255, 255, 0.03);
@@ -294,7 +294,7 @@
     .acc-row-val { font-weight: 600; color: var(--text-main); }
     .acc-row-val.success { color: var(--success); }
 
-    /* Summary Details (Imp 5, 6, 7 & 8) */
+    /* Summary Details */
     .summary-card {
       background: var(--bg-card);
       border: 1px solid rgba(255, 255, 255, 0.03);
@@ -303,7 +303,7 @@
       margin-bottom: 20px;
     }
 
-    /* Activity Timeline Ledger (Imp 9) */
+    /* Activity Timeline Ledger */
     .timeline-card {
       background: var(--bg-card);
       border: 1px solid rgba(255,255,255,0.03);
@@ -360,7 +360,7 @@
       color: var(--text-muted);
     }
 
-    /* Dynamic Menu Selection Rows (Imp 4) */
+    /* Dynamic Menu Selection Rows */
     .settings-menu-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -444,7 +444,7 @@
       color: var(--error);
     }
 
-    /* Shortcuts actions panel (Imp 10) */
+    /* Shortcuts actions panel */
     .quick-actions-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -561,7 +561,7 @@
 </head>
 <body>
 
-  <!-- Premium Skeleton Loading Screen (Imp 12) -->
+  <!-- Premium Skeleton Loading Screen -->
   <div class="skeleton-screen" id="skeletonContainer">
     <div style="height: 140px; width: 100%; background: var(--bg-card); border-radius:24px;"></div>
     <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:12px;">
@@ -845,17 +845,17 @@
     const auth = firebase.auth();
     const db = firebase.database();
 
-    // DOM Elements
+    // DOM selectors
     const skeletonContainer = document.getElementById('skeletonContainer');
     const mainContent = document.getElementById('mainContent');
 
-    const avatarDisplay = document.getElementById('avatarDisplay');
+    const userAvatar = document.getElementById('userAvatar');
     const usernameDisplay = document.getElementById('usernameDisplay');
-    const statusBadge = document.getElementById('statusBadge');
+    const userStatusBox = document.getElementById('userStatusBox');
     const statusLabel = document.getElementById('statusLabel');
-    const registeredDateLabel = document.getElementById('registeredDateLabel');
-    const uidMono = document.getElementById('uidMono');
-    const idBoxCopyBtn = document.getElementById('idBoxCopyBtn');
+
+    const totalCombinedBalanceDisplay = document.getElementById('totalCombinedBalanceDisplay');
+    const mainWithdrawableDisplay = document.getElementById('mainWithdrawableDisplay');
 
     const statTotalPower = document.getElementById('statTotalPower');
     const statActivePower = document.getElementById('statActivePower');
@@ -889,6 +889,7 @@
     const timelineContainer = document.getElementById('timelineContainer');
     const adminLink = document.getElementById('adminLink');
     const logoutBtn = document.getElementById('logoutBtn');
+    const idBoxCopyBtn = document.getElementById('idBoxCopyBtn');
     const toastContainer = document.getElementById('toastContainer');
 
     let currentUser = null;
@@ -962,11 +963,13 @@
         // Dynamic multi-session computations
         db.ref(`Users/${currentUser.uid}/activeSessions`).on('value', (sessionsSnap) => {
           const sessions = sessionsSnap.exists() ? sessionsSnap.val() : {};
-          const sessionsArray = Object.keys(sessions).map(k => sessions[key]);
+          
+          // BUG FIX: Corrected iteration loop target maps
+          const sessionsArray = Object.keys(sessions).map(k => sessions[k]);
           
           let allocatedPower = 0;
-          Object.keys(sessions).forEach((key) => {
-            allocatedPower += parseInt(sessions[key].powerAllocated || 0);
+          sessionsArray.forEach((session) => {
+            allocatedPower += parseInt(session.powerAllocated || 0);
           });
 
           const idlePower = Math.max(0, totalPower - allocatedPower);
@@ -974,10 +977,9 @@
           statActivePower.textContent = `${Number(allocatedPower).toLocaleString()} HP`;
           statIdlePower.textContent = `${Number(idlePower).toLocaleString()} HP`;
 
-          sumActiveSessions.textContent = `${Object.keys(sessions).length} Streams`;
+          sumActiveSessions.textContent = `${sessionsArray.length} Streams`;
           
-          const hasActiveSessions = Object.keys(sessions).length > 0;
-          if (hasActiveSessions) {
+          if (sessionsArray.length > 0) {
             statusBadge.classList.add('active');
             statusLabel.textContent = "Online";
           } else {
@@ -1038,7 +1040,7 @@
               sumCompletedWithdrawn.textContent = `$${sumCompleted.toFixed(4)}`;
               sumRejectedCount.textContent = `${rejectedCount} Requests`;
 
-              // Generate Activities Timeline (Rule 9)
+              // Generate Activities Timeline
               generateChronologicalActivities(sessions, team, logs);
             });
           });
@@ -1046,7 +1048,7 @@
       });
     }
 
-    // Build visually rich historical timeline logs (Rule 9 timeline requirements)
+    // Build chronological timeline logs
     function generateChronologicalActivities(sessions, team, withdrawLogs) {
       let timelineHTML = "";
 
@@ -1065,6 +1067,9 @@
             <span class="timeline-time">Platform ledger active</span>
           </div>
         `;
+        // Dismantle loader
+        skeletonContainer.style.display = 'none';
+        mainContent.style.display = 'block';
         return;
       }
 
@@ -1110,8 +1115,8 @@
 
       timelineContainer.innerHTML = timelineHTML;
 
-      // Unmask content
-      skeletonContainer.classList.add('hidden');
+      // Dismantle loader
+      skeletonContainer.style.display = 'none';
       mainContent.style.display = 'block';
     }
 
