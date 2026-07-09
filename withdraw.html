@@ -1,253 +1,808 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Withdraw - Unlimited Earning</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/dist/css/all.min.css">
-    
-    <style>
-        :root {
-            --primary: #4834d4;
-            --secondary: #686de0;
-            --success: #2ecc71;
-            --danger: #e74c3c;
-            --bg: #f5f6fa;
-            --white: #ffffff;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>TNMINING - Withdraw</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-primary: #05020c;
+      --bg-secondary: #0d061f;
+      --bg-card: rgba(18, 10, 36, 0.65);
+      --border-color: rgba(168, 85, 247, 0.2);
+      --border-focus: rgba(6, 182, 212, 0.6);
+      --primary: #a855f7;
+      --secondary: #06b6d4;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --error: #ef4444;
+      --success: #10b981;
+      --warning: #f59e0b;
+    }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--bg); padding-bottom: 30px; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        .header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            padding: 30px 20px 60px 20px; color: white; border-bottom-left-radius: 35px; border-bottom-right-radius: 35px; text-align: center;
-        }
+    body {
+      background-color: var(--bg-primary);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 40%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 100px;
+    }
 
-        .balance-card {
-            background: var(--white); margin: -40px 20px 20px 20px; padding: 25px; border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center;
-        }
-        .balance-card h2 { font-size: 32px; color: var(--primary); font-weight: 600; margin-top: 5px; }
+    .container {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
 
-        /* Status Info */
-        .status-info { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 0 20px 20px 20px; }
-        .info-box { background: white; padding: 12px; border-radius: 12px; text-align: center; border: 1px solid #eee; }
-        .info-box p { font-size: 10px; color: #888; text-transform: uppercase; }
-        .info-box h4 { font-size: 14px; color: var(--primary); }
+    /* Page Header */
+    .page-title-section {
+      text-align: center;
+      margin-bottom: 22px;
+    }
 
-        /* Methods */
-        .methods-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 20px; margin-bottom: 20px; }
-        .method-item {
-            background: white; padding: 15px 5px; border-radius: 15px; text-align: center; cursor: pointer;
-            border: 2px solid transparent; transition: 0.3s;
-        }
-        .method-item img { width: 30px; margin-bottom: 8px; }
-        .method-item p { font-size: 12px; font-weight: 600; }
-        .method-item.active { border-color: var(--primary); background: #f0f3ff; }
+    .page-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
 
-        /* Form */
-        .withdraw-form { background: white; margin: 0 20px; padding: 20px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 12px; color: #666; margin-bottom: 5px; }
-        .form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; outline: none; font-size: 15px; }
+    .page-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
 
-        .btn-submit {
-            width: 100%; padding: 15px; background: var(--primary); color: white; border: none;
-            border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 5px 15px rgba(72, 52, 212, 0.3);
-        }
-        .btn-submit:disabled { background: #ccc; box-shadow: none; }
+    /* Wallet Hero Balance display */
+    .wallet-hero {
+      background: linear-gradient(135deg, rgba(20, 10, 45, 0.8) 0%, rgba(8, 4, 25, 0.8) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
 
-        .rules-box { padding: 20px; font-size: 12px; color: #777; line-height: 1.6; }
-        .rules-box b { color: var(--primary); }
-    </style>
+    .wallet-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .wallet-val {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 30px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff, var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Form Card */
+    .withdraw-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .form-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .limit-indicator {
+      font-size: 11px;
+      color: var(--error);
+      font-weight: 500;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 13px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      color: var(--text-main);
+      font-size: 14.5px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--border-focus);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    /* Max Button inside Input */
+    .btn-max {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid var(--primary);
+      padding: 5px 10px;
+      border-radius: 8px;
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-max:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .wallet-input {
+      padding-left: 42px;
+    }
+
+    .input-wrapper i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .btn-withdraw-submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border: none;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-withdraw-submit:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.45);
+    }
+
+    .btn-withdraw-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* History Log Card */
+    .history-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 20px;
+      padding: 20px;
+    }
+
+    .history-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .history-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .item-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .item-wallet {
+      font-size: 12px;
+      color: var(--text-main);
+      font-weight: 500;
+      font-family: 'Share Tech Mono', monospace;
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .item-date {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .item-status-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .item-amount {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .status-badge {
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2.5px 8px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    .status-badge.pending { background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .status-badge.approved { background: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .status-badge.completed { background: rgba(6, 182, 212, 0.15); color: var(--secondary); border: 1px solid rgba(6, 182, 212, 0.3); }
+    .status-badge.rejected { background: rgba(239, 68, 68, 0.15); color: var(--error); border: 1px solid rgba(239, 68, 68, 0.3); }
+
+    .empty-state {
+      text-align: center;
+      padding: 20px 0;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Modal dialog overrides */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 2, 12, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 380px;
+      padding: 24px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .modal-detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 12.5px;
+    }
+
+    .modal-detail-row:last-of-type {
+      border-bottom: none;
+      margin-bottom: 18px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-modal {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-cancel {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-confirm {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: #fff;
+    }
+
+    /* Bottom Navigation Bar Styles */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: rgba(13, 6, 31, 0.9);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(168, 85, 247, 0.15);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 999;
+      padding: 0 10px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      color: var(--text-muted);
+      width: 60px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item i { font-size: 18px; }
+    .nav-item span { font-size: 10px; font-weight: 500; }
+    .nav-item.active { color: var(--primary); }
+
+    /* Center floating button */
+    .nav-item-mining {
+      position: relative;
+      top: -15px;
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff !important;
+      box-shadow: 0 8px 25px rgba(168, 85, 247, 0.45);
+      border: 4px solid var(--bg-primary);
+    }
+
+    .nav-item-mining i {
+      font-size: 24px;
+    }
+
+    /* Toast elements */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1100;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      background: rgba(18, 10, 36, 0.95);
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 12px 20px;
+      border-radius: 12px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transform: translateX(120%);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .toast.show { transform: translateX(0); }
+    .toast.error { border-left: 4px solid var(--error); }
+    .toast.success { border-left: 4px solid var(--success); }
+    .toast.error i { color: var(--error); }
+    .toast.success i { color: var(--success); }
+  </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>Withdrawal</h1>
-    <p style="font-size: 12px; opacity: 0.8;">Cash out your earnings</p>
-</div>
-
-<div class="balance-card">
-    <p style="font-size: 14px; color: #666;">Total Balance</p>
-    <h2>৳ <span id="uBalance">0.00</span></h2>
-</div>
-
-<div class="status-info">
-    <div class="info-box"><p>Req. Ref</p><h4 id="reqRef">0</h4></div>
-    <div class="info-box"><p>Active Ref</p><h4 id="myActiveRef">0</h4></div>
-    <div class="info-box"><p>Daily Limit</p><h4 id="dailyLimit">0/3</h4></div>
-</div>
-
-<div class="methods-grid">
-    <div class="method-item active" onclick="setMethod('Recharge', this)">
-        <img src="https://cdn-icons-png.flaticon.com/512/3159/3159045.png">
-        <p>Recharge</p>
+  <div class="container">
+    
+    <!-- Title Area -->
+    <div class="page-title-section">
+      <h1 class="page-title">Funds Withdrawal</h1>
+      <p class="page-subtitle">Secure payment gateway to TON networks</p>
     </div>
-    <div class="method-item" onclick="setMethod('Nagad', this)">
-        <img src="https://it-bari.com/wp-content/uploads/2021/05/Nagad-Logo-Vector.png">
-        <p>Nagad</p>
-    </div>
-    <div class="method-item" onclick="setMethod('Bkash', this)">
-        <img src="https://www.logo.wine/a/logo/BKash/BKash-Icon-Logo.wine.svg">
-        <p>Bkash</p>
-    </div>
-</div>
 
-<div class="withdraw-form">
-    <div class="form-group">
-        <label>Selected Method</label>
-        <input type="text" id="methodDisplay" value="Recharge" readonly style="background: #f8f9fd; color: #888;">
+    <!-- Active Balance Overview -->
+    <div class="wallet-hero">
+      <div class="wallet-label">Available Balance</div>
+      <div class="wallet-val" id="userBalanceDisplay">$0.00000000</div>
     </div>
-    <div class="form-group">
-        <label>Enter Amount</label>
-        <input type="number" id="wAmt" placeholder="Minimum ৳ 20">
+
+    <!-- Payout Request form -->
+    <div class="withdraw-card">
+      <form id="withdrawForm">
+        
+        <div class="form-group">
+          <div class="form-label-row">
+            <span class="form-label" for="amountInput">Withdrawal Amount ($)</span>
+            <span class="limit-indicator">Min. Payout: $0.20</span>
+          </div>
+          <div class="input-wrapper">
+            <input type="number" step="any" min="0.20" id="amountInput" class="form-input" placeholder="0.00" required>
+            <div class="btn-max" id="maxBtn">MAX</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label-row">
+            <span class="form-label" for="addressInput">TON Wallet Address</span>
+          </div>
+          <div class="input-wrapper">
+            <input type="text" id="addressInput" class="form-input wallet-input" placeholder="UQ... or EQ..." minlength="24" required>
+            <i class="fa-solid fa-link"></i>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-withdraw-submit" id="reviewBtn">Review Payout</button>
+      </form>
     </div>
-    <div class="form-group">
-        <label>Account Number</label>
-        <input type="number" id="wNum" placeholder="01XXXXXXXXX">
+
+    <!-- Payout Transaction History -->
+    <div class="history-card">
+      <h2 class="history-title">
+        <i class="fa-solid fa-clock-rotate-left"></i> Withdrawal History
+      </h2>
+      <div class="history-list" id="historyContainer">
+        <!-- Rendered in script -->
+        <div class="empty-state">No transaction logs loaded.</div>
+      </div>
     </div>
-    <button class="btn-submit" id="btnSub" onclick="handleWithdraw()">Submit Request</button>
-</div>
 
-<div class="rules-box">
-    <b>Withdrawal Rules:</b><br>
-    • Recharge: <span id="rLimit">20 - 39</span> TK<br>
-    • Nagad: Min <span id="nLimit">40</span> TK<br>
-    • Bkash: Min <span id="bLimit">60</span> TK<br>
-    • One <b>Active Referral</b> is required to withdraw.
-</div>
+  </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <!-- Review Confirmation Modal Overlay -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal-card">
+      <h3 class="modal-title">Confirm Payout Request</h3>
+      
+      <div class="modal-detail-row">
+        <span class="modal-label">Requested Payout</span>
+        <span class="modal-val" id="confirmAmount">$0.00</span>
+      </div>
+      <div class="modal-detail-row">
+        <span class="modal-label">Gateway Asset</span>
+        <span class="modal-val">TON Coin</span>
+      </div>
+      <div class="modal-detail-row">
+        <span class="modal-label" style="max-width: 100px;">Network Destination</span>
+        <span class="modal-val" style="word-break: break-all; text-align: right; max-width: 180px; font-family: 'Share Tech Mono', monospace;" id="confirmAddress">-</span>
+      </div>
+      <div class="modal-detail-row">
+        <span class="modal-label">Processing Status</span>
+        <span class="modal-val" style="color: var(--warning);">Pending Approval</span>
+      </div>
 
-<script>
+      <div class="modal-actions">
+        <button type="button" class="btn-modal btn-cancel" id="cancelModalBtn">Cancel</button>
+        <button type="button" class="btn-modal btn-confirm" id="confirmModalBtn">Confirm Withdraw</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Bar -->
+  <nav class="bottom-nav">
+    <a href="home.html" class="nav-item">
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+    </a>
+    <a href="task.html" class="nav-item">
+      <i class="fa-solid fa-list-check"></i>
+      <span>Tasks</span>
+    </a>
+    <a href="mining.html" class="nav-item-mining">
+      <i class="fa-solid fa-circle-notch"></i>
+    </a>
+    <a href="referral.html" class="nav-item">
+      <i class="fa-solid fa-user-group"></i>
+      <span>Referral</span>
+    </a>
+    <a href="account.html" class="nav-item">
+      <i class="fa-solid fa-user"></i>
+      <span>Account</span>
+    </a>
+  </nav>
+
+  <!-- Alerts Toasts -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+  <script>
+    // Firebase Configuration
     const firebaseConfig = {
-        apiKey: "AIzaSyAOdWqPh69SEG-Z6P71xL6jlcFcNb9gMNs",
-        authDomain: "unlimited-earning-28639.firebaseapp.com",
-        databaseURL: "https://unlimited-earning-28639-default-rtdb.firebaseio.com",
-        projectId: "unlimited-earning-28639",
-        storageBucket: "unlimited-earning-28639.firebasestorage.app",
-        messagingSenderId: "1061620701842",
-        appId: "1:1061620701842:web:80fab8608da73a3fdc244b"
+      apiKey: "AIzaSyDuQICVoC10i62PQMS6cX37t1eoeTg5zsc",
+      authDomain: "mining-c7b26.firebaseapp.com",
+      databaseURL: "https://mining-c7b26-default-rtdb.firebaseio.com",
+      projectId: "mining-c7b26",
+      storageBucket: "mining-c7b26.firebasestorage.app",
+      messagingSenderId: "873757658723",
+      appId: "1:873757658723:web:18a4af95953a08b440b256"
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+    // Initialize
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
     const auth = firebase.auth();
+    const db = firebase.database();
 
+    // DOM Elements
+    const userBalanceDisplay = document.getElementById('userBalanceDisplay');
+    const amountInput = document.getElementById('amountInput');
+    const addressInput = document.getElementById('addressInput');
+    const maxBtn = document.getElementById('maxBtn');
+    const withdrawForm = document.getElementById('withdrawForm');
+    const historyContainer = document.getElementById('historyContainer');
+    const toastContainer = document.getElementById('toastContainer');
+
+    // Confirm Modal Details
+    const confirmModal = document.getElementById('confirmModal');
+    const confirmAmount = document.getElementById('confirmAmount');
+    const confirmAddress = document.getElementById('confirmAddress');
+    const cancelModalBtn = document.getElementById('cancelModalBtn');
+    const confirmModalBtn = document.getElementById('confirmModalBtn');
+
+    let currentUser = null;
+    let localBalance = 0;
     let userData = null;
-    let settings = { minRecharge: 20, maxRecharge: 39, minNagad: 40, minBkash: 60, requiredRef: 1 };
-    let selectedMethod = "Recharge";
 
-    auth.onAuthStateChanged(user => {
-        if(user) {
-            const phone = user.email.split('@')[0];
-            loadData(phone);
-        } else {
-            window.location.href = "index.html";
-        }
+    // Route Guard check
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'index.html';
+      } else {
+        currentUser = user;
+        bindUserBalance();
+        loadWithdrawalHistory();
+      }
     });
 
-    function loadData(phone) {
-        // Load Settings
-        db.ref('settings/withdraw').on('value', snap => {
-            if(snap.exists()){
-                settings = snap.val();
-                document.getElementById('rLimit').innerText = `${settings.minRecharge} - ${settings.maxRecharge}`;
-                document.getElementById('nLimit').innerText = settings.minNagad;
-                document.getElementById('bLimit').innerText = settings.minBkash;
-                document.getElementById('reqRef').innerText = settings.requiredRef;
-            }
-        });
-
-        // Load User Info
-        db.ref('users/' + phone).on('value', snap => {
-            userData = snap.val();
-            if(userData) {
-                document.getElementById('uBalance').innerText = (userData.balance || 0).toFixed(2);
-                
-                // Count Real Active Referrals
-                db.ref('users').orderByChild('referBy').equalTo(userData.uid.toString()).on('value', refSnap => {
-                    let count = 0;
-                    refSnap.forEach(c => { if(c.val().status === "active") count++; });
-                    document.getElementById('myActiveRef').innerText = count;
-                    userData.realActiveRef = count;
-                });
-
-                // Check Daily Limit
-                const today = new Date().toLocaleDateString();
-                if(userData.lastWithdrawDate !== today) {
-                    db.ref('users/' + phone).update({ dailyWithdrawCount: 0, lastWithdrawDate: today });
-                    document.getElementById('dailyLimit').innerText = "0/3";
-                } else {
-                    document.getElementById('dailyLimit').innerText = (userData.dailyWithdrawCount || 0) + "/3";
-                }
-            }
-        });
+    // Simple alert trigger
+    function showToast(message, type = 'error') {
+      const toast = document.createElement('div');
+      toast.classList.add('toast', type);
+      const icon = type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation';
+      toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
+      toastContainer.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 50);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
     }
 
-    function setMethod(m, el) {
-        selectedMethod = m;
-        document.getElementById('methodDisplay').value = m;
-        document.querySelectorAll('.method-item').forEach(i => i.classList.remove('active'));
-        el.classList.add('active');
+    // Connect real-time balance metrics
+    function bindUserBalance() {
+      db.ref(`Users/${currentUser.uid}`).on('value', (snapshot) => {
+        if (!snapshot.exists()) return;
+        userData = snapshot.val();
+        localBalance = parseFloat(userData.balance || 0);
+        userBalanceDisplay.textContent = `$${localBalance.toFixed(8)}`;
+      });
     }
 
-    async function handleWithdraw() {
-        const amt = parseFloat(document.getElementById('wAmt').value);
-        const num = document.getElementById('wNum').value.trim();
-        const btn = document.getElementById('btnSub');
+    // Fill maximum balance trigger
+    maxBtn.addEventListener('click', () => {
+      amountInput.value = localBalance;
+    });
 
-        if(!amt || !num) return alert("Fill all fields!");
-        if(num.length < 10) return alert("Invalid Number!");
-        if(amt > userData.balance) return alert("Insufficient Balance!");
-        if((userData.dailyWithdrawCount || 0) >= 3) return alert("Daily limit reached!");
-        if((userData.realActiveRef || 0) < settings.requiredRef) return alert(`Minimum ${settings.requiredRef} active referral required!`);
+    // Review Request submission validation
+    withdrawForm.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-        // Validate Method Limits
-        if(selectedMethod === "Recharge") {
-            if(amt < settings.minRecharge || amt > settings.maxRecharge) return alert(`Recharge limit: ৳${settings.minRecharge} - ৳${settings.maxRecharge}`);
-        } else if(selectedMethod === "Nagad") {
-            if(amt < settings.minNagad) return alert(`Min Nagad: ৳${settings.minNagad}`);
-        } else if(selectedMethod === "Bkash") {
-            if(amt < settings.minBkash) return alert(`Min Bkash: ৳${settings.minBkash}`);
+      const reqAmount = parseFloat(amountInput.value);
+      const reqAddress = addressInput.value.trim();
+
+      if (reqAmount < 0.20) {
+        showToast("Minimum payout limit is $0.20.");
+        return;
+      }
+
+      if (reqAmount > localBalance) {
+        showToast("Insufficient balance to process request.");
+        return;
+      }
+
+      if (reqAddress.length < 24) {
+        showToast("Enter a valid TON network recipient address.");
+        return;
+      }
+
+      // Configure Modal review card details
+      confirmAmount.textContent = `$${reqAmount.toFixed(4)}`;
+      confirmAddress.textContent = reqAddress;
+      
+      // Reveal Modal Overlay UI
+      confirmModal.classList.add('active');
+    });
+
+    // Close Confirmation Modal
+    cancelModalBtn.addEventListener('click', () => {
+      confirmModal.classList.remove('active');
+    });
+
+    // Process Withdrawal Request inside Firebase
+    confirmModalBtn.addEventListener('click', () => {
+      const requestedVal = parseFloat(amountInput.value);
+      const targetAddress = addressInput.value.trim();
+
+      confirmModal.classList.remove('active');
+      confirmModalBtn.disabled = true;
+
+      // Atomic Balance transactional verification
+      const userRef = db.ref(`Users/${currentUser.uid}`);
+      userRef.transaction((curr) => {
+        if (curr) {
+          if (parseFloat(curr.balance) < requestedVal) {
+            // Cancel transaction inside database (insufficient funds)
+            return; 
+          }
+          curr.balance = parseFloat(curr.balance) - requestedVal;
+        }
+        return curr;
+      }, (error, committed, snapshot) => {
+        if (error) {
+          showToast("Network mismatch. Transaction canceled.");
+          confirmModalBtn.disabled = false;
+        } else if (!committed) {
+          showToast("Payout abort: Insufficient available balance.");
+          confirmModalBtn.disabled = false;
+        } else {
+          // Balance was safely deducted, create the global and personal logs
+          const withdrawPushRef = db.ref('Withdraws').push();
+          const withdrawId = withdrawPushRef.key;
+
+          const logData = {
+            requestId: withdrawId,
+            uid: currentUser.uid,
+            username: userData.username,
+            amount: requestedVal,
+            wallet: targetAddress,
+            status: "Pending",
+            createdAt: firebase.database.ServerValue.TIMESTAMP
+          };
+
+          // Update global ledger and user inner list in parallel
+          const updateObj = {};
+          updateObj[`Withdraws/${withdrawId}`] = logData;
+          updateObj[`Users/${currentUser.uid}/withdrawHistory/${withdrawId}`] = logData;
+
+          db.ref().update(updateObj)
+            .then(() => {
+              showToast("Withdrawal requested successfully!", "success");
+              withdrawForm.reset();
+              confirmModalBtn.disabled = false;
+            })
+            .catch(() => {
+              showToast("Payment system error logging transactions.");
+              confirmModalBtn.disabled = false;
+            });
+        }
+      });
+    });
+
+    // Populate transaction logs history
+    function loadWithdrawalHistory() {
+      db.ref(`Users/${currentUser.uid}/withdrawHistory`).on('value', (snapshot) => {
+        historyContainer.innerHTML = "";
+
+        if (!snapshot.exists()) {
+          historyContainer.innerHTML = `<div class="empty-state">No transaction logs loaded.</div>`;
+          return;
         }
 
-        btn.disabled = true;
-        const reqID = Date.now();
+        const logs = snapshot.val();
+        const logsArray = Object.keys(logs).map(key => logs[key]);
 
-        try {
-            // 1. Add to Admin Requests
-            await db.ref('withdrawal_requests/' + reqID).set({
-                id: reqID, uid: userData.uid, name: userData.name, 
-                userPhone: userData.phone, withdrawNumber: num,
-                amount: amt, method: selectedMethod, status: "pending", timestamp: reqID
-            });
+        // Render latest request first
+        logsArray.sort((a, b) => b.createdAt - a.createdAt);
 
-            // 2. Add to User History
-            await db.ref('history/' + userData.phone).push({
-                type: 'withdraw', title: `Withdraw Pending (${selectedMethod})`,
-                amount: amt, status: 'Pending', timestamp: reqID
-            });
+        logsArray.forEach((item) => {
+          const formattedDate = new Date(item.createdAt).toLocaleString();
+          const itemEl = document.createElement('div');
+          itemEl.classList.add('history-item');
 
-            // 3. Deduct Balance & Update Count
-            await db.ref('users/' + userData.phone).update({
-                balance: (userData.balance - amt),
-                dailyWithdrawCount: (userData.dailyWithdrawCount || 0) + 1
-            });
-
-            alert("Request Submitted Successfully!");
-            document.getElementById('wAmt').value = "";
-            document.getElementById('wNum').value = "";
-        } catch (e) {
-            alert(e.message);
-        }
-        btn.disabled = false;
+          itemEl.innerHTML = `
+            <div class="item-meta">
+              <span class="item-wallet">${item.wallet}</span>
+              <span class="item-date">${formattedDate}</span>
+            </div>
+            <div class="item-status-col">
+              <span class="item-amount">$${Number(item.amount).toFixed(4)}</span>
+              <span class="status-badge ${item.status.toLowerCase()}">${item.status}</span>
+            </div>
+          `;
+          historyContainer.appendChild(itemEl);
+        });
+      });
     }
-</script>
+  </script>
 </body>
 </html>
