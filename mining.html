@@ -16,7 +16,7 @@
       --bg-primary: #020009;
       --bg-secondary: #09041a;
       --bg-card: rgba(13, 6, 30, 0.65);
-      --border-color: rgba(168, 85, 247, 0.2);
+      --border-color: rgba(168, 85, 247, 0.18);
       --primary: #a855f7;
       --secondary: #06b6d4;
       --gold: #fbbf24;
@@ -76,12 +76,12 @@
       margin-top: 4px;
     }
 
-    /* Power Allocation Hero Card */
+    /* Power Allocation Hero Card (Rule 3) */
     .power-hero-card {
       background: radial-gradient(circle at 50% 0%, rgba(24, 12, 54, 0.6) 0%, rgba(9, 4, 25, 0.9) 100%);
       border: 1px solid var(--border-color);
       border-radius: 24px;
-      padding: 22px 18px;
+      padding: 22px 14px;
       margin-bottom: 20px;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
     }
@@ -89,18 +89,18 @@
     .hero-stat-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      gap: 8px;
       text-align: center;
     }
 
     .hero-metric {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
     }
 
     .hero-metric-label {
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
@@ -109,7 +109,7 @@
 
     .hero-metric-value {
       font-family: 'Share Tech Mono', monospace;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--text-main);
     }
@@ -118,7 +118,7 @@
     .hero-metric-value.cyan { color: var(--secondary); }
     .hero-metric-value.gold { color: var(--gold); }
 
-    /* Start Session Button Block */
+    /* Deploy Dynamic Session button (Rule 4) */
     .trigger-container {
       margin-bottom: 24px;
     }
@@ -131,7 +131,7 @@
       border-radius: 20px;
       color: white;
       font-weight: 800;
-      font-size: 14.5px;
+      font-size: 14px;
       cursor: pointer;
       box-shadow: 0 8px 25px rgba(168, 85, 247, 0.35);
       transition: all 0.25s ease;
@@ -142,7 +142,7 @@
     }
 
     .btn-deploy-node:disabled {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border-color);
       color: var(--text-muted);
       cursor: not-allowed;
@@ -153,9 +153,9 @@
       transform: scale(0.97);
     }
 
-    /* Active Session Stream List */
+    /* Active Streams Grid (Rule 11) */
     .section-header-title {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--text-muted);
       margin-bottom: 12px;
@@ -169,7 +169,6 @@
       gap: 14px;
     }
 
-    /* Beautiful Node Card layout */
     .stream-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -220,13 +219,13 @@
     }
 
     .stream-title {
-      font-size: 13.5px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 800;
     }
 
     .stream-power-badge {
       font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       color: var(--primary);
       background: rgba(168, 85, 247, 0.08);
@@ -235,7 +234,13 @@
       border-radius: 12px;
     }
 
-    /* Yield progress visualizers */
+    .stream-id-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    /* Yield elements */
     .stream-body {
       display: flex;
       justify-content: space-between;
@@ -249,7 +254,7 @@
     }
 
     .stream-ticker-label {
-      font-size: 10px;
+      font-size: 9.5px;
       color: var(--text-muted);
       text-transform: uppercase;
     }
@@ -292,7 +297,6 @@
       background: linear-gradient(90deg, var(--gold), #d97706);
     }
 
-    /* Card Claim Trigger Button */
     .btn-claim-stream {
       width: 100%;
       padding: 11px;
@@ -417,11 +421,11 @@
     
     <!-- Title Area -->
     <div class="page-header">
-      <h1 class="page-title">Deploy Mining Nodes</h1>
-      <p class="page-subtitle">Deploy idle chunks of 1,000 POWER into active 5H hashing streams</p>
+      <h1 class="page-title">Dynamic Hashing Streams</h1>
+      <p class="page-subtitle">Deploy multiple concurrent sessions with your available power blocks</p>
     </div>
 
-    <!-- Power Allocation Summary -->
+    <!-- Power State Layout Metrics (Rule 3) -->
     <div class="power-hero-card">
       <div class="hero-stat-row">
         <div class="hero-metric">
@@ -429,36 +433,36 @@
           <span class="hero-metric-value purple" id="totalPowerDisplay">0 HP</span>
         </div>
         <div class="hero-metric">
-          <span class="hero-metric-label">In Session</span>
+          <span class="hero-metric-label">Active Mining</span>
           <span class="hero-metric-value cyan" id="allocatedPowerDisplay">0 HP</span>
         </div>
         <div class="hero-metric">
-          <span class="hero-metric-label">Idle Power</span>
+          <span class="hero-metric-label">Available Power</span>
           <span class="hero-metric-value gold" id="idlePowerDisplay">0 HP</span>
         </div>
       </div>
     </div>
 
-    <!-- Core Deployment Controller Trigger -->
+    <!-- Consolidated/Segmented trigger button (Rule 4) -->
     <div class="trigger-container">
       <button class="btn-deploy-node" id="deployStreamBtn">
-        <i class="fa-solid fa-square-plus"></i>
-        <span>Deploy Node Core (-1,000 HP)</span>
+        <i class="fa-solid fa-bolt-lightning"></i>
+        <span id="btnTriggerLabel">Start Session</span>
       </button>
     </div>
 
-    <!-- Active Streams ledger -->
+    <!-- Parallel Running sessions stack -->
     <h2 class="section-header-title">Active Hashing Streams</h2>
     <div class="streams-list" id="streamsContainer">
       <div class="empty-streams-card">
         <i class="fa-solid fa-microchip"></i>
-        <p>No active cores initialized. Deploy an idle chunk to begin mining.</p>
+        <p>No active sessions detected. Click Start Mining to spawn your stream.</p>
       </div>
     </div>
 
   </div>
 
-  <!-- Bottom Navigation -->
+  <!-- Bottom Nav Menu -->
   <nav class="bottom-nav">
     <a href="home.html" class="nav-item">
       <i class="fa-solid fa-house"></i>
@@ -511,6 +515,7 @@
     const allocatedPowerDisplay = document.getElementById('allocatedPowerDisplay');
     const idlePowerDisplay = document.getElementById('idlePowerDisplay');
     const deployStreamBtn = document.getElementById('deployStreamBtn');
+    const btnTriggerLabel = document.getElementById('btnTriggerLabel');
     const streamsContainer = document.getElementById('streamsContainer');
     const toastContainer = document.getElementById('toastContainer');
 
@@ -544,12 +549,12 @@
     }
 
     function bindMiningSystem() {
-      // 1. Sync User Core statistics
+      // 1. Sync User Stats
       db.ref(`Users/${currentUser.uid}`).on('value', (snapshot) => {
         if (!snapshot.exists()) return;
         userData = snapshot.val();
 
-        // 2. Fetch Sessions list
+        // 2. Fetch Sessions list (Rule 9 & 10)
         db.ref(`Users/${currentUser.uid}/activeSessions`).on('value', (sessionSnap) => {
           activeSessionsList = sessionSnap.exists() ? sessionSnap.val() : {};
           
@@ -562,10 +567,10 @@
     function calculatePowerAllocations() {
       const totalPower = parseInt(userData.power || 1000);
       
-      // Calculate allocation from active database list
+      // Calculate power lock sum from live streams
       let allocatedPower = 0;
       Object.keys(activeSessionsList).forEach((key) => {
-        allocatedPower += parseInt(activeSessionsList[key].powerAllocated || 1000);
+        allocatedPower += parseInt(activeSessionsList[key].powerAllocated || 0);
       });
 
       const idlePower = Math.max(0, totalPower - allocatedPower);
@@ -574,14 +579,16 @@
       allocatedPowerDisplay.textContent = `${Number(allocatedPower).toLocaleString()} HP`;
       idlePowerDisplay.textContent = `${Number(idlePower).toLocaleString()} HP`;
 
-      // Check if user has enough idle power (Min 1,000 HP required) to Deploy Node
-      if (idlePower >= 1000) {
+      // Update interactive Start buttons (Rule 4)
+      if (idlePower > 0) {
         deployStreamBtn.disabled = false;
+        btnTriggerLabel.textContent = `Start Mining with ${Number(idlePower).toLocaleString()} HP`;
       } else {
         deployStreamBtn.disabled = true;
+        btnTriggerLabel.textContent = "All Power Deploying";
       }
 
-      // Legacy state match logic for Online marker synchronization in home.html
+      // Legacy state match logic for Green online status inside home.html
       const hasActiveStreams = Object.keys(activeSessionsList).length > 0;
       db.ref(`Users/${currentUser.uid}`).update({
         miningStatus: hasActiveStreams ? 'active' : 'idle',
@@ -589,35 +596,35 @@
       });
     }
 
-    // Deploy a new independent mining block session
+    // Deploy independent dynamic session (Rule 1, 4 & 9)
     deployStreamBtn.addEventListener('click', () => {
       if (deployStreamBtn.disabled) return;
       deployStreamBtn.disabled = true;
 
-      // Double-verify current stats
+      // Calculate exact available power
       const totalPower = parseInt(userData.power || 1000);
       let allocatedPower = 0;
       Object.keys(activeSessionsList).forEach((key) => {
-        allocatedPower += parseInt(activeSessionsList[key].powerAllocated || 1000);
+        allocatedPower += parseInt(activeSessionsList[key].powerAllocated || 0);
       });
       const idlePower = totalPower - allocatedPower;
 
-      if (idlePower < 1000) {
-        showToast("Insufficient idle power. Upgrade hashrate to start more streams.", "error");
+      if (idlePower <= 0) {
+        showToast("No available hashrate to deploy.", "error");
         return;
       }
 
-      // Initialize a new independent Session block
+      // Generate independent pushing record (Rule 9)
       const sessionRef = db.ref(`Users/${currentUser.uid}/activeSessions`).push();
       const newSession = {
         id: sessionRef.key,
-        powerAllocated: 1000,
+        powerAllocated: idlePower, // Locks ALL available Power
         startTime: Date.now()
       };
 
       sessionRef.set(newSession)
         .then(() => {
-          showToast("Hashing Core Initialized! Mining Node started.", "success");
+          showToast(`Stream initialized with ${Number(idlePower).toLocaleString()} HP!`, "success");
         })
         .catch(() => {
           showToast("Failed to initiate stream.", "error");
@@ -625,7 +632,7 @@
         });
     });
 
-    // Render Stream panels with independent Ticker clocks
+    // Render Stream panels with independent Ticker clocks (Rule 11)
     function renderMiningStreams() {
       if (tickerInterval) clearInterval(tickerInterval);
 
@@ -634,7 +641,7 @@
         streamsContainer.innerHTML = `
           <div class="empty-streams-card">
             <i class="fa-solid fa-microchip"></i>
-            <p>No active cores initialized. Deploy an idle chunk to begin mining.</p>
+            <p>No active sessions detected. Click Start Mining to spawn your stream.</p>
           </div>
         `;
         return;
@@ -643,19 +650,22 @@
       let streamsHTML = "";
       keys.forEach((key) => {
         const session = activeSessionsList[key];
+        // Session reference short ID alias (Rule 11)
+        const displayId = session.id.substring(1, 8).toUpperCase();
+        
         streamsHTML += `
           <div class="stream-card" id="card_${session.id}">
             <div class="stream-header">
               <div class="stream-title-block">
                 <span class="stream-pulse-core"></span>
-                <span class="stream-title">Stream Core Node</span>
+                <span class="stream-title">Stream #${displayId}</span>
               </div>
-              <span class="stream-power-badge">1,000 HP Block</span>
+              <span class="stream-power-badge">${Number(session.powerAllocated).toLocaleString()} HP</span>
             </div>
             
             <div class="stream-body">
               <div class="stream-ticker-col">
-                <span class="stream-ticker-label" id="label_${session.id}">Yellow Yields</span>
+                <span class="stream-ticker-label" id="label_${session.id}">Session Yields</span>
                 <span class="stream-ticker-val" id="ticker_${session.id}">$0.00000000</span>
               </div>
               <span class="stream-timer" id="timer_${session.id}">05:00:00</span>
@@ -674,7 +684,7 @@
 
       streamsContainer.innerHTML = streamsHTML;
 
-      // Start the master dynamic clock synchronization loop
+      // Dynamic ticking loops
       const runStreamsTimer = () => {
         const now = Date.now();
 
@@ -690,22 +700,25 @@
           if (!cardEl || !tickerEl || !timerEl || !barEl || !btnEl) return;
 
           let elapsedSecs = Math.max(0, Math.floor((now - parseInt(session.startTime)) / 1000));
+          const sessionPower = parseFloat(session.powerAllocated || 1000);
+          
+          // Formula: 1,000 POWER = $0.00025 per completed session
+          const maxCycleReward = sessionPower * 0.00000025; 
 
           if (elapsedSecs >= CYCLE_SECS) {
-            // Completed Stream state
+            // Completed cycle
             cardEl.classList.add('completed');
-            tickerEl.textContent = "$0.00025000"; // Fixed 1 claim = $0.00025 per 1,000 POWER session
+            tickerEl.textContent = `$${maxCycleReward.toFixed(8)}`;
             timerEl.textContent = "Finished";
             barEl.style.width = "100%";
             btnEl.style.display = "block";
-            labelEl.textContent = "Reward Ready";
+            if (labelEl) labelEl.textContent = "Completed";
           } else {
-            // Processing Stream state
+            // Dynamic Ticker
             const progressPct = (elapsedSecs / CYCLE_SECS) * 100;
             barEl.style.width = `${progressPct}%`;
 
-            // Calculate precise ticker: $0.00025 maximum reward divided over 18,000s duration
-            const accumulationYield = elapsedSecs * (0.00025 / CYCLE_SECS);
+            const accumulationYield = elapsedSecs * (maxCycleReward / CYCLE_SECS);
             tickerEl.textContent = `$${accumulationYield.toFixed(8)}`;
 
             const remaining = CYCLE_SECS - elapsedSecs;
@@ -722,22 +735,23 @@
       tickerInterval = setInterval(runStreamsTimer, 1000);
     }
 
-    // Process secure payouts of completed session streams
+    // Individual session claim trigger (Rule 6 & 8)
     window.claimStreamYield = function(sessionId) {
       const session = activeSessionsList[sessionId];
       if (!session) return;
 
       const elapsed = Math.floor((Date.now() - parseInt(session.startTime)) / 1000);
       if (elapsed < CYCLE_SECS) {
-        showToast("Stream Core is still actively processing.");
+        showToast("Stream is still hashing.", "error");
         return;
       }
 
       const claimBtn = document.getElementById(`btn_${sessionId}`);
       if (claimBtn) claimBtn.disabled = true;
 
-      // Yield values: exactly $0.00025 per 1,000 POWER session cycle
-      const rewardAmt = 0.00025;
+      // Yield: exactly $0.00025 per 1,000 POWER session cycle
+      const sessionPower = parseFloat(session.powerAllocated || 1000);
+      const rewardAmt = sessionPower * 0.00000025;
 
       const userRef = db.ref(`Users/${currentUser.uid}`);
       userRef.transaction((curr) => {
@@ -750,11 +764,11 @@
         return curr;
       }, async (error, committed) => {
         if (committed) {
-          // Remove session log upon success
+          // Clear active stream record (Rule 6)
           await db.ref(`Users/${currentUser.uid}/activeSessions/${sessionId}`).remove();
-          showToast(`Stream yields claimed successfully! +$${rewardAmt.toFixed(5)} added.`, "success");
+          showToast(`Claimed +$${rewardAmt.toFixed(6)} successfully!`, "success");
 
-          // Execute standard referral validation check (for validation mapping & milestones)
+          // Affiliate commissions & Milestone verifications
           const referrerUid = userData.referredBy;
           if (referrerUid) {
             const referralRef = db.ref(`Referrals/${referrerUid}/${currentUser.uid}`);
@@ -797,7 +811,7 @@
             }
           }
         } else {
-          showToast("Failed to process stream payout.", "error");
+          showToast("Failed to complete stream transaction.", "error");
           if (claimBtn) claimBtn.disabled = false;
         }
       });
