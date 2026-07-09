@@ -1,443 +1,627 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Access - Unlimited Earning</title>
-    
-    <!-- Premium Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        /* 
-        ========================================
-        PREMIUM AUTH CSS STYLING (150+ Lines)
-        ========================================
-        */
-        :root {
-            --primary: #4834d4;
-            --secondary: #686de0;
-            --accent: #eb4d4b;
-            --bg-dark: #130f40;
-            --white: #ffffff;
-            --glass: rgba(255, 255, 255, 0.98);
-            --shadow: 0 25px 50px rgba(0,0,0,0.2);
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>TNMINING - Sign In</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-primary: #05020c;
+      --bg-secondary: #0d061f;
+      --bg-card: rgba(18, 10, 36, 0.65);
+      --border-color: rgba(168, 85, 247, 0.2);
+      --border-focus: rgba(6, 182, 212, 0.6);
+      --primary: #a855f7;
+      --secondary: #06b6d4;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --error: #ef4444;
+      --success: #10b981;
+    }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        body {
-            background: linear-gradient(135deg, var(--bg-dark), var(--primary));
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow: hidden;
-        }
+    body {
+      background-color: var(--bg-primary);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.12) 0%, transparent 40%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
 
-        /* Background Animated Circles */
-        .circle { position: absolute; border-radius: 50%; filter: blur(80px); z-index: -1; animation: move 15s infinite; }
-        .circle-1 { width: 400px; height: 400px; background: var(--secondary); top: -150px; left: -100px; }
-        .circle-2 { width: 300px; height: 300px; background: var(--accent); bottom: -100px; right: -50px; opacity: 0.6; }
-        @keyframes move { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(40px, 30px); } }
+    /* Container holding the glassmorphic card */
+    .auth-container {
+      width: 100%;
+      max-width: 420px;
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 40px 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
+                  0 0 40px rgba(168, 85, 247, 0.1);
+      position: relative;
+      z-index: 1;
+      transform: translateY(0);
+      transition: transform 0.3s ease;
+    }
 
-        /* Auth Card Layout */
-        .auth-card {
-            background: var(--glass);
-            width: 100%;
-            max-width: 480px;
-            padding: 45px 35px;
-            border-radius: 40px;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow-y: auto;
-            max-height: 95vh;
-            border: 1px solid rgba(255,255,255,0.2);
-            animation: cardEnter 0.8s ease;
-        }
-        @keyframes cardEnter { from { opacity: 0; transform: scale(0.9) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    /* Branding styles */
+    .brand-section {
+      text-align: center;
+      margin-bottom: 35px;
+    }
 
-        .auth-card::-webkit-scrollbar { width: 0; }
+    .brand-logo-placeholder {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 15px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
+    }
 
-        .logo-header { text-align: center; margin-bottom: 35px; }
-        .logo-header i { font-size: 55px; color: var(--primary); margin-bottom: 12px; filter: drop-shadow(0 5px 10px rgba(72, 52, 212, 0.3)); }
-        .logo-header h2 { font-weight: 800; font-size: 28px; color: var(--bg-dark); letter-spacing: -0.5px; }
-        .logo-header p { font-size: 14px; color: #777; margin-top: 5px; }
+    .brand-logo-placeholder i {
+      font-size: 32px;
+      color: #fff;
+    }
 
-        /* Input Controls */
-        .input-group { margin-bottom: 20px; position: relative; }
-        .input-group label { display: block; font-size: 12px; font-weight: 700; color: #444; margin-bottom: 8px; margin-left: 8px; text-transform: uppercase; }
-        
-        .input-field { position: relative; display: flex; align-items: center; }
-        .input-field i:not(.eye-icon) { position: absolute; left: 18px; color: var(--primary); font-size: 18px; }
-        
-        .input-field input {
-            width: 100%;
-            padding: 15px 15px 15px 50px;
-            border: 2px solid #f0f0f0;
-            border-radius: 18px;
-            outline: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: var(--transition);
-            background: #fafafa;
-        }
-        .input-field input:focus { border-color: var(--primary); background: #fff; box-shadow: 0 8px 20px rgba(72, 52, 212, 0.1); }
+    .brand-name {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      background: linear-gradient(to right, #ffffff, #a855f7, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 5px;
+    }
 
-        .eye-icon { position: absolute; right: 18px; cursor: pointer; color: #bbb; transition: 0.3s; padding: 5px; }
-        .eye-icon:hover { color: var(--primary); }
+    .brand-tagline {
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
 
-        /* Buttons Styling */
-        .btn-action {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            border-radius: 20px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(72, 52, 212, 0.3);
-            transition: var(--transition);
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            letter-spacing: 1px;
-        }
-        .btn-action:hover { transform: translateY(-4px); box-shadow: 0 15px 30px rgba(72, 52, 212, 0.4); filter: brightness(1.1); }
-        .btn-action:active { transform: scale(0.97); }
-        .btn-action:disabled { background: #cbd5e0; box-shadow: none; cursor: not-allowed; }
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 22px;
+      position: relative;
+    }
 
-        .footer-text { text-align: center; margin-top: 30px; font-size: 14px; color: #666; }
-        .footer-text b { color: var(--primary); cursor: pointer; text-decoration: underline; margin-left: 5px; }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      margin-left: 4px;
+    }
 
-        /* Alert System */
-        .alert-box {
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            font-size: 13px;
-            display: none;
-            text-align: center;
-            font-weight: 600;
-            animation: shake 0.5s ease;
-        }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
-        .alert-danger { background: #ffebeb; color: var(--accent); border: 1px solid #ffcccc; }
-        .alert-success { background: #e3fcef; color: var(--success); border: 1px solid #ccf5e1; }
+    .input-wrapper {
+      position: relative;
+    }
 
-        /* Sections Toggle */
-        #registrationPart { display: none; }
+    .input-wrapper i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
 
-        /* Loader */
-        .loading-spinner {
-            width: 22px; height: 22px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-top: 3px solid white;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            display: none;
-        }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+    .form-input {
+      width: 100%;
+      padding: 14px 16px 14px 48px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      color: var(--text-main);
+      font-size: 14.5px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
 
-    </style>
+    .form-input:focus {
+      border-color: var(--border-focus);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+    }
+
+    .form-input:focus + i {
+      color: var(--secondary);
+    }
+
+    /* Password visibility toggle */
+    .password-toggle {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .password-toggle:hover {
+      color: var(--text-main);
+    }
+
+    /* Options area (Remember/Forgot) */
+    .auth-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      font-size: 13px;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      color: var(--text-muted);
+    }
+
+    .checkbox-container input {
+      display: none;
+    }
+
+    .checkmark {
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      margin-right: 8px;
+      display: inline-block;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .checkbox-container input:checked + .checkmark {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .checkbox-container input:checked + .checkmark::after {
+      content: "\f00c";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      color: #fff;
+      font-size: 10px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .forgot-link {
+      color: var(--secondary);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
+      opacity: 0.9;
+    }
+
+    /* Button Actions */
+    .btn-submit {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: none;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(168, 85, 247, 0.35);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(168, 85, 247, 0.5);
+    }
+
+    .btn-submit:active {
+      transform: translateY(1px);
+    }
+
+    .btn-submit .spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-left: -10px;
+      margin-top: -10px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Redirect Text Link */
+    .auth-footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .auth-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 5px;
+      transition: opacity 0.2s;
+    }
+
+    .auth-footer a:hover {
+      text-decoration: underline;
+      opacity: 0.9;
+    }
+
+    /* Popups / Toast Alerts styling */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      background: rgba(18, 10, 36, 0.9);
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 12px 20px;
+      border-radius: 12px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transform: translateX(120%);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast.error {
+      border-left: 4px solid var(--error);
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--success);
+    }
+
+    .toast i {
+      font-size: 16px;
+    }
+
+    .toast.error i {
+      color: var(--error);
+    }
+
+    .toast.success i {
+      color: var(--success);
+    }
+
+    /* Loading Overlay screen */
+    .screen-loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-primary);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.4s ease;
+    }
+
+    .screen-loader.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(168, 85, 247, 0.1);
+      border-top-color: var(--primary);
+      border-right-color: var(--secondary);
+      border-radius: 50%;
+      animation: spin 1s infinite linear;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="circle circle-1"></div>
-    <div class="circle circle-2"></div>
+  <!-- Full-Screen Initial Loader -->
+  <div class="screen-loader" id="screenLoader">
+    <div class="loader-spinner"></div>
+  </div>
 
-    <div class="auth-card">
-        <!-- Global Alert -->
-        <div id="msgAlert" class="alert-box"></div>
-
-        <!-- LOGIN PANEL -->
-        <div id="loginPart">
-            <div class="logo-header">
-                <i class="fas fa-shield-halved"></i>
-                <h2>User Login</h2>
-                <p>Access your dashboard and earnings</p>
-            </div>
-
-            <div class="input-group">
-                <label>Phone Number</label>
-                <div class="input-field">
-                    <i class="fas fa-phone-volume"></i>
-                    <input type="number" id="logPhone" placeholder="01XXXXXXXXX">
-                </div>
-            </div>
-
-            <div class="input-group">
-                <label>Password</label>
-                <div class="input-field">
-                    <i class="fas fa-key"></i>
-                    <input type="password" id="logPass" placeholder="Enter password">
-                    <i class="fas fa-eye eye-icon" onclick="viewPass('logPass', this)"></i>
-                </div>
-            </div>
-
-            <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 25px; font-size: 13px;">
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color:#555;">
-                    <input type="checkbox" id="keepLogged" style="width:18px; height:18px; accent-color:var(--primary);"> Remember Me
-                </label>
-            </div>
-
-            <button class="btn-action" id="btnLog" onclick="processLogin()">
-                <div class="loading-spinner" id="logLoad"></div>
-                <span id="logTxt">SECURE LOGIN</span>
-            </button>
-
-            <div class="footer-text">
-                Don't have an account? <b onclick="switchSection('reg')">Create One</b>
-            </div>
-        </div>
-
-        <!-- REGISTRATION PANEL -->
-        <div id="registrationPart">
-            <div class="logo-header">
-                <i class="fas fa-user-plus"></i>
-                <h2>Register</h2>
-                <p>Start your earning journey today</p>
-            </div>
-
-            <div class="input-group">
-                <label>Your Full Name</label>
-                <div class="input-field">
-                    <i class="fas fa-user-tag"></i>
-                    <input type="text" id="regName" placeholder="Full name">
-                </div>
-            </div>
-
-            <div class="input-group">
-                <label>Mobile Number</label>
-                <div class="input-field">
-                    <i class="fas fa-phone"></i>
-                    <input type="number" id="regPhone" placeholder="01XXXXXXXXX">
-                </div>
-            </div>
-
-            <div class="input-group">
-                <label>Create Password</label>
-                <div class="input-field">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="regPass" placeholder="Minimum 6 digits">
-                    <i class="fas fa-eye eye-icon" onclick="viewPass('regPass', this)"></i>
-                </div>
-            </div>
-
-            <div class="input-group">
-                <label>Confirm Password</label>
-                <div class="input-field">
-                    <i class="fas fa-check-double"></i>
-                    <input type="password" id="regConfirm" placeholder="Re-type password">
-                </div>
-            </div>
-
-            <div class="input-group">
-                <label>Referral Code <span style="color:var(--accent);">(Required)</span></label>
-                <div class="input-field">
-                    <i class="fas fa-users-rays"></i>
-                    <input type="text" id="regRefer" placeholder="Example: UE5839">
-                </div>
-                <p style="font-size: 10px; color: #999; margin-top: 5px; padding-left: 10px;">রেফারেল কোড ছাড়া রেজিস্ট্রেশন করা যাবে না।</p>
-            </div>
-
-            <button class="btn-action" id="btnReg" onclick="processRegistration()">
-                <div class="loading-spinner" id="regLoad"></div>
-                <span id="regTxt">CREATE MY ACCOUNT</span>
-            </button>
-
-            <div class="footer-text">
-                Already member? <b onclick="switchSection('login')">Login Instead</b>
-            </div>
-        </div>
+  <!-- Main Login Card -->
+  <div class="auth-container">
+    <div class="brand-section">
+      <div class="brand-logo-placeholder">
+        <i class="fa-solid fa-cubes"></i>
+      </div>
+      <h1 class="brand-name">TNMINING</h1>
+      <p class="brand-tagline">Premium TON Cloud Mining</p>
     </div>
 
-    <!-- 
-    ========================================
-    FIREBASE LOGIC ENGINE (200+ Lines)
-    ========================================
-    -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <form id="loginForm" autocomplete="on">
+      <div class="form-group">
+        <label class="form-label" for="loginEmail">Email Address</label>
+        <div class="input-wrapper">
+          <input type="email" id="loginEmail" class="form-input" placeholder="Enter your email" required autocomplete="email">
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+      </div>
 
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyAOdWqPh69SEG-Z6P71xL6jlcFcNb9gMNs",
-            authDomain: "unlimited-earning-28639.firebaseapp.com",
-            databaseURL: "https://unlimited-earning-28639-default-rtdb.firebaseio.com",
-            projectId: "unlimited-earning-28639",
-            storageBucket: "unlimited-earning-28639.firebasestorage.app",
-            messagingSenderId: "1061620701842",
-            appId: "1:1061620701842:web:80fab8608da73a3fdc244b"
-        };
+      <div class="form-group">
+        <label class="form-label" for="loginPassword">Password</label>
+        <div class="input-wrapper">
+          <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" required autocomplete="current-password">
+          <i class="fa-solid fa-lock"></i>
+          <i class="fa-solid fa-eye password-toggle" id="togglePassword"></i>
+        </div>
+      </div>
 
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.database();
+      <div class="auth-options">
+        <label class="checkbox-container">
+          <input type="checkbox" id="rememberMe" checked>
+          <span class="checkmark"></span>
+          Remember me
+        </label>
+        <a href="#" class="forgot-link" id="forgotBtn">Forgot Password?</a>
+      </div>
 
-        /**
-         * AUTOMATIC REFERRAL CAPTURE
-         */
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const capturedRef = urlParams.get('ref');
-            if(capturedRef) {
-                document.getElementById('regRefer').value = capturedRef;
-                switchSection('reg'); // Auto show register if link is used
-            }
+      <button type="submit" class="btn-submit" id="submitBtn">
+        <span class="btn-text">Sign In</span>
+        <div class="spinner" id="btnSpinner"></div>
+      </button>
+    </form>
 
-            // Check if already logged in
-            auth.onAuthStateChanged(user => {
-                if(user) window.location.href = "home.html";
+    <div class="auth-footer">
+      Don't have an account? <a href="register.html">Register</a>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Firebase Scripts (Compat Version for ease of modular browser use) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDuQICVoC10i62PQMS6cX37t1eoeTg5zsc",
+      authDomain: "mining-c7b26.firebaseapp.com",
+      databaseURL: "https://mining-c7b26-default-rtdb.firebaseio.com",
+      projectId: "mining-c7b26",
+      storageBucket: "mining-c7b26.firebasestorage.app",
+      messagingSenderId: "873757658723",
+      appId: "1:873757658723:web:18a4af95953a08b440b256"
+    };
+
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    // DOM Selectors
+    const loginForm = document.getElementById('loginForm');
+    const emailInput = document.getElementById('loginEmail');
+    const passwordInput = document.getElementById('loginPassword');
+    const togglePassword = document.getElementById('togglePassword');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnSpinner = document.getElementById('btnSpinner');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const forgotBtn = document.getElementById('forgotBtn');
+    const rememberMeCheckbox = document.getElementById('rememberMe');
+    const screenLoader = document.getElementById('screenLoader');
+    const toastContainer = document.getElementById('toastContainer');
+
+    // Show Custom Toast
+    function showToast(message, type = 'error') {
+      const toast = document.createElement('div');
+      toast.classList.add('toast', type);
+      
+      const icon = type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation';
+      toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
+      
+      toastContainer.appendChild(toast);
+      
+      // Trigger animations
+      setTimeout(() => toast.classList.add('show'), 50);
+      
+      // Automatically remove
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Toggle Password Visibility
+    togglePassword.addEventListener('click', () => {
+      const isPassword = passwordInput.type === 'password';
+      passwordInput.type = isPassword ? 'text' : 'password';
+      togglePassword.classList.toggle('fa-eye');
+      togglePassword.classList.toggle('fa-eye-slash');
+    });
+
+    // Check Auto-fill for Remember Me logic
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedEmail = localStorage.getItem('tn_saved_email');
+      if (savedEmail) {
+        emailInput.value = savedEmail;
+        rememberMeCheckbox.checked = true;
+      }
+      
+      // Check auth status
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          // If already signed in, check if user details exist, then redirect
+          db.ref(`Users/${user.uid}`).once('value')
+            .then(snapshot => {
+              if (snapshot.exists() && snapshot.val().banned) {
+                auth.signOut();
+                showToast("Your account has been banned.", "error");
+                screenLoader.classList.add('fade-out');
+              } else {
+                window.location.href = 'home.html';
+              }
+            })
+            .catch(() => {
+              window.location.href = 'home.html';
             });
-        };
+        } else {
+          // No user, dismiss screen loader animation
+          screenLoader.classList.add('fade-out');
+        }
+      });
+    });
 
-        /**
-         * REGISTRATION LOGIC
-         */
-        async function processRegistration() {
-            const name = document.getElementById('regName').value.trim();
-            const phone = document.getElementById('regPhone').value.trim();
-            const pass = document.getElementById('regPass').value;
-            const confirm = document.getElementById('regConfirm').value;
-            const refer = document.getElementById('regRefer').value.trim();
+    // Handle Form Submission (Sign In)
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-            // Strict Validations
-            if(!name || !phone || !pass || !confirm) return showNotice("Please fill all fields!");
-            if(!refer) return showNotice("Referral Code is REQUIRED to join!");
-            if(phone.length < 10) return showNotice("Enter a valid phone number!");
-            if(pass !== confirm) return showNotice("Passwords do not match!");
-            if(pass.length < 6) return showNotice("Password should be 6+ digits!");
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
 
-            setUIState('reg', true);
+      if (!email || !password) {
+        showToast("Please fill in all fields.");
+        return;
+      }
 
-            try {
-                // 1. Check if user exists
-                const userSnapshot = await db.ref('users/' + phone).once('value');
-                if(userSnapshot.exists()) {
-                    setUIState('reg', false);
-                    return showNotice("This phone number is already registered!");
+      // Enter Loading State
+      submitBtn.disabled = true;
+      btnSpinner.style.display = 'block';
+      btnText.style.opacity = '0.3';
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          
+          // Check if account is banned inside the db
+          db.ref(`Users/${user.uid}`).once('value')
+            .then((snapshot) => {
+              if (snapshot.exists() && snapshot.val().banned) {
+                auth.signOut();
+                showToast("Your account is suspended.", "error");
+                resetButtonState();
+              } else {
+                // Remember Me Persistence settings
+                if (rememberMeCheckbox.checked) {
+                  localStorage.setItem('tn_saved_email', email);
+                } else {
+                  localStorage.removeItem('tn_saved_email');
                 }
+                showToast("Success! Logging in...", "success");
+                setTimeout(() => {
+                  window.location.href = 'home.html';
+                }, 1000);
+              }
+            });
+        })
+        .catch((error) => {
+          let errorMsg = "Incorrect email or password.";
+          if (error.code === 'auth/invalid-credential') {
+            errorMsg = "Invalid credentials. Please try again.";
+          } else if (error.code === 'auth/user-not-found') {
+            errorMsg = "Account not found.";
+          } else if (error.code === 'auth/wrong-password') {
+            errorMsg = "Incorrect password.";
+          } else if (error.code === 'auth/too-many-requests') {
+            errorMsg = "Too many attempts. Try again later.";
+          }
+          showToast(errorMsg, "error");
+          resetButtonState();
+        });
+    });
 
-                // 2. Authenticate
-                const email = phone + "@earning.com";
-                await auth.createUserWithEmailAndPassword(email, pass);
+    // Handle Reset Password (Forgot Password)
+    forgotBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const email = emailInput.value.trim();
 
-                // 3. Generate ID
-                const newUID = "UE" + Math.floor(1000 + Math.random() * 9000);
+      if (!email) {
+        showToast("Please enter your email to reset password.");
+        return;
+      }
 
-                // 4. RTDB Entry
-                const newUser = {
-                    uid: newUID,
-                    name: name,
-                    phone: phone,
-                    password: pass,
-                    referBy: refer,
-                    balance: 0,
-                    referralEarnings: 0,
-                    successTasks: 0,
-                    failedTasks: 0,
-                    pendingTasks: 0,
-                    status: "unactive",
-                    joinedDate: new Date().toLocaleDateString(),
-                    timestamp: Date.now()
-                };
+      auth.sendPasswordResetEmail(email)
+        .then(() => {
+          showToast("Password reset link sent to your email.", "success");
+        })
+        .catch((error) => {
+          let errorMsg = "Failed to send reset email.";
+          if (error.code === 'auth/user-not-found') {
+            errorMsg = "No account found with this email.";
+          } else if (error.code === 'auth/invalid-email') {
+            errorMsg = "Please enter a valid email address.";
+          }
+          showToast(errorMsg, "error");
+        });
+    });
 
-                await db.ref('users/' + phone).set(newUser);
-                
-                showNotice("Registration Successful! Welcome.", "success");
-                setTimeout(() => { window.location.href = "home.html"; }, 1500);
-
-            } catch (err) {
-                showNotice(err.message);
-                setUIState('reg', false);
-            }
-        }
-
-        /**
-         * LOGIN LOGIC
-         */
-        async function processLogin() {
-            const phone = document.getElementById('logPhone').value.trim();
-            const pass = document.getElementById('logPass').value;
-            const remember = document.getElementById('keepLogged').checked;
-
-            if(!phone || !pass) return showNotice("Enter number and password!");
-
-            setUIState('log', true);
-
-            try {
-                const persistence = remember ? firebase.auth.Auth.Persistence.LOCAL : firebase.auth.Auth.Persistence.SESSION;
-                await auth.setPersistence(persistence);
-
-                const email = phone + "@earning.com";
-                await auth.signInWithEmailAndPassword(email, pass);
-                window.location.href = "home.html";
-
-            } catch (err) {
-                showNotice("Login Failed! Check number or password.");
-                setUIState('log', false);
-            }
-        }
-
-        /**
-         * UTILS
-         */
-        function switchSection(part) {
-            const login = document.getElementById('loginPart');
-            const reg = document.getElementById('registrationPart');
-            if(part === 'reg') {
-                login.style.display = "none";
-                reg.style.display = "block";
-            } else {
-                reg.style.display = "none";
-                login.style.display = "block";
-            }
-        }
-
-        function viewPass(id, icon) {
-            const input = document.getElementById(id);
-            if(input.type === "password") {
-                input.type = "text";
-                icon.className = "fas fa-eye-slash eye-icon";
-            } else {
-                input.type = "password";
-                icon.className = "fas fa-eye eye-icon";
-            }
-        }
-
-        function showNotice(msg, type = 'error') {
-            const box = document.getElementById('msgAlert');
-            box.innerText = msg;
-            box.className = type === 'error' ? 'alert-box alert-danger' : 'alert-box alert-success';
-            box.style.display = "block";
-            setTimeout(() => { box.style.display = "none"; }, 5000);
-        }
-
-        function setUIState(mode, loading) {
-            const btn = mode === 'log' ? document.getElementById('btnLog') : document.getElementById('btnReg');
-            const loader = mode === 'log' ? document.getElementById('logLoad') : document.getElementById('regLoad');
-            const txt = mode === 'log' ? document.getElementById('logTxt') : document.getElementById('regTxt');
-            const label = mode === 'log' ? "LOGGING IN..." : "CREATING...";
-
-            if(loading) {
-                btn.disabled = true;
-                loader.style.display = "block";
-                txt.innerText = label;
-            } else {
-                btn.disabled = false;
-                loader.style.display = "none";
-                txt.innerText = mode === 'log' ? "SECURE LOGIN" : "CREATE MY ACCOUNT";
-            }
-        }
-    </script>
+    // Helper to reset button layout
+    function resetButtonState() {
+      submitBtn.disabled = false;
+      btnSpinner.style.display = 'none';
+      btnText.style.opacity = '1';
+    }
+  </script>
 </body>
 </html>
