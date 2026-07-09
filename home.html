@@ -15,7 +15,7 @@
     :root {
       --bg-primary: #020009;
       --bg-secondary: #09041a;
-      --bg-card: rgba(13, 6, 30, 0.65);
+      --bg-card: rgba(13, 6, 30, 0.75);
       --border-color: rgba(168, 85, 247, 0.18);
       --primary: #a855f7;
       --secondary: #06b6d4;
@@ -58,7 +58,7 @@
       padding: 16px;
     }
 
-    /* Redesigned Premium Header Section */
+    /* Premium Header */
     .header {
       display: flex;
       justify-content: space-between;
@@ -95,7 +95,7 @@
     .user-meta {
       display: flex;
       flex-direction: column;
-      gap: 4px; /* Strict physical separation to prevent overlapping */
+      gap: 4px;
     }
 
     .username {
@@ -105,7 +105,6 @@
       line-height: 1.2;
     }
 
-    /* Enhanced Online/Offline indicator tag */
     .user-status {
       display: inline-flex;
       align-items: center;
@@ -143,7 +142,6 @@
       color: var(--text-muted);
       letter-spacing: 0.5px;
       text-transform: uppercase;
-      transition: all 0.3s ease;
     }
 
     .user-status.active .status-text {
@@ -205,6 +203,15 @@
       margin-bottom: 4px;
     }
 
+    .balance-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
     /* Glowing Live Yellow Balance Card */
     .mining-status-card {
       background: rgba(20, 15, 5, 0.35);
@@ -236,10 +243,6 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-    }
-
-    .mining-card-label i {
-      font-size: 10px;
     }
 
     .live-accumulated-balance {
@@ -312,33 +315,88 @@
     .stat-value.highlight-purple { color: var(--primary); }
     .stat-value.highlight-cyan { color: var(--secondary); }
 
-    /* Announcement Banner */
-    .announcement-box {
+    /* REDESIGNED: Leaderboard Slideshow Ticker Notice Bar */
+    .leaderboard-ticker-box {
       background: rgba(168, 85, 247, 0.05);
-      border: 1px solid rgba(168, 85, 247, 0.12);
-      border-radius: 16px;
-      padding: 12px 16px;
-      margin-bottom: 22px;
+      border: 1px solid rgba(168, 85, 247, 0.16);
+      border-radius: 20px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
       display: flex;
       align-items: center;
-      gap: 12px;
-    }
-
-    .ann_icon {
-      font-size: 14px;
-      color: var(--primary);
-    }
-
-    .ann-text {
-      flex: 1;
-      font-size: 12px;
-      color: #e2e8f0;
-      white-space: nowrap;
+      gap: 14px;
+      position: relative;
       overflow: hidden;
-      text-overflow: ellipsis;
+      min-height: 54px;
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.05);
     }
 
-    /* Actions Hub Grid */
+    .ticker-icon-wrapper {
+      font-size: 16px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: float-trophy 2.5s infinite ease-in-out;
+    }
+
+    @keyframes float-trophy {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-3px) scale(1.05); }
+    }
+
+    .ticker-content-viewport {
+      flex: 1;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ticker-slide {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      position: absolute;
+      inset: 0;
+    }
+
+    .ticker-slide.active {
+      opacity: 1;
+      transform: translateY(0);
+      position: relative;
+    }
+
+    .rank-user-info {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .rank-user-power {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .rank-badge {
+      font-size: 9px;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      padding: 1px 7px;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Shortcuts Grid */
     .section-title {
       font-size: 11px;
       font-weight: 700;
@@ -538,7 +596,6 @@
         </div>
         <div class="user-meta">
           <span class="username" id="usernameDisplay">Loading...</span>
-          <!-- Dynamic separation blocks layout completely -->
           <div class="user-status" id="userStatusBox">
             <span class="status-dot"></span> 
             <span class="status-text" id="statusLabel">Offline</span>
@@ -557,11 +614,11 @@
       <div class="balance-amount" id="balanceDisplay">$0.00000000</div>
       <div class="balance-sub">
         <i class="fa-solid fa-wallet"></i>
-        <span id="rateDisplay">1000 POWER = $0.001 per day</span>
+        <span id="rateDisplay">1,000 POWER = $0.001/day</span>
       </div>
     </div>
 
-    <!-- Active Live Mining Accumulator Card -->
+    <!-- Active Live Mining Accumulator Card (Yellow Balance) -->
     <div class="mining-status-card" id="miningStatusCard">
       <div class="mining-card-label" id="miningStateLabel">
         <i class="fa-solid fa-circle" style="color: var(--text-muted)"></i> Idle Core
@@ -593,10 +650,18 @@
       </div>
     </div>
 
-    <!-- Announcements -->
-    <div class="announcement-box" id="announcementBox">
-      <i class="fa-solid fa-bullhorn ann_icon"></i>
-      <span class="ann-text" id="annText">Welcome to TNMINING! Secure +1,000 POWER starting bonus.</span>
+    <!-- Top 10 Dynamic Leaderboard Slideshow notice-bar -->
+    <div class="leaderboard-ticker-box" id="leaderboardNoticeContainer">
+      <div class="ticker-icon-wrapper">
+        <i class="fa-solid fa-trophy" style="color: var(--gold);"></i>
+      </div>
+      <div class="ticker-content-viewport" id="tickerViewport">
+        <!-- Managed dynamically in script, showing Rank name + Power in a sliding loop -->
+        <div class="ticker-slide active">
+          <div class="rank-user-info">Gathering system scores...</div>
+          <div class="rank-user-power">Connecting to decentralized hash pools</div>
+        </div>
+      </div>
     </div>
 
     <!-- Shortcuts Grid -->
@@ -709,6 +774,9 @@
     const miningMetaDesc = document.getElementById('miningMetaDesc');
     const claimYieldsBtn = document.getElementById('claimYieldsBtn');
 
+    // Leaderboard ticker DOM Elements
+    const tickerViewport = document.getElementById('tickerViewport');
+
     // Global Stats DOM Elements
     const netUsers = document.getElementById('netUsers');
     const netNodes = document.getElementById('netNodes');
@@ -719,6 +787,7 @@
     let userData = null;
     let mainBalance = 0;
     let liveTickerInterval = null;
+    let leaderboardInterval = null;
 
     const DURATION_SECS = 5 * 60 * 60; // 5 Hours = 18000s
 
@@ -729,7 +798,7 @@
         currentUser = user;
         bindUserListener();
         bindGlobalStats();
-        bindAnnouncements();
+        bindDynamicLeaderboard();
       }
     });
 
@@ -757,7 +826,6 @@
           return;
         }
 
-        // Display parsing
         const name = userData.username || "User";
         usernameDisplay.textContent = name.charAt(0).toUpperCase() + name.slice(1);
         userAvatar.textContent = name.charAt(0).toUpperCase();
@@ -772,7 +840,7 @@
         todayEarningsDisplay.textContent = `$${Number(userData.todayEarnings || 0).toFixed(4)}`;
         totalEarningsDisplay.textContent = `$${Number(userData.totalEarnings || 0).toFixed(4)}`;
 
-        // Formula rate visualization
+        // Formula rate visualization (1,000 POWER = $0.001/day)
         const dailyRate = powerVal * 0.000001;
         rateDisplay.textContent = `${Number(powerVal).toLocaleString()} POWER = $${dailyRate.toFixed(4)}/day`;
 
@@ -919,6 +987,51 @@
       });
     });
 
+    // Query Top 10 users with highest POWER to run dynamic notice-bar loop
+    function bindDynamicLeaderboard() {
+      if (leaderboardInterval) clearInterval(leaderboardInterval);
+
+      db.ref('Users').orderByChild('power').limitToLast(10).on('value', (snapshot) => {
+        if (!snapshot.exists()) return;
+
+        const rawList = snapshot.val();
+        const topArray = Object.keys(rawList).map(key => rawList[key]);
+
+        // Sort descending
+        topArray.sort((a, b) => b.power - a.power);
+
+        let tickerSlidesHTML = "";
+        topArray.forEach((user, index) => {
+          const uName = user.username ? (user.username.charAt(0).toUpperCase() + user.username.slice(1)) : "Miner";
+          const formattedPower = Number(user.power || 1000).toLocaleString();
+
+          tickerSlidesHTML += `
+            <div class="ticker-slide ${index === 0 ? 'active' : ''}">
+              <div class="rank-user-info">
+                <span class="rank-badge">Rank #${index + 1}</span>
+                <span>@${uName}</span>
+              </div>
+              <div class="rank-user-power">Holds the leaderboard hashrate of <strong>${formattedPower} HP</strong></div>
+            </div>
+          `;
+        });
+
+        tickerViewport.innerHTML = tickerSlidesHTML;
+
+        // Init loop rotation
+        let slideIndex = 0;
+        const slides = tickerViewport.getElementsByClassName('ticker-slide');
+
+        leaderboardInterval = setInterval(() => {
+          if (slides.length <= 1) return;
+
+          slides[slideIndex].classList.remove('active');
+          slideIndex = (slideIndex + 1) % slides.length;
+          slides[slideIndex].classList.add('active');
+        }, 3500); // Transitions notice rank every 3.5 seconds
+      });
+    }
+
     function bindGlobalStats() {
       db.ref('Users').on('value', (snapshot) => {
         if (!snapshot.exists()) return;
@@ -939,16 +1052,9 @@
       });
     }
 
-    function bindAnnouncements() {
-      db.ref('Announcements').on('value', (snapshot) => {
-        if (snapshot.exists()) {
-          document.getElementById('annText').textContent = snapshot.val().text || "Core systems active. Hash away!";
-        }
-      });
-    }
-
     window.addEventListener('beforeunload', () => {
       if (liveTickerInterval) clearInterval(liveTickerInterval);
+      if (leaderboardInterval) clearInterval(leaderboardInterval);
     });
   </script>
 </body>
