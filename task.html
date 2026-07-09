@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>TNMINING - Tasks & Rewards</title>
+  <title>TNMINING - Core Tasks</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2 family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
@@ -16,14 +16,18 @@
       --bg-primary: #020009;
       --bg-secondary: #09041a;
       --bg-card: rgba(13, 6, 30, 0.65);
-      --border-color: rgba(168, 85, 247, 0.2);
+      --border-color: rgba(168, 85, 247, 0.18);
       --primary: #a855f7;
       --secondary: #06b6d4;
+      --gold: #fbbf24;
+      --gold-glow: rgba(251, 191, 36, 0.35);
       --primary-glow: rgba(168, 85, 247, 0.3);
       --secondary-glow: rgba(6, 182, 212, 0.2);
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --success: #10b981;
+      --error: #ef4444;
+      --radius-premium: 24px;
     }
 
     * {
@@ -53,12 +57,19 @@
       max-width: 460px;
       margin: 0 auto;
       padding: 16px;
+      opacity: 0;
+      transform: translateY(15px);
+      animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes fade-in-up {
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Page Header */
     .page-header {
       text-align: center;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
       padding-top: 10px;
     }
 
@@ -74,209 +85,225 @@
       margin-top: 4px;
     }
 
-    /* Unified section headings */
-    .section-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      margin-top: 12px;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* Daily Login card design with dual glows */
-    .daily-login-card {
-      background: radial-gradient(circle at 50% 0%, rgba(24, 12, 54, 0.6) 0%, rgba(9, 4, 25, 0.9) 100%);
-      border: 1px solid var(--border-color);
-      border-radius: 24px;
-      padding: 24px 20px;
-      text-align: center;
-      margin-bottom: 22px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-      position: relative;
-    }
-
-    .daily-icon-box {
-      width: 70px;
-      height: 70px;
-      background: rgba(168, 85, 247, 0.1);
-      border: 1px solid var(--primary);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 16px;
-      font-size: 28px;
-      color: var(--primary);
-      box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
-      transition: all 0.3s ease;
-    }
-
-    .daily-login-card.ready .daily-icon-box {
-      color: var(--secondary);
-      border-color: var(--secondary);
-      background: rgba(6, 182, 212, 0.12);
-      box-shadow: 0 0 25px rgba(6, 182, 212, 0.35);
-      animation: bounce-icon 2s infinite ease-in-out;
-    }
-
-    @keyframes bounce-icon {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
-
-    .daily-title {
-      font-size: 16px;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-
-    .daily-desc {
-      font-size: 11.5px;
-      color: var(--text-muted);
-      margin-bottom: 18px;
-    }
-
-    .btn-claim-daily {
-      width: 100%;
-      padding: 13.5px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-      border: none;
-      border-radius: 16px;
-      color: white;
-      font-weight: 800;
-      font-size: 13.5px;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.3);
-      transition: all 0.25s ease;
-    }
-
-    .btn-claim-daily:disabled {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-
-    .btn-claim-daily:active:not(:disabled) {
-      transform: scale(0.97);
-    }
-
-    /* Dynamic Task listing stack */
-    .tasks-list {
+    /* Shimmer Skeleton Screen */
+    .skeleton-screen {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    .task-item {
+    .skeleton-item {
+      height: 90px;
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 20px;
-      padding: 14px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      position: relative;
+      overflow: hidden;
     }
 
-    .task-item:hover {
+    .skeleton-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+      transform: translateX(-100%);
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      100% { transform: translateX(100%); }
+    }
+
+    /* Dynamic Tasks Listing Box */
+    .tasks-list-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Task Card Design (matches Mining and Home precisely) */
+    .task-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 22px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      position: relative;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .task-card:hover {
       border-color: var(--secondary);
     }
 
-    .task-info {
+    .task-card.completed {
+      border-color: rgba(16, 185, 129, 0.2);
+    }
+
+    .task-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .task-profile-wrapper {
       display: flex;
       align-items: center;
       gap: 12px;
-      max-width: 70%;
     }
 
-    .task-icon {
-      width: 42px;
-      height: 42px;
+    .task-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
       background: rgba(255, 255, 255, 0.03);
-      border-radius: 14px;
+      border: 1.5px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 16px;
-      color: var(--primary);
+      color: var(--secondary);
       flex-shrink: 0;
     }
 
-    .task-meta {
+    .task-meta-info {
       display: flex;
       flex-direction: column;
       gap: 2px;
     }
 
-    .task-name {
-      font-size: 12.5px;
-      font-weight: 700;
+    .task-title {
+      font-size: 13.5px;
+      font-weight: 800;
       color: var(--text-main);
       line-height: 1.3;
     }
 
-    .task-reward {
+    .task-description {
       font-size: 11px;
-      color: var(--secondary);
-      font-weight: 700;
+      color: var(--text-muted);
+      line-height: 1.4;
     }
 
-    .btn-task-action {
-      background: rgba(168, 85, 247, 0.12);
-      border: 1px solid var(--primary);
-      padding: 7px 14px;
+    .task-reward-badge {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      background: rgba(251, 191, 36, 0.06);
+      border: 1px solid rgba(251, 191, 36, 0.18);
+      padding: 3px 10px;
       border-radius: 12px;
-      color: var(--primary);
-      font-size: 11.5px;
+      flex-shrink: 0;
+    }
+
+    /* Verification Status Banner */
+    .verification-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 8px 12px;
+      border-radius: 12px;
+      color: var(--text-muted);
+    }
+
+    .verification-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .verification-val {
       font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Action Claim Controls */
+    .task-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-task {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 14px;
+      font-size: 12.5px;
+      font-weight: 800;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
-    .btn-task-action:hover {
-      background: var(--primary);
+    .btn-task-link {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-task-link:hover {
+      border-color: var(--secondary);
+      background: rgba(6, 182, 212, 0.05);
+    }
+
+    .btn-task-claim {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
       color: white;
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.25);
     }
 
-    .btn-task-action.completed {
-      background: rgba(16, 185, 129, 0.06);
-      border-color: rgba(16, 185, 129, 0.2);
-      color: var(--success);
-      cursor: default;
+    .btn-task-claim:disabled {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+      cursor: not-allowed;
+      box-shadow: none;
+      border: 1px solid rgba(255,255,255,0.02);
     }
 
-    /* Premium Web3 "No Tasks / Coming Soon" Empty Card state */
+    /* Empty State (Rule 2) */
     .empty-tasks-card {
       background: var(--bg-card);
-      border: 1px dashed var(--border-color);
-      border-radius: 24px;
-      padding: 40px 20px;
+      border: 1.5px dashed var(--border-color);
+      border-radius: var(--radius-premium);
+      padding: 45px 24px;
       text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
     }
 
     .empty-tasks-card i {
-      font-size: 32px;
-      color: rgba(168, 85, 247, 0.35);
-      margin-bottom: 12px;
+      font-size: 36px;
+      color: rgba(168, 85, 247, 0.3);
+      margin-bottom: 14px;
+      animation: float-icon 3s infinite ease-in-out;
+    }
+
+    @keyframes float-icon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
     }
 
     .empty-title {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 800;
       color: var(--text-main);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .empty-subtitle {
       font-size: 11.5px;
       color: var(--text-muted);
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
     /* Bottom Navigation Styles */
@@ -327,16 +354,14 @@
       border: 4.5px solid var(--bg-primary);
     }
 
-    .nav-item-mining i {
-      font-size: 22px;
-    }
+    .nav-item-mining i { font-size: 22px; }
 
-    /* Alerts */
+    /* Toasts Alerts */
     .toast-container {
       position: fixed;
       top: 20px;
       right: 20px;
-      z-index: 1000;
+      z-index: 10000;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -367,37 +392,27 @@
 
   <div class="container">
     
-    <!-- Title Section -->
+    <!-- Title Area -->
     <div class="page-header">
-      <h1 class="page-title">Rewards Hub</h1>
-      <p class="page-subtitle">Claim daily login bonuses and dynamic network tasks</p>
+      <h1 class="page-title">Dynamic Alliance Missions</h1>
+      <p class="page-subtitle">Verify dynamic alliance tasks and earn extra tokens instantly</p>
     </div>
 
-    <!-- 1. 24-HOUR DAILY LOGIN CARD -->
-    <h2 class="section-title">Check-In Rewards</h2>
-    <div class="daily-login-card" id="dailyCard">
-      <div class="daily-icon-box" id="dailyIcon">
-        <i class="fa-solid fa-calendar-check"></i>
-      </div>
-      <h3 class="daily-title">Daily Hashing Credit</h3>
-      <p class="daily-desc">Claim free **+100 permanent POWER** instantly every 24 hours.</p>
-      <button class="btn-claim-daily" id="dailyClaimBtn">Checking rewards status...</button>
+    <!-- Skeletons Loader State Container -->
+    <div class="skeleton-screen" id="skeletonContainer">
+      <div class="skeleton-item"></div>
+      <div class="skeleton-item"></div>
+      <div class="skeleton-item"></div>
     </div>
 
-    <!-- 2. DYNAMIC ADMIN TASK LIST (FALLBACK EMPTY CARD SUPPORTED) -->
-    <h2 class="section-title">Network Tasks</h2>
-    <div class="tasks-list" id="tasksContainer">
-      <!-- Generated via database, default is "No Tasks available" -->
-      <div class="empty-tasks-card">
-        <i class="fa-solid fa-layer-group"></i>
-        <h4 class="empty-title">Synchronizing Tasks...</h4>
-        <p class="empty-subtitle">Hold on, verifying dynamic lists.</p>
-      </div>
+    <!-- Active Tasks Directory (Fully Reactive to Firebase Nodes) -->
+    <div class="tasks-list-stack" id="tasksDirectory" style="display:none;">
+      <!-- Compiled dynamically via script -->
     </div>
 
   </div>
 
-  <!-- Bottom Navigation -->
+  <!-- Bottom Navigation Menu -->
   <nav class="bottom-nav">
     <a href="home.html" class="nav-item">
       <i class="fa-solid fa-house"></i>
@@ -420,9 +435,10 @@
     </a>
   </nav>
 
+  <!-- Notification Toasts Portal -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- Firebase Legacy Compat Libraries -->
+  <!-- Firebase Legacy Compat SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
@@ -446,24 +462,21 @@
     const db = firebase.database();
 
     // DOM Elements
-    const dailyCard = document.getElementById('dailyCard');
-    const dailyIcon = document.getElementById('dailyIcon');
-    const dailyClaimBtn = document.getElementById('dailyClaimBtn');
-    const tasksContainer = document.getElementById('tasksContainer');
+    const skeletonContainer = document.getElementById('skeletonContainer');
+    const tasksDirectory = document.getElementById('tasksDirectory');
     const toastContainer = document.getElementById('toastContainer');
 
     let currentUser = null;
     let userData = null;
-    let checkInInterval = null;
-
-    const COOLDOWN_24H_MS = 24 * 60 * 60 * 1000; // 24 Hours
+    let globalTasksData = {};
+    let countdownTimersInterval = null;
 
     auth.onAuthStateChanged((user) => {
       if (!user) {
         window.location.href = 'index.html';
       } else {
         currentUser = user;
-        bindRewardsPlatform();
+        bindDynamicTasksPlatform();
       }
     });
 
@@ -480,184 +493,286 @@
       }, 4000);
     }
 
-    function bindRewardsPlatform() {
-      // 1. Sync User info & Daily logs
-      db.ref(`Users/${currentUser.uid}`).on('value', (snapshot) => {
-        if (!snapshot.exists()) return;
-        userData = snapshot.val();
+    // Connect Dynamic platform listener directly to Tasks database tree (Rule 1, 3, 10 & 15)
+    function bindDynamicTasksPlatform() {
+      db.ref(`Users/${currentUser.uid}`).on('value', (userSnapshot) => {
+        if (!userSnapshot.exists()) return;
+        userData = userSnapshot.val();
 
-        evaluateDailyTimer();
-      });
+        // Query active configurations
+        db.ref('Tasks').on('value', (tasksSnapshot) => {
+          skeletonContainer.style.display = 'none';
+          tasksDirectory.style.display = 'flex';
 
-      // 2. Fetch Tasks list from Database (Default state handling embedded)
-      db.ref('Tasks').on('value', (tasksSnapshot) => {
-        if (!tasksSnapshot.exists() || Object.keys(tasksSnapshot.val()).length === 0) {
-          // Render beautiful coming soon card if no tasks configured
-          tasksContainer.innerHTML = `
-            <div class="empty-tasks-card">
-              <i class="fa-solid fa-layer-group"></i>
-              <h4 class="empty-title">No Active Tasks Available</h4>
-              <p class="empty-subtitle">Check back later! We are cooking up new cloud missions for you.</p>
-            </div>
-          `;
-          return;
-        }
-
-        const tasksData = tasksSnapshot.val();
-        const userCompletions = userData.completedTasks || {};
-        let tasksHTML = "";
-
-        Object.keys(tasksData).forEach((key) => {
-          const task = tasksData[key];
-          const lastClaim = userCompletions[key] || 0;
-          const now = Date.now();
-          let isLocked = false;
-          let actionLabel = "Claim";
-
-          if (task.cooldown) {
-            const remaining = Math.floor((lastClaim + (task.cooldown * 1000) - now) / 1000);
-            if (remaining > 0) {
-              isLocked = true;
-              const hours = Math.floor(remaining / 3600).toString().padStart(2, '0');
-              const mins = Math.floor((remaining % 3600) / 60).toString().padStart(2, '0');
-              actionLabel = `${hours}:${mins}`;
-            }
-          } else {
-            if (lastClaim > 0) {
-              isLocked = true;
-              actionLabel = "Done";
-            }
-          }
-
-          const rewardLabel = task.rewardType === 'power' ? `+${task.rewardVal} POWER` : `+$${task.rewardVal.toFixed(4)}`;
-
-          tasksHTML += `
-            <div class="task-item">
-              <div class="task-info">
-                <div class="task-icon"><i class="fa-solid ${task.rewardType === 'power' ? 'fa-bolt' : 'fa-wallet'}"></i></div>
-                <div class="task-meta">
-                  <span class="task-name">${task.title}</span>
-                  <span class="task-reward">${rewardLabel}</span>
-                </div>
+          if (!tasksSnapshot.exists() || Object.keys(tasksSnapshot.val()).length === 0) {
+            // Render Premium Empty State Card (Rule 2)
+            tasksDirectory.innerHTML = `
+              <div class="empty-tasks-card">
+                <i class="fa-solid fa-layer-group"></i>
+                <h4 class="empty-title">No Active Missions Available</h4>
+                <p class="empty-subtitle">New tasks will appear here when the administrator publishes them.</p>
               </div>
-              <button class="btn-task-action ${actionLabel === 'Done' ? 'completed' : ''}" 
-                      ${isLocked ? 'disabled' : ''} 
-                      onclick="triggerTaskClaim('${key}', '${task.link || ''}')">
-                ${actionLabel}
-              </button>
-            </div>
-          `;
-        });
-
-        tasksContainer.innerHTML = tasksHTML;
-      });
-    }
-
-    // Monitor exact daily check-in clock cooldown
-    function evaluateDailyTimer() {
-      if (checkInInterval) clearInterval(checkInInterval);
-
-      const loop = () => {
-        const lastClaimTime = parseInt(userData.lastDailyClaimTime || 0);
-        const now = Date.now();
-        const elapsed = now - lastClaimTime;
-
-        if (elapsed >= COOLDOWN_24H_MS) {
-          // Available for Claim
-          dailyCard.classList.add('ready');
-          dailyClaimBtn.disabled = false;
-          dailyClaimBtn.textContent = "Claim Daily +100 POWER";
-        } else {
-          // Under active countdown cooldown
-          dailyCard.classList.remove('ready');
-          dailyClaimBtn.disabled = true;
-
-          const remainingMs = COOLDOWN_24H_MS - elapsed;
-          const remainingSecs = Math.max(0, Math.floor(remainingMs / 1000));
-          
-          const hours = Math.floor(remainingSecs / 3600).toString().padStart(2, '0');
-          const mins = Math.floor((remainingSecs % 3600) / 60).toString().padStart(2, '0');
-          const secs = (remainingSecs % 60).toString().padStart(2, '0');
-
-          dailyClaimBtn.textContent = `Next claim in ${hours}:${mins}:${secs}`;
-        }
-      };
-
-      loop();
-      checkInInterval = setInterval(loop, 1000);
-    }
-
-    // Daily Claim Action
-    dailyClaimBtn.addEventListener('click', () => {
-      if (dailyClaimBtn.disabled) return;
-      dailyClaimBtn.disabled = true;
-
-      const now = Date.now();
-      const userRef = db.ref(`Users/${currentUser.uid}`);
-
-      userRef.transaction((curr) => {
-        if (curr) {
-          curr.lastDailyClaimTime = now;
-          curr.power = (curr.power || 1000) + 100; // Gift 100 permanent POWER
-        }
-        return curr;
-      }, (err, committed) => {
-        if (committed) {
-          showToast("Daily Bonus claimed successfully! +100 permanent POWER credited.", "success");
-        } else {
-          showToast("Failed to check in.", "error");
-          dailyClaimBtn.disabled = false;
-        }
-      });
-    });
-
-    // Dynamic Task Click Action Handler
-    window.triggerTaskClaim = function(taskId, linkUrl) {
-      if (linkUrl) {
-        window.open(linkUrl, '_blank');
-        showToast("Mission started! Return in 3 seconds to claim.", "success");
-      }
-
-      setTimeout(() => {
-        db.ref(`Tasks/${taskId}`).once('value', (snap) => {
-          if (!snap.exists()) return;
-          const taskObj = snap.val();
-          
-          const now = Date.now();
-          const lastClaim = (userData.completedTasks && userData.completedTasks[taskId]) || 0;
-
-          if (taskObj.cooldown && (lastClaim + (taskObj.cooldown * 1000) > now)) {
-            showToast("This task is currently cooling down.", "error");
+            `;
             return;
           }
 
-          const userRef = db.ref(`Users/${currentUser.uid}`);
-          userRef.transaction((curr) => {
-            if (curr) {
-              if (!curr.completedTasks) curr.completedTasks = {};
-              curr.completedTasks[taskId] = now;
-
-              if (taskObj.rewardType === 'power') {
-                curr.power = (curr.power || 1000) + parseInt(taskObj.rewardVal);
-              } else {
-                curr.balance = parseFloat(curr.balance || 0) + parseFloat(taskObj.rewardVal);
-              }
-            }
-            return curr;
-          }, (err, committed) => {
-            if (committed) {
-              const formattedReward = taskObj.rewardType === 'power' ? `+${taskObj.rewardVal} permanent POWER` : `+$${parseFloat(taskObj.rewardVal).toFixed(4)}`;
-              showToast(`Task Success! Gained: ${formattedReward}`, "success");
-            } else {
-              showToast("Task verification failed.", "error");
-            }
-          });
+          globalTasksData = tasksSnapshot.val();
+          renderDynamicTasksDirectory();
         });
-      }, linkUrl ? 3000 : 0);
+      });
+    }
+
+    // Render Dynamic Directory based on individual structures (Rule 4, 5, 6, 7 & 9)
+    function renderDynamicTasksDirectory() {
+      if (countdownTimersInterval) clearInterval(countdownTimersInterval);
+
+      const tasksKeys = Object.keys(globalTasksData);
+      const userCompletions = userData.completedTasks || {};
+      let compiledHTML = "";
+
+      tasksKeys.forEach((key) => {
+        const task = globalTasksData[key];
+        
+        // Skip rendering if task is marked disabled by Admin (Rule 3 & 9)
+        if (task.enabled === false) return;
+
+        const lastClaim = userCompletions[key] ? userCompletions[key].lastClaimTime : 0;
+        const claimStatus = userCompletions[key] ? userCompletions[key].status : "Available";
+        const now = Date.now();
+
+        // 1. Resolve Dynamic Icons based on Task types (Rule 5 & 6)
+        let iconClass = "fa-hashtag";
+        if (task.taskType === 'telegram_channel' || task.taskType === 'telegram_group') iconClass = "fa-telegram";
+        else if (task.taskType === 'visit_website') iconClass = "fa-earth-americas";
+        else if (task.taskType === 'mini_app') iconClass = "fa-cubes";
+        else if (task.taskType === 'video') iconClass = "fa-play";
+        else if (task.taskType === 'invite') iconClass = "fa-user-group";
+
+        // 2. Format Reward details (Rule 4)
+        let rewardFormatted = "";
+        if (task.rewardType === 'power') rewardFormatted = `+${Number(task.reward).toLocaleString()} POWER`;
+        else if (task.rewardType === 'usd') rewardFormatted = `+$${parseFloat(task.reward).toFixed(4)} USD`;
+        else if (task.rewardType === 'ton') rewardFormatted = `+${parseFloat(task.reward).toFixed(4)} TON`;
+        else rewardFormatted = `+${Number(task.reward).toLocaleString()} BONUS`;
+
+        // 3. Evaluate verification badge texts (Rule 6 & 7)
+        let verifText = "Instant verification";
+        if (task.verificationType === 'manual') verifText = "Requires manual approval";
+        else if (task.verificationType === 'link_visit') verifText = "Requires redirection visit";
+        else if (task.verificationType === 'tg_join') verifText = "Telegram automated verification";
+
+        // 4. Resolve Dynamic Action button states (Rule 9)
+        let actionBtnHTML = "";
+        let isLocked = false;
+
+        // Check global claim threshold limit (Rule 3)
+        const globalLimit = parseInt(task.claimLimit || 0);
+        const globalClaimsCount = parseInt(task.claimsCount || 0);
+        const limitReached = (globalLimit > 0) && (globalClaimsCount >= globalLimit);
+
+        // Check timestamp expiration rules
+        const expiryTime = parseInt(task.expiry || 0);
+        const expired = (expiryTime > 0) && (now > expiryTime);
+
+        if (expired) {
+          actionBtnHTML = `<button class="btn-task btn-task-claim" disabled>Expired</button>`;
+        } else if (limitReached) {
+          actionBtnHTML = `<button class="btn-task btn-task-claim" disabled>Limit Exceeded</button>`;
+        } else if (claimStatus === 'PendingApproval') {
+          actionBtnHTML = `<button class="btn-task btn-task-claim" disabled><i class="fa-solid fa-clock-rotate-left"></i> Pending Verification</button>`;
+        } else if (claimStatus === 'Completed') {
+          const cooldownDuration = parseInt(task.cooldown || 0);
+          if (cooldownDuration > 0) {
+            // Check if cooling down elapsed satisfies limits
+            const cooldownMs = cooldownDuration * 1000;
+            const remaining = Math.max(0, Math.floor((lastClaim + cooldownMs - now) / 1000));
+            
+            if (remaining > 0) {
+              isLocked = true;
+              actionBtnHTML = `<button class="btn-task btn-task-claim" disabled id="cooldown_${task.id}">Cooldown ...</button>`;
+            } else {
+              actionBtnHTML = `<button class="btn-task btn-task-claim" onclick="executeClaimAction('${task.id}')">Claim Reward</button>`;
+            }
+          } else {
+            actionBtnHTML = `<button class="btn-task btn-task-claim completed" disabled><i class="fa-solid fa-circle-check"></i> Completed</button>`;
+          }
+        } else {
+          // Task Available
+          if (task.url) {
+            actionBtnHTML = `
+              <button class="btn-task btn-task-link" onclick="openTaskRedirect('${task.id}', '${task.url}')">${task.buttonText || "Join Link"}</button>
+              <button class="btn-task btn-task-claim" id="claim_btn_${task.id}" onclick="executeClaimAction('${task.id}')" disabled>Claim</button>
+            `;
+          } else {
+            actionBtnHTML = `<button class="btn-task btn-task-claim" onclick="executeClaimAction('${task.id}')">Verify & Claim</button>`;
+          }
+        }
+
+        compiledHTML += `
+          <div class="task-card ${claimStatus === 'Completed' && !isLocked ? 'completed' : ''}" id="card_${task.id}">
+            <div class="task-card-header">
+              <div class="task-profile-wrapper">
+                <div class="task-icon-box"><i class="fa-solid ${iconClass}"></i></div>
+                <div class="task-meta-info">
+                  <span class="task-title">${task.title}</span>
+                  <span class="task-description">${task.description || "alliance sub task mission"}</span>
+                </div>
+              </div>
+              <span class="task-reward-badge">${rewardFormatted}</span>
+            </div>
+
+            <div class="verification-bar">
+              <span class="verification-label"><i class="fa-solid fa-shield-halved" style="color:var(--secondary);"></i> Network protocol</span>
+              <span class="verification-val">${verifText}</span>
+            </div>
+
+            <div class="task-actions">
+              ${actionBtnHTML}
+            </div>
+          </div>
+        `;
+      });
+
+      tasksDirectory.innerHTML = compiledHTML;
+
+      // Initialize Cooldown dynamic text update loops
+      const runCooldownTickers = () => {
+        const now = Date.now();
+        tasksKeys.forEach((key) => {
+          const task = globalTasksData[key];
+          const timerEl = document.getElementById(`cooldown_${task.id}`);
+          if (!timerEl) return;
+
+          const lastClaim = userCompletions[key] ? userCompletions[key].lastClaimTime : 0;
+          const cooldownDuration = parseInt(task.cooldown || 0);
+          const cooldownMs = cooldownDuration * 1000;
+          
+          const remainingSecs = Math.max(0, Math.floor((lastClaim + cooldownMs - now) / 1000));
+          
+          if (remainingSecs <= 0) {
+            // Hotreload directory layout to activate
+            renderDynamicTasksDirectory();
+          } else {
+            const hours = Math.floor(remainingSecs / 3600).toString().padStart(2, '0');
+            const mins = Math.floor((remainingSecs % 3600) / 60).toString().padStart(2, '0');
+            const secs = (remainingSecs % 60).toString().padStart(2, '0');
+            timerEl.innerHTML = `<i class="fa-solid fa-clock fa-spin" style="color:var(--gold);"></i> Retry in ${hours}:${mins}:${secs}`;
+          }
+        });
+      };
+
+      runCooldownTickers();
+      countdownTimersInterval = setInterval(runCooldownTickers, 1000);
+    }
+
+    // Handles user opening social task redirection links
+    window.openTaskRedirect = function(taskId, url) {
+      window.open(url, '_blank');
+      showToast("Verification link opened! Please complete task, then click claim.", "success");
+
+      const claimBtn = document.getElementById(`claim_btn_${taskId}`);
+      if (claimBtn) {
+        // Enforce a simple UI button delay of 2.5 seconds to prevent automated fast clicks
+        let count = 3;
+        claimBtn.innerHTML = `Verifying (${count}s)...`;
+        
+        const verifDelay = setInterval(() => {
+          count--;
+          if (count <= 0) {
+            clearInterval(verifDelay);
+            claimBtn.disabled = false;
+            claimBtn.textContent = "Claim Reward";
+          } else {
+            claimBtn.innerHTML = `Verifying (${count}s)...`;
+          }
+        }, 1000);
+      }
+    };
+
+    // Execute Claim action based on rules validation types (Rule 7, 8 & 9)
+    window.executeClaimAction = function(taskId) {
+      const taskObj = globalTasksData[taskId];
+      if (!taskObj) return;
+
+      const userClaimBtn = document.getElementById(`claim_btn_${taskId}`) || document.querySelector(`#card_${taskId} .btn-task-claim`);
+      if (userClaimBtn) userClaimBtn.disabled = true;
+
+      const now = Date.now();
+
+      // SCENARIO 1: MANUAL REVIEW CLASSIFICATION (Rule 7)
+      if (taskObj.verificationType === 'manual') {
+        const claimId = db.ref('ManualClaimsQueue').push().key;
+
+        const manualClaimPayload = {
+          claimId: claimId,
+          taskId: taskId,
+          taskTitle: taskObj.title,
+          uid: currentUser.uid,
+          username: userData.username,
+          reward: taskObj.reward,
+          rewardType: taskObj.rewardType,
+          submittedAt: firebase.database.ServerValue.TIMESTAMP,
+          status: "PendingApproval"
+        };
+
+        const updatePayload = {};
+        updatePayload[`ManualClaimsQueue/${claimId}`] = manualClaimPayload;
+        updatePayload[`Users/${currentUser.uid}/completedTasks/${taskId}`] = {
+          lastClaimTime: now,
+          status: "PendingApproval"
+        };
+
+        db.ref().update(updatePayload)
+          .then(() => {
+            showToast("Claim request submitted! Administrator will review your entry manually.", "success");
+          })
+          .catch(() => {
+            showToast("Failed to queue manual review.", "error");
+            if (userClaimBtn) userClaimBtn.disabled = false;
+          });
+
+        return;
+      }
+
+      // SCENARIO 2: INSTANT DIRECT PAYOUT/CLAIM
+      const userRef = db.ref(`Users/${currentUser.uid}`);
+      userRef.transaction((curr) => {
+        if (curr) {
+          if (!curr.completedTasks) curr.completedTasks = {};
+          
+          // Log task state to Completed
+          curr.completedTasks[taskId] = {
+            lastClaimTime: now,
+            status: "Completed"
+          };
+
+          // Credit respective balance variables (Rule 4)
+          const rewardVal = parseFloat(taskObj.reward);
+          if (taskObj.rewardType === 'power') {
+            curr.power = (curr.power || 1000) + parseInt(rewardVal);
+          } else {
+            curr.balance = parseFloat(curr.balance || 0) + rewardVal;
+          }
+        }
+        return curr;
+      }, (error, committed) => {
+        if (committed) {
+          // Increment total claims metrics in global task configurations
+          db.ref(`Tasks/${taskId}/claimsCount`).transaction((count) => {
+            return (parseInt(count) || 0) + 1;
+          });
+
+          const formattedReward = taskObj.rewardType === 'power' ? `+${Number(taskObj.reward).toLocaleString()} POWER` : `+$${parseFloat(taskObj.reward).toFixed(4)}`;
+          showToast(`Success! claimed ${formattedReward} reward.`, "success");
+        } else {
+          showToast("Failed to write payout claim.", "error");
+          if (userClaimBtn) userClaimBtn.disabled = false;
+        }
+      });
     };
 
     window.addEventListener('beforeunload', () => {
-      if (checkInInterval) clearInterval(checkInInterval);
+      if (countdownTimersInterval) clearInterval(countdownTimersInterval);
     });
   </script>
 </body>
