@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>TNMINING - Home Platform</title>
+  <title>TNMINING - Mining Nodes</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +26,6 @@
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --success: #10b981;
-      --success-glow: rgba(16, 185, 129, 0.4);
     }
 
     * {
@@ -58,288 +57,104 @@
       padding: 16px;
     }
 
-    /* Redesigned Premium Header Section */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      padding: 10px 4px;
+    /* Page Header */
+    .page-header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-top: 10px;
     }
 
-    .user-profile {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .avatar-wrapper {
-      position: relative;
-    }
-
-    .avatar {
-      width: 52px;
-      height: 52px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      color: white;
+    .page-title {
       font-size: 20px;
-      border: 1.5px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 8px 20px rgba(168, 85, 247, 0.35);
-    }
-
-    .user-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 4px; /* Strict physical separation to prevent overlapping */
-    }
-
-    .username {
-      font-size: 16px;
       font-weight: 800;
-      color: var(--text-main);
-      line-height: 1.2;
-    }
-
-    /* Enhanced Online/Offline indicator tag */
-    .user-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 3px 10px;
-      border-radius: 20px;
-      width: fit-content;
-      transition: all 0.3s ease;
-    }
-
-    .user-status span.status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background-color: var(--text-muted);
-      transition: all 0.3s ease;
-    }
-
-    .user-status.active {
-      background: rgba(16, 185, 129, 0.08);
-      border-color: rgba(16, 185, 129, 0.2);
-    }
-
-    .user-status.active span.status-dot {
-      background-color: var(--success);
-      box-shadow: 0 0 8px var(--success-glow);
-      animation: pulse-dot 1.8s infinite ease-in-out;
-    }
-
-    .status-text {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--text-muted);
       letter-spacing: 0.5px;
-      text-transform: uppercase;
-      transition: all 0.3s ease;
     }
 
-    .user-status.active .status-text {
-      color: var(--success);
-    }
-
-    @keyframes pulse-dot {
-      0%, 100% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.2); opacity: 1; }
-    }
-
-    .header-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 16px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 16px;
-      transition: all 0.2s ease;
-    }
-
-    .header-btn:hover {
-      border-color: var(--primary);
-      box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
-    }
-
-    /* Available Claimed Balance Card */
-    .balance-card {
-      background: radial-gradient(circle at 50% 0%, rgba(24, 12, 54, 0.6) 0%, rgba(9, 4, 25, 0.9) 100%);
-      border: 1px solid var(--border-color);
-      border-radius: 24px;
-      padding: 24px 16px;
-      text-align: center;
-      margin-bottom: 16px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(168, 85, 247, 0.05);
-    }
-
-    .balance-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .balance-amount {
-      font-size: 32px;
-      font-family: 'Share Tech Mono', monospace;
-      font-weight: 700;
-      background: linear-gradient(135deg, #ffffff 30%, #e2e8f0 70%, var(--secondary) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 4px;
-    }
-
-    /* Glowing Live Yellow Balance Card */
-    .mining-status-card {
-      background: rgba(20, 15, 5, 0.35);
-      border: 1px solid rgba(251, 191, 36, 0.15);
-      border-radius: 24px;
-      padding: 20px;
-      margin-bottom: 18px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-      transition: all 0.3s ease;
-    }
-
-    .mining-status-card.active {
-      background: rgba(20, 15, 5, 0.6);
-      border-color: rgba(251, 191, 36, 0.35);
-      box-shadow: 0 10px 30px var(--gold-glow);
-    }
-
-    .mining-card-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--gold);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .mining-card-label i {
-      font-size: 10px;
-    }
-
-    .live-accumulated-balance {
-      font-size: 28px;
-      font-family: 'Share Tech Mono', monospace;
-      font-weight: 700;
-      color: var(--gold);
-      text-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
-      margin-bottom: 12px;
-    }
-
-    .mining-meta-info {
+    .page-subtitle {
       font-size: 12px;
       color: var(--text-muted);
-      font-weight: 500;
+      margin-top: 4px;
     }
 
-    .btn-claim-home {
-      width: 100%;
-      padding: 13px;
-      background: linear-gradient(135deg, var(--gold) 0%, #d97706 100%);
-      border: none;
-      border-radius: 16px;
-      color: #000;
-      font-weight: 800;
-      font-size: 13.5px;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(251, 191, 36, 0.3);
-      transition: all 0.25s ease;
-      margin-top: 12px;
-      display: none;
-    }
-
-    .btn-claim-home:active {
-      transform: scale(0.97);
-    }
-
-    /* Statistics Metric Grid */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .stat-box {
-      background: var(--bg-card);
+    /* Power Allocation Hero Card */
+    .power-hero-card {
+      background: radial-gradient(circle at 50% 0%, rgba(24, 12, 54, 0.6) 0%, rgba(9, 4, 25, 0.95) 100%);
       border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 16px;
+      border-radius: 24px;
+      padding: 22px 14px;
+      margin-bottom: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      text-align: center;
+    }
+
+    .hero-metric {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      backdrop-filter: blur(8px);
+      gap: 6px;
     }
 
-    .stat-label {
-      font-size: 10px;
+    .hero-metric-label {
+      font-size: 9.5px;
+      font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      font-weight: 600;
     }
 
-    .stat-value {
+    .hero-metric-value {
+      font-family: 'Share Tech Mono', monospace;
       font-size: 15px;
       font-weight: 700;
+      color: var(--text-main);
     }
 
-    .stat-value.highlight-purple { color: var(--primary); }
-    .stat-value.highlight-cyan { color: var(--secondary); }
+    .hero-metric-value.purple { color: var(--primary); }
+    .hero-metric-value.cyan { color: var(--secondary); }
+    .hero-metric-value.gold { color: var(--gold); }
 
-    /* Announcement Banner */
-    .announcement-box {
-      background: rgba(168, 85, 247, 0.05);
-      border: 1px solid rgba(168, 85, 247, 0.12);
-      border-radius: 16px;
-      padding: 12px 16px;
-      margin-bottom: 22px;
+    /* Start Session Button Block */
+    .trigger-container {
+      margin-bottom: 24px;
+    }
+
+    .btn-deploy-node {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border: none;
+      border-radius: 20px;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(168, 85, 247, 0.35);
+      transition: all 0.25s ease;
       display: flex;
       align-items: center;
-      gap: 12px;
+      justify-content: center;
+      gap: 10px;
     }
 
-    .ann_icon {
-      font-size: 14px;
-      color: var(--primary);
+    .btn-deploy-node:disabled {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      cursor: not-allowed;
+      box-shadow: none;
     }
 
-    .ann-text {
-      flex: 1;
-      font-size: 12px;
-      color: #e2e8f0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .btn-deploy-node:active:not(:disabled) {
+      transform: scale(0.97);
     }
 
-    /* Actions Hub Grid */
-    .section-title {
+    /* Active Streams Grid */
+    .section-header-title {
       font-size: 11px;
       font-weight: 700;
       color: var(--text-muted);
@@ -348,101 +163,175 @@
       letter-spacing: 1px;
     }
 
-    .actions-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 22px;
-    }
-
-    .action-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 18px;
-      padding: 14px 6px;
+    .streams-list {
       display: flex;
       flex-direction: column;
+      gap: 14px;
+    }
+
+    .stream-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 22px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .stream-card.completed {
+      border-color: rgba(251, 191, 36, 0.3);
+      box-shadow: 0 8px 25px var(--gold-glow);
+    }
+
+    .stream-header {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s ease;
     }
 
-    .action-card:hover {
-      border-color: var(--secondary);
-      background: rgba(6, 182, 212, 0.05);
-    }
-
-    .action-icon {
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 12px;
+    .stream-title-block {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 15px;
+      gap: 10px;
+    }
+
+    .stream-pulse-core {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--secondary);
+      box-shadow: 0 0 10px var(--secondary);
+      animation: pulse-stream-dot 1.5s infinite;
+    }
+
+    .completed .stream-pulse-core {
+      background-color: var(--gold);
+      box-shadow: 0 0 12px var(--gold);
+      animation: none;
+    }
+
+    @keyframes pulse-stream-dot {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.3); opacity: 1; }
+    }
+
+    .stream-title {
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .stream-power-badge {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      background: rgba(168, 85, 247, 0.08);
+      border: 1px solid rgba(168, 85, 247, 0.2);
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+
+    .stream-id-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    /* Yield elements */
+    .stream-body {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stream-ticker-col {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stream-ticker-label {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .stream-ticker-val {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 18px;
+      font-weight: 700;
       color: var(--secondary);
-      transition: all 0.2s;
     }
 
-    .action-card:hover .action-icon {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: #fff;
+    .completed .stream-ticker-val {
+      color: var(--gold);
     }
 
-    .action-label {
-      font-size: 11px;
-      font-weight: 600;
+    .stream-timer {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 15px;
+      font-weight: 700;
       color: var(--text-main);
     }
 
-    /* Live network status */
-    .network-stats-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      border-radius: 20px;
-      padding: 16px 20px;
-      margin-bottom: 10px;
-    }
-
-    .net-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .net-title span {
-      width: 6px;
+    .stream-progress-track {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
       height: 6px;
-      background-color: var(--secondary);
-      border-radius: 50%;
-      display: inline-block;
-      animation: pulse-dot 1.5s infinite;
+      border-radius: 10px;
+      overflow: hidden;
     }
 
-    .net-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    .stream-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 10px;
+      transition: width 1s linear;
     }
 
-    .net-row:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
+    .completed .stream-progress-bar {
+      background: linear-gradient(90deg, var(--gold), #d97706);
     }
 
-    .net-label { color: var(--text-muted); }
-    .net-val { font-weight: 600; color: var(--text-main); }
+    .btn-claim-stream {
+      width: 100%;
+      padding: 11px;
+      background: linear-gradient(135deg, var(--gold) 0%, #d97706 100%);
+      border: none;
+      border-radius: 14px;
+      color: #000;
+      font-weight: 800;
+      font-size: 12.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(251, 191, 36, 0.25);
+      transition: all 0.2s ease;
+    }
 
-    /* Bottom Navigation Bar Styles */
+    .btn-claim-stream:active {
+      transform: scale(0.97);
+    }
+
+    .empty-streams-card {
+      background: var(--bg-card);
+      border: 1px dashed var(--border-color);
+      border-radius: 22px;
+      padding: 35px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .empty-streams-card i {
+      font-size: 28px;
+      color: rgba(168, 85, 247, 0.4);
+      margin-bottom: 12px;
+    }
+
+    /* Bottom Nav Menu */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -494,12 +383,12 @@
       font-size: 22px;
     }
 
-    /* Alerts */
+    /* Toasts Alerts */
     .toast-container {
       position: fixed;
       top: 20px;
       right: 20px;
-      z-index: 1000;
+      z-index: 10000;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -530,122 +419,52 @@
 
   <div class="container">
     
-    <!-- Top Header -->
-    <div class="header">
-      <div class="user-profile">
-        <div class="avatar-wrapper">
-          <div class="avatar" id="userAvatar">U</div>
+    <!-- Title Area -->
+    <div class="page-header">
+      <h1 class="page-title">Dynamic Hashing Streams</h1>
+      <p class="page-subtitle">Deploy multiple concurrent sessions with your available power blocks</p>
+    </div>
+
+    <!-- Power State Layout Metrics -->
+    <div class="power-hero-card">
+      <div class="hero-stat-row">
+        <div class="hero-metric">
+          <span class="hero-metric-label">Total Power</span>
+          <span class="hero-metric-value purple" id="totalPowerDisplay">0 HP</span>
         </div>
-        <div class="user-meta">
-          <span class="username" id="usernameDisplay">Loading...</span>
-          <!-- Dynamic separation blocks layout completely -->
-          <div class="user-status" id="userStatusBox">
-            <span class="status-dot"></span> 
-            <span class="status-text" id="statusLabel">Offline</span>
-          </div>
+        <div class="hero-metric">
+          <span class="hero-metric-label">Active Mining</span>
+          <span class="hero-metric-value cyan" id="allocatedPowerDisplay">0 HP</span>
+        </div>
+        <div class="hero-metric">
+          <span class="hero-metric-label">Available Power</span>
+          <span class="hero-metric-value gold" id="idlePowerDisplay">0 HP</span>
         </div>
       </div>
-      
-      <div class="header-btn" onclick="window.location.href='account.html'">
-        <i class="fa-solid fa-user-gear"></i>
-      </div>
     </div>
 
-    <!-- Available Claimed Balance Display -->
-    <div class="balance-card">
-      <div class="balance-label">Withdrawable Balance</div>
-      <div class="balance-amount" id="balanceDisplay">$0.00000000</div>
-      <div class="balance-sub">
-        <i class="fa-solid fa-wallet"></i>
-        <span id="rateDisplay">1000 POWER = $0.001 per day</span>
-      </div>
+    <!-- Consolidated/Segmented trigger button -->
+    <div class="trigger-container">
+      <button class="btn-deploy-node" id="deployStreamBtn">
+        <i class="fa-solid fa-bolt-lightning"></i>
+        <span id="btnTriggerLabel">Start Session</span>
+      </button>
     </div>
 
-    <!-- Active Live Mining Accumulator Card -->
-    <div class="mining-status-card" id="miningStatusCard">
-      <div class="mining-card-label" id="miningStateLabel">
-        <i class="fa-solid fa-circle" style="color: var(--text-muted)"></i> Idle Core
-      </div>
-      <div class="live-accumulated-balance" id="goldBalanceDisplay">$0.00000000</div>
-      <div class="mining-meta-info" id="miningMetaDesc">Start mining to generate real-time yellow yield.</div>
-      
-      <!-- Instant Claim Action -->
-      <button class="btn-claim-home" id="claimYieldsBtn">Claim Gold Yields</button>
-    </div>
-
-    <!-- Grid Stats Section -->
-    <div class="stats-grid">
-      <div class="stat-box">
-        <span class="stat-label">Mining Power</span>
-        <span class="stat-value highlight-purple" id="powerDisplay">1,000 HP</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-label">Referrals</span>
-        <span class="stat-value highlight-cyan" id="referralDisplay">0 Users</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-label">Today's Claims</span>
-        <span class="stat-value" id="todayEarningsDisplay">$0.0000</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-label">Total Gained</span>
-        <span class="stat-value" id="totalEarningsDisplay">$0.0000</span>
-      </div>
-    </div>
-
-    <!-- Announcements -->
-    <div class="announcement-box" id="announcementBox">
-      <i class="fa-solid fa-bullhorn ann_icon"></i>
-      <span class="ann-text" id="annText">Welcome to TNMINING! Secure +1,000 POWER starting bonus.</span>
-    </div>
-
-    <!-- Shortcuts Grid -->
-    <div class="actions-section">
-      <h2 class="section-title">Quick Actions</h2>
-      <div class="actions-grid">
-        <a href="buy-power.html" class="action-card">
-          <div class="action-icon"><i class="fa-solid fa-bolt"></i></div>
-          <span class="action-label">Buy Power</span>
-        </a>
-        <a href="withdraw.html" class="action-card">
-          <div class="action-icon"><i class="fa-solid fa-wallet"></i></div>
-          <span class="action-label">Withdraw</span>
-        </a>
-        <a href="task.html" class="action-card">
-          <div class="action-icon"><i class="fa-solid fa-list-check"></i></div>
-          <span class="action-label">Tasks</span>
-        </a>
-        <a href="referral.html" class="action-card">
-          <div class="action-icon"><i class="fa-solid fa-user-group"></i></div>
-          <span class="action-label">Referrals</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- Live Network Stats -->
-    <div class="network-stats-card">
-      <div class="net-title">
-        <span></span> Network Realtime Data
-      </div>
-      <div class="net-row">
-        <span class="net-label">Global Active Miners</span>
-        <span class="net-val" id="netUsers">0</span>
-      </div>
-      <div class="net-row">
-        <span class="net-label">Active Hashing Pools</span>
-        <span class="net-val" id="netNodes">0</span>
-      </div>
-      <div class="net-row">
-        <span class="net-label">Global Network Hashrate</span>
-        <span class="net-val" id="netPower">0 HP</span>
+    <!-- Parallel Running sessions stack -->
+    <h2 class="section-header-title">Active Hashing Streams</h2>
+    <div class="streams-list" id="streamsContainer">
+      <div class="empty-streams-card">
+        <i class="fa-solid fa-microchip"></i>
+        <p>No active sessions detected. Click Start Mining to spawn your stream.</p>
       </div>
     </div>
 
   </div>
 
-  <!-- Bottom Navigation -->
+  <!-- Bottom Nav Menu -->
   <nav class="bottom-nav">
-    <a href="home.html" class="nav-item active">
+    <a href="home.html" class="nav-item">
       <i class="fa-solid fa-house"></i>
       <span>Home</span>
     </a>
@@ -668,12 +487,13 @@
 
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- Firebase Legacy Compat -->
+  <!-- Firebase Legacy Compat Libraries -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
   <script>
+    // Firebase Configuration
     const firebaseConfig = {
       apiKey: "AIzaSyDuQICVoC10i62PQMS6cX37t1eoeTg5zsc",
       authDomain: "mining-c7b26.firebaseapp.com",
@@ -691,45 +511,27 @@
     const db = firebase.database();
 
     // DOM Elements
-    const userAvatar = document.getElementById('userAvatar');
-    const usernameDisplay = document.getElementById('usernameDisplay');
-    const userStatusBox = document.getElementById('userStatusBox');
-    const statusLabel = document.getElementById('statusLabel');
-    const balanceDisplay = document.getElementById('balanceDisplay');
-    const rateDisplay = document.getElementById('rateDisplay');
-    const powerDisplay = document.getElementById('powerDisplay');
-    const referralDisplay = document.getElementById('referralDisplay');
-    const todayEarningsDisplay = document.getElementById('todayEarningsDisplay');
-    const totalEarningsDisplay = document.getElementById('totalEarningsDisplay');
-
-    // Live Card DOM Elements
-    const miningStatusCard = document.getElementById('miningStatusCard');
-    const miningStateLabel = document.getElementById('miningStateLabel');
-    const goldBalanceDisplay = document.getElementById('goldBalanceDisplay');
-    const miningMetaDesc = document.getElementById('miningMetaDesc');
-    const claimYieldsBtn = document.getElementById('claimYieldsBtn');
-
-    // Global Stats DOM Elements
-    const netUsers = document.getElementById('netUsers');
-    const netNodes = document.getElementById('netNodes');
-    const netPower = document.getElementById('netPower');
+    const totalPowerDisplay = document.getElementById('totalPowerDisplay');
+    const allocatedPowerDisplay = document.getElementById('allocatedPowerDisplay');
+    const idlePowerDisplay = document.getElementById('idlePowerDisplay');
+    const deployStreamBtn = document.getElementById('deployStreamBtn');
+    const btnTriggerLabel = document.getElementById('btnTriggerLabel');
+    const streamsContainer = document.getElementById('streamsContainer');
     const toastContainer = document.getElementById('toastContainer');
 
     let currentUser = null;
     let userData = null;
-    let mainBalance = 0;
-    let liveTickerInterval = null;
+    let activeSessionsList = {};
+    let tickerInterval = null;
 
-    const DURATION_SECS = 5 * 60 * 60; // 5 Hours = 18000s
+    const CYCLE_SECS = 5 * 60 * 60; // 5 Hours (18000s)
 
     auth.onAuthStateChanged((user) => {
       if (!user) {
         window.location.href = 'index.html';
       } else {
         currentUser = user;
-        bindUserListener();
-        bindGlobalStats();
-        bindAnnouncements();
+        bindMiningSystem();
       }
     });
 
@@ -746,131 +548,203 @@
       }, 4000);
     }
 
-    function bindUserListener() {
+    function bindMiningSystem() {
       db.ref(`Users/${currentUser.uid}`).on('value', (snapshot) => {
         if (!snapshot.exists()) return;
         userData = snapshot.val();
 
-        if (userData.banned) {
-          auth.signOut();
-          window.location.href = 'index.html';
-          return;
-        }
-
-        // Display parsing
-        const name = userData.username || "User";
-        usernameDisplay.textContent = name.charAt(0).toUpperCase() + name.slice(1);
-        userAvatar.textContent = name.charAt(0).toUpperCase();
-
-        const powerVal = parseFloat(userData.power || 1000);
-        powerDisplay.textContent = `${Number(powerVal).toLocaleString()} HP`;
-        referralDisplay.textContent = `${userData.referralsCount || 0} Users`;
-        
-        mainBalance = parseFloat(userData.balance || 0);
-        balanceDisplay.textContent = `$${mainBalance.toFixed(8)}`;
-
-        todayEarningsDisplay.textContent = `$${Number(userData.todayEarnings || 0).toFixed(4)}`;
-        totalEarningsDisplay.textContent = `$${Number(userData.totalEarnings || 0).toFixed(4)}`;
-
-        // Formula rate visualization
-        const dailyRate = powerVal * 0.000001;
-        rateDisplay.textContent = `${Number(powerVal).toLocaleString()} POWER = $${dailyRate.toFixed(4)}/day`;
-
-        configureMiningSessionState();
+        db.ref(`Users/${currentUser.uid}/activeSessions`).on('value', (sessionSnap) => {
+          activeSessionsList = sessionSnap.exists() ? sessionSnap.val() : {};
+          
+          calculatePowerAllocations();
+          renderMiningStreams();
+        });
       });
     }
 
-    function configureMiningSessionState() {
-      if (liveTickerInterval) clearInterval(liveTickerInterval);
+    function calculatePowerAllocations() {
+      const totalPower = parseInt(userData.power || 1000);
+      let allocatedPower = 0;
+      Object.keys(activeSessionsList).forEach((key) => {
+        allocatedPower += parseInt(activeSessionsList[key].powerAllocated || 0);
+      });
 
-      if (userData.miningStatus === 'active') {
-        userStatusBox.classList.add('active');
-        statusLabel.textContent = "Online";
-        miningStatusCard.classList.add('active');
+      const idlePower = Math.max(0, totalPower - allocatedPower);
 
-        runHomeTicker();
+      totalPowerDisplay.textContent = `${Number(totalPower).toLocaleString()} HP`;
+      allocatedPowerDisplay.textContent = `${Number(allocatedPower).toLocaleString()} HP`;
+      idlePowerDisplay.textContent = `${Number(idlePower).toLocaleString()} HP`;
+
+      if (idlePower > 0) {
+        deployStreamBtn.disabled = false;
+        btnTriggerLabel.textContent = `Start Mining with ${Number(idlePower).toLocaleString()} HP`;
       } else {
-        userStatusBox.classList.remove('active');
-        statusLabel.textContent = "Offline";
-        
-        miningStatusCard.classList.remove('active');
-        miningStateLabel.innerHTML = `<i class="fa-solid fa-circle" style="color: var(--text-muted)"></i> Idle Core`;
-        miningStateLabel.style.color = "var(--text-muted)";
-        goldBalanceDisplay.textContent = "$0.00000000";
-        miningMetaDesc.textContent = "No session active. Tap the center button to begin.";
-        claimYieldsBtn.style.display = "none";
+        deployStreamBtn.disabled = true;
+        btnTriggerLabel.textContent = "All Power Deploying";
       }
+
+      const hasActiveStreams = Object.keys(activeSessionsList).length > 0;
+      db.ref(`Users/${currentUser.uid}`).update({
+        miningStatus: hasActiveStreams ? 'active' : 'idle',
+        miningStartTime: hasActiveStreams ? Object.values(activeSessionsList)[0].startTime : 0
+      });
     }
 
-    function runHomeTicker() {
-      const startTime = parseInt(userData.miningStartTime || 0);
-      const powerVal = parseFloat(userData.power || 1000);
-      const ratePerSecond = (powerVal * 0.000001) / 86400;
+    deployStreamBtn.addEventListener('click', () => {
+      if (deployStreamBtn.disabled) return;
+      deployStreamBtn.disabled = true;
 
-      const updateTicker = () => {
-        const now = Date.now();
-        let elapsed = Math.max(0, Math.floor((now - startTime) / 1000));
+      const totalPower = parseInt(userData.power || 1000);
+      let allocatedPower = 0;
+      Object.keys(activeSessionsList).forEach((key) => {
+        allocatedPower += parseInt(activeSessionsList[key].powerAllocated || 0);
+      });
+      const idlePower = totalPower - allocatedPower;
 
-        if (elapsed >= DURATION_SECS) {
-          clearInterval(liveTickerInterval);
-          const cycleGains = DURATION_SECS * ratePerSecond;
-          
-          goldBalanceDisplay.textContent = `$${cycleGains.toFixed(8)}`;
-          miningStateLabel.innerHTML = `<i class="fa-solid fa-gift" style="color: var(--gold); animation: pulse-badge 1s infinite;"></i> Ready to Claim`;
-          miningStateLabel.style.color = "var(--gold)";
-          miningMetaDesc.textContent = "5-hour hashing session completed successfully.";
-          claimYieldsBtn.style.display = "block";
-        } else {
-          const dynamicSessionGains = elapsed * ratePerSecond;
-          goldBalanceDisplay.textContent = `$${dynamicSessionGains.toFixed(8)}`;
-          
-          const remaining = DURATION_SECS - elapsed;
-          const hours = Math.floor(remaining / 3600).toString().padStart(2, '0');
-          const mins = Math.floor((remaining % 3600) / 60).toString().padStart(2, '0');
-          const secs = (remaining % 60).toString().padStart(2, '0');
-
-          miningStateLabel.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin" style="color: var(--gold)"></i> Processing Hash...`;
-          miningStateLabel.style.color = "var(--gold)";
-          miningMetaDesc.innerHTML = `Mining session finishes in: <strong>${hours}:${mins}:${secs}</strong>`;
-          claimYieldsBtn.style.display = "none";
-        }
-      };
-
-      updateTicker();
-      liveTickerInterval = setInterval(updateTicker, 1000);
-    }
-
-    claimYieldsBtn.addEventListener('click', () => {
-      if (claimYieldsBtn.disabled) return;
-      claimYieldsBtn.disabled = true;
-
-      const startTime = parseInt(userData.miningStartTime || 0);
-      const elapsed = Math.floor((Date.now() - startTime) / 1000);
-
-      if (elapsed < DURATION_SECS) {
-        showToast("Session is not complete.", "error");
-        claimYieldsBtn.disabled = false;
+      if (idlePower <= 0) {
+        showToast("No available hashrate to deploy.", "error");
         return;
       }
 
-      const powerVal = parseFloat(userData.power || 1000);
-      const reward = DURATION_SECS * ((powerVal * 0.000001) / 86400);
+      const sessionRef = db.ref(`Users/${currentUser.uid}/activeSessions`).push();
+      const newSession = {
+        id: sessionRef.key,
+        powerAllocated: idlePower,
+        startTime: Date.now()
+      };
 
-      const userRef = db.ref(`Users/${currentUser.uid}`);
-      userRef.transaction((curr) => {
-        if (curr) {
-          curr.balance = parseFloat(curr.balance || 0) + reward;
-          curr.totalEarnings = parseFloat(curr.totalEarnings || 0) + reward;
-          curr.todayEarnings = parseFloat(curr.todayEarnings || 0) + reward;
-          curr.miningStatus = "idle";
-          curr.miningStartTime = 0;
-          curr.completedMiningCycles = (curr.completedMiningCycles || 0) + 1;
-        }
-        return curr;
-      }, async (error, committed) => {
-        if (committed) {
-          showToast(`Successfully claimed +$${reward.toFixed(6)} yellow yield!`, "success");
-          
+      sessionRef.set(newSession)
+        .then(() => {
+          showToast(`Stream initialized with ${Number(idlePower).toLocaleString()} HP!`, "success");
+        })
+        .catch(() => {
+          showToast("Failed to initiate stream.", "error");
+          deployStreamBtn.disabled = false;
+        });
+    });
+
+    function renderMiningStreams() {
+      if (tickerInterval) clearInterval(tickerInterval);
+
+      const keys = Object.keys(activeSessionsList);
+      if (keys.length === 0) {
+        streamsContainer.innerHTML = `
+          <div class="empty-streams-card">
+            <i class="fa-solid fa-microchip"></i>
+            <p>No active sessions detected. Click Start Mining to spawn your stream.</p>
+          </div>
+        `;
+        return;
+      }
+
+      let streamsHTML = "";
+      keys.forEach((key) => {
+        const session = activeSessionsList[key];
+        const displayId = session.id.substring(1, 8).toUpperCase();
+        
+        streamsHTML += `
+          <div class="stream-card" id="card_${session.id}">
+            <div class="stream-header">
+              <div class="stream-title-block">
+                <span class="stream-pulse-core"></span>
+                <span class="stream-title">Stream #${displayId}</span>
+              </div>
+              <span class="stream-power-badge">${Number(session.powerAllocated).toLocaleString()} HP</span>
+            </div>
+            
+            <div class="stream-body">
+              <div class="stream-ticker-col">
+                <span class="stream-ticker-label" id="label_${session.id}">Session Yields</span>
+                <span class="stream-ticker-val" id="ticker_${session.id}">$0.00000000</span>
+              </div>
+              <span class="stream-timer" id="timer_${session.id}">05:00:00</span>
+            </div>
+
+            <div class="stream-progress-track">
+              <div class="stream-progress-bar" id="bar_${session.id}"></div>
+            </div>
+
+            <button class="btn-claim-stream" id="btn_${session.id}" style="display:none;" onclick="claimStreamYield('${session.id}')">
+              Claim Stream Yields
+            </button>
+          </div>
+        `;
+      });
+
+      streamsContainer.innerHTML = streamsHTML;
+
+      const runStreamsTimer = () => {
+        const now = Date.now();
+
+        keys.forEach((key) => {
+          const session = activeSessionsList[key];
+          const cardEl = document.getElementById(`card_${session.id}`);
+          const tickerEl = document.getElementById(`ticker_${session.id}`);
+          const timerEl = document.getElementById(`timer_${session.id}`);
+          const barEl = document.getElementById(`bar_${session.id}`);
+          const btnEl = document.getElementById(`btn_${session.id}`);
+          const labelEl = document.getElementById(`label_${session.id}`);
+
+          if (!cardEl || !tickerEl || !timerEl || !barEl || !btnEl) return;
+
+          let elapsedSecs = Math.max(0, Math.floor((now - parseInt(session.startTime)) / 1000));
+          const sessionPower = parseFloat(session.powerAllocated || 1000);
+          const maxCycleReward = sessionPower * 0.00000025; 
+
+          if (elapsedSecs >= CYCLE_SECS) {
+            cardEl.classList.add('completed');
+            tickerEl.textContent = `$${maxCycleReward.toFixed(8)}`;
+            timerEl.textContent = "Finished";
+            barEl.style.width = "100%";
+            btnEl.style.display = "block";
+            if (labelEl) labelEl.textContent = "Completed";
+          } else {
+            const progressPct = (elapsedSecs / CYCLE_SECS) * 100;
+            barEl.style.width = `${progressPct}%`;
+
+            const accumulationYield = elapsedSecs * (maxCycleReward / CYCLE_SECS);
+            tickerEl.textContent = `$${accumulationYield.toFixed(8)}`;
+
+            const remaining = CYCLE_SECS - elapsedSecs;
+            const hours = Math.floor(remaining / 3600).toString().padStart(2, '0');
+            const mins = Math.floor((remaining % 3600) / 60).toString().padStart(2, '0');
+            const secs = (remaining % 60).toString().padStart(2, '0');
+            timerEl.textContent = `${hours}:${mins}:${secs}`;
+            btnEl.style.display = "none";
+          }
+        });
+      };
+
+      runStreamsTimer();
+      tickerInterval = setInterval(runStreamsTimer, 1000);
+    }
+
+    // Secure Atomic Payout Claims & Automatic Timer Reset
+    window.claimStreamYield = function(sessionId) {
+      const session = activeSessionsList[sessionId];
+      if (!session) return;
+
+      const claimBtn = document.getElementById(`btn_${sessionId}`);
+      if (claimBtn) claimBtn.disabled = true;
+
+      const sessionPower = parseFloat(session.powerAllocated || 1000);
+      const rewardAmt = sessionPower * 0.00000025;
+
+      // Executing secure atomic server-side increments to avoid profile read conflicts
+      const updates = {};
+      updates[`Users/${currentUser.uid}/balance`] = firebase.database.ServerValue.increment(rewardAmt);
+      updates[`Users/${currentUser.uid}/totalEarnings`] = firebase.database.ServerValue.increment(rewardAmt);
+      updates[`Users/${currentUser.uid}/todayEarnings`] = firebase.database.ServerValue.increment(rewardAmt);
+      updates[`Users/${currentUser.uid}/completedMiningCycles`] = firebase.database.ServerValue.increment(1);
+      
+      // Auto-restart stream timer directly by setting startTime to Date.now()
+      updates[`Users/${currentUser.uid}/activeSessions/${sessionId}/startTime`] = Date.now();
+
+      db.ref().update(updates)
+        .then(async () => {
+          showToast(`Claim successful! +$${rewardAmt.toFixed(6)} credited & mining session restarted automatically!`, "success");
+
+          // Process affiliate milestone reward evaluations
           const referrerUid = userData.referredBy;
           if (referrerUid) {
             const referralRef = db.ref(`Referrals/${referrerUid}/${currentUser.uid}`);
@@ -912,43 +786,15 @@
               }
             }
           }
-        } else {
-          showToast("Failed to complete transaction.", "error");
-          claimYieldsBtn.disabled = false;
-        }
-      });
-    });
-
-    function bindGlobalStats() {
-      db.ref('Users').on('value', (snapshot) => {
-        if (!snapshot.exists()) return;
-        const users = snapshot.val();
-        let totalCount = 0;
-        let activeNodes = 0;
-        let totalPower = 0;
-
-        Object.keys(users).forEach((key) => {
-          totalCount++;
-          totalPower += parseFloat(users[key].power || 1000);
-          if (users[key].miningStatus === 'active') activeNodes++;
+        })
+        .catch(() => {
+          showToast("Failed to complete stream transaction.", "error");
+          if (claimBtn) claimBtn.disabled = false;
         });
-
-        netUsers.textContent = Number(totalCount).toLocaleString();
-        netNodes.textContent = Number(activeNodes).toLocaleString();
-        netPower.textContent = `${Number(totalPower).toLocaleString()} HP`;
-      });
-    }
-
-    function bindAnnouncements() {
-      db.ref('Announcements').on('value', (snapshot) => {
-        if (snapshot.exists()) {
-          document.getElementById('annText').textContent = snapshot.val().text || "Core systems active. Hash away!";
-        }
-      });
-    }
+    };
 
     window.addEventListener('beforeunload', () => {
-      if (liveTickerInterval) clearInterval(liveTickerInterval);
+      if (tickerInterval) clearInterval(tickerInterval);
     });
   </script>
 </body>
