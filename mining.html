@@ -76,9 +76,9 @@
       margin-top: 4px;
     }
 
-    /* Power Allocation Hero Card (Rule 3) */
+    /* Power Allocation Hero Card */
     .power-hero-card {
-      background: radial-gradient(circle at 50% 0%, rgba(24, 12, 54, 0.6) 0%, rgba(9, 4, 25, 0.9) 100%);
+      background: radial-gradient(circle at 50% 0%, rgba(24, 12, 54, 0.6) 0%, rgba(9, 4, 25, 0.95) 100%);
       border: 1px solid var(--border-color);
       border-radius: 24px;
       padding: 22px 14px;
@@ -118,7 +118,7 @@
     .hero-metric-value.cyan { color: var(--secondary); }
     .hero-metric-value.gold { color: var(--gold); }
 
-    /* Deploy Dynamic Session button (Rule 4) */
+    /* Deploy Dynamic Session button */
     .trigger-container {
       margin-bottom: 24px;
     }
@@ -153,7 +153,7 @@
       transform: scale(0.97);
     }
 
-    /* Active Streams Grid (Rule 11) */
+    /* Active Streams Grid */
     .section-header-title {
       font-size: 11px;
       font-weight: 700;
@@ -388,7 +388,7 @@
       position: fixed;
       top: 20px;
       right: 20px;
-      z-index: 1000;
+      z-index: 10000;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -425,7 +425,7 @@
       <p class="page-subtitle">Deploy multiple concurrent sessions with your available power blocks</p>
     </div>
 
-    <!-- Power State Layout Metrics (Rule 3) -->
+    <!-- Power State Layout Metrics -->
     <div class="power-hero-card">
       <div class="hero-stat-row">
         <div class="hero-metric">
@@ -443,7 +443,7 @@
       </div>
     </div>
 
-    <!-- Consolidated/Segmented trigger button (Rule 4) -->
+    <!-- Consolidated/Segmented trigger button -->
     <div class="trigger-container">
       <button class="btn-deploy-node" id="deployStreamBtn">
         <i class="fa-solid fa-bolt-lightning"></i>
@@ -549,12 +549,10 @@
     }
 
     function bindMiningSystem() {
-      // 1. Sync User Stats
       db.ref(`Users/${currentUser.uid}`).on('value', (snapshot) => {
         if (!snapshot.exists()) return;
         userData = snapshot.val();
 
-        // 2. Fetch Sessions list (Rule 9 & 10)
         db.ref(`Users/${currentUser.uid}/activeSessions`).on('value', (sessionSnap) => {
           activeSessionsList = sessionSnap.exists() ? sessionSnap.val() : {};
           
@@ -566,8 +564,6 @@
 
     function calculatePowerAllocations() {
       const totalPower = parseInt(userData.power || 1000);
-      
-      // Calculate power lock sum from live streams
       let allocatedPower = 0;
       Object.keys(activeSessionsList).forEach((key) => {
         allocatedPower += parseInt(activeSessionsList[key].powerAllocated || 0);
@@ -579,7 +575,6 @@
       allocatedPowerDisplay.textContent = `${Number(allocatedPower).toLocaleString()} HP`;
       idlePowerDisplay.textContent = `${Number(idlePower).toLocaleString()} HP`;
 
-      // Update interactive Start buttons (Rule 4)
       if (idlePower > 0) {
         deployStreamBtn.disabled = false;
         btnTriggerLabel.textContent = `Start Mining with ${Number(idlePower).toLocaleString()} HP`;
@@ -588,7 +583,6 @@
         btnTriggerLabel.textContent = "All Power Deploying";
       }
 
-      // Legacy state match logic for Green online status inside home.html
       const hasActiveStreams = Object.keys(activeSessionsList).length > 0;
       db.ref(`Users/${currentUser.uid}`).update({
         miningStatus: hasActiveStreams ? 'active' : 'idle',
@@ -596,12 +590,10 @@
       });
     }
 
-    // Deploy independent dynamic session (Rule 1, 4 & 9)
     deployStreamBtn.addEventListener('click', () => {
       if (deployStreamBtn.disabled) return;
       deployStreamBtn.disabled = true;
 
-      // Calculate exact available power
       const totalPower = parseInt(userData.power || 1000);
       let allocatedPower = 0;
       Object.keys(activeSessionsList).forEach((key) => {
@@ -614,11 +606,10 @@
         return;
       }
 
-      // Generate independent pushing record (Rule 9)
       const sessionRef = db.ref(`Users/${currentUser.uid}/activeSessions`).push();
       const newSession = {
         id: sessionRef.key,
-        powerAllocated: idlePower, // Locks ALL available Power
+        powerAllocated: idlePower,
         startTime: Date.now()
       };
 
@@ -632,7 +623,6 @@
         });
     });
 
-    // Render Stream panels with independent Ticker clocks (Rule 11)
     function renderMiningStreams() {
       if (tickerInterval) clearInterval(tickerInterval);
 
@@ -650,7 +640,6 @@
       let streamsHTML = "";
       keys.forEach((key) => {
         const session = activeSessionsList[key];
-        // Session reference short ID alias (Rule 11)
         const displayId = session.id.substring(1, 8).toUpperCase();
         
         streamsHTML += `
@@ -684,7 +673,6 @@
 
       streamsContainer.innerHTML = streamsHTML;
 
-      // Dynamic ticking loops
       const runStreamsTimer = () => {
         const now = Date.now();
 
@@ -701,12 +689,9 @@
 
           let elapsedSecs = Math.max(0, Math.floor((now - parseInt(session.startTime)) / 1000));
           const sessionPower = parseFloat(session.powerAllocated || 1000);
-          
-          // Formula: 1,000 POWER = $0.00025 per completed session
           const maxCycleReward = sessionPower * 0.00000025; 
 
           if (elapsedSecs >= CYCLE_SECS) {
-            // Completed cycle
             cardEl.classList.add('completed');
             tickerEl.textContent = `$${maxCycleReward.toFixed(8)}`;
             timerEl.textContent = "Finished";
@@ -714,7 +699,6 @@
             btnEl.style.display = "block";
             if (labelEl) labelEl.textContent = "Completed";
           } else {
-            // Dynamic Ticker
             const progressPct = (elapsedSecs / CYCLE_SECS) * 100;
             barEl.style.width = `${progressPct}%`;
 
@@ -735,21 +719,14 @@
       tickerInterval = setInterval(runStreamsTimer, 1000);
     }
 
-    // Individual session claim trigger (Rule 6 & 8)
+    // Auto-Restart & Claim System Integration
     window.claimStreamYield = function(sessionId) {
       const session = activeSessionsList[sessionId];
       if (!session) return;
 
-      const elapsed = Math.floor((Date.now() - parseInt(session.startTime)) / 1000);
-      if (elapsed < CYCLE_SECS) {
-        showToast("Stream is still hashing.", "error");
-        return;
-      }
-
       const claimBtn = document.getElementById(`btn_${sessionId}`);
       if (claimBtn) claimBtn.disabled = true;
 
-      // Yield: exactly $0.00025 per 1,000 POWER session cycle
       const sessionPower = parseFloat(session.powerAllocated || 1000);
       const rewardAmt = sessionPower * 0.00000025;
 
@@ -764,9 +741,12 @@
         return curr;
       }, async (error, committed) => {
         if (committed) {
-          // Clear active stream record (Rule 6)
-          await db.ref(`Users/${currentUser.uid}/activeSessions/${sessionId}`).remove();
-          showToast(`Claimed +$${rewardAmt.toFixed(6)} successfully!`, "success");
+          // AUTO-RESTART: Instead of removing the session, reset startTime to Date.now()!
+          db.ref(`Users/${currentUser.uid}/activeSessions/${sessionId}`).update({
+            startTime: Date.now()
+          }).then(() => {
+            showToast(`Claim successful! +$${rewardAmt.toFixed(6)} added & session restarted automatically.`, "success");
+          });
 
           // Affiliate commissions & Milestone verifications
           const referrerUid = userData.referredBy;
@@ -783,13 +763,13 @@
 
               if (refStatus === "Pending") {
                 refStatus = "Valid";
-                extraPower += 1000; // Credit Referrer with +1000 POWER base reward
+                extraPower += 1000;
                 payload.status = "Valid";
                 payload.powerGained = 1000;
               }
 
               if (newCycles >= 10 && !refData.bonus2kClaimed) {
-                extraPower += 2000; // Award extra premium +2,000 POWER Milestone Reward
+                extraPower += 2000;
                 payload.bonus2kClaimed = true;
                 payload.powerGained = (refData.powerGained || 1000) + 2000;
               }
